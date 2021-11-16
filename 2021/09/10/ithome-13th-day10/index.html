@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Day10，先來聊聊我的Kubernetes看法正文在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套container orchestration platform眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。 我自己認為Kubernetes有趣的地方在於，Kubernetes中大部分的內容、Resources、APIs等……">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法">
+<meta property="og:url" content="http://example.com/2021/09/10/ithome-13th-day10/index.html">
+<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:description" content="Day10，先來聊聊我的Kubernetes看法正文在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套container orchestration platform眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。 我自己認為Kubernetes有趣的地方在於，Kubernetes中大部分的內容、Resources、APIs等……">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T04:00:24.602Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="13th_鐵人賽">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/09/10/ithome-13th-day10/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/10/ithome-13th-day10/","path":"2021/09/10/ithome-13th-day10/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法 | 阿熊的空間</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的空間</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day10%EF%BC%8C%E5%85%88%E4%BE%86%E8%81%8A%E8%81%8A%E6%88%91%E7%9A%84Kubernetes%E7%9C%8B%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">Day10，先來聊聊我的Kubernetes看法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/ithome-13th-day10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的空間">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-10T00:00:00+08:00">2021-09-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 12:00:24" itemprop="dateModified" datetime="2021-11-16T12:00:24+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Day10，先來聊聊我的Kubernetes看法"><a href="#Day10，先來聊聊我的Kubernetes看法" class="headerlink" title="Day10，先來聊聊我的Kubernetes看法"></a>Day10，先來聊聊我的Kubernetes看法</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套<strong>container orchestration platform</strong>眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。</p>
+<p>我自己認為Kubernetes有趣的地方在於，Kubernetes中大部分的內容、Resources、APIs等……都是基於<strong>declarative</strong>、基於<strong>標準</strong>來建立的。而這樣的方式直接與間接促成了強大的共通性。這也是為什麼常常有人說學一套Kubernetes，可以穿梭地端(自建或vendor support)與雲端(AKS、EKS、GKE……)，儘管這未必完全正確。</p>
+<p>這樣提及強大的共通性，其實指的是在platform上operator的這一塊，而非是system architecture這一塊。也就是說如果找10個人來建置Kubernetes Cluster、那很高的機率就會建出10個不太一樣的Cluster、但對於Cluster的使用來者來說卻又是高度互通的。</p>
+<p>為什麼會說每個人建的Kubernetes，很容易都會產生些許的落差呢？</p>
+<p>以核心元件(kubelet、kube-scheduler、kube-apiserver、kube-controller-mangement、kube-proxy(iptables/ipvs)、etcd…..)來說功能倒是大同小異。</p>
+<p>但從大方向來說，第一步面臨到可能就是該選擇哪個的Opertaion System?，作業系統百百種支援Kubernetes建置的亦不在少數。接著是要以何種方式建立？Container、Binary、Kubeadm，還有如核心元件是不是要用static pod等等……議題，或是整個直接使用CNCF Certified installer的project(open source or subscription)，或著直接使用Cloud PaaS，這些其實都是能夠納入考量的環節。</p>
+<p>再從細一點的方向來說，Kubernete著重在interface的標準、提供interface、只要符合實作便能為之所用，這也讓建置者更加選擇障礙了XD，三個著名的標準分別要選擇的是：</p>
+<ul>
+<li>CRI (Container Runtime Interface)<br>也就是選擇容器執行的agent，現行來說也有很多選擇，如Containerd、CRI-O、Kata Container等等……<blockquote>
+<p>要注意Docker並非CRI的一環，Docker是透過Dockershim才符合CRI的，而<a target="_blank" rel="noopener" href="https://kubernetes.io/blog/2020/12/02/dockershim-faq/">Dockershim目前也將面臨deprecated的問題</a>。  </p>
+</blockquote>
+</li>
+<li>CNI (Container Network Interface)<br>CNI指的大概就是Cluster中，Container與Container之間的網路交換是基於那些方式&amp;Protocol，與host之間的關係去實作的。在實務上我們會根據一些特性需求或環境限制去決定要使用那個CNI。<blockquote>
+<p> <a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1qCOlor16Wp5mHd6MQxB5gUEQILnijyDLIExEpqmee2k/edit#gid=1028366989">過去學習時看過別人整理的CNI清單(不確定後續有沒有持續更新)</a>有需要可以參考。</p>
+</blockquote>
+</li>
+<li>CSI (Container storage interface)<br>指的就是Cluster中與Storage之間的行為與關係，為了讓服務(pod)能夠去存取不同的storage架構、自由的叫用空間資源，而需要實作統一的介面。</li>
+</ul>
+<p>此外像是<strong>LoadBalancer type</strong>這種東西也需要做抉擇，也許是cloud vendor support、也許是地端open source solution，也許是地端hardware vendor support……諸如此類好像還有很多東西沒提到，不過就先這樣吧~</p>
+<p>就像汽車一樣，不一樣的鋼板、螺絲、引擎，輪胎…….合成的車車，最終只要駕駛有駕照都可以上路。</p>
+<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>今天這一篇好像全部都是閒聊的範圍呢XD，選擇很多很複雜、同時也因為選擇很多而生動有趣。等等要來去打AZ了，希望明天還能繼續發文。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/13th-%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 13th_鐵人賽</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/09/ithome-13th-day09/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day09，我也好想用用看Terraform">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day09，我也好想用用看Terraform
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/11/ithome-13th-day11/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day11，看法講完後該安裝了">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day11，看法講完後該安裝了 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

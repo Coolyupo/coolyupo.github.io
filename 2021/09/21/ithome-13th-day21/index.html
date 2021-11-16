@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Day21，Prometheus Operator正文今天要使用helm來安裝 Prometheus Operator，原先的prometheus operator chart已經被棄用，目前轉為新的prometheus-community&#x2F;kube-prometheus-stack，而kube-prometheus就是基於prometheus + prometheus operator上的設定與">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator">
+<meta property="og:url" content="http://example.com/2021/09/21/ithome-13th-day21/index.html">
+<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:description" content="Day21，Prometheus Operator正文今天要使用helm來安裝 Prometheus Operator，原先的prometheus operator chart已經被棄用，目前轉為新的prometheus-community&#x2F;kube-prometheus-stack，而kube-prometheus就是基於prometheus + prometheus operator上的設定與">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/CxzuHN2.png">
+<meta property="og:image" content="https://i.imgur.com/tu6lTtp.png">
+<meta property="og:image" content="https://i.imgur.com/zaUHn8X.png">
+<meta property="og:image" content="https://i.imgur.com/9neJtGY.png">
+<meta property="og:image" content="https://i.imgur.com/IwtPnAN.png">
+<meta property="og:image" content="https://i.imgur.com/CIpclO8.png">
+<meta property="og:image" content="https://i.imgur.com/ajOIO7y.png">
+<meta property="og:image" content="https://i.imgur.com/clXPi4k.png">
+<meta property="og:image" content="https://i.imgur.com/Lnvk71b.png">
+<meta property="og:image" content="https://i.imgur.com/QSrLGfK.png">
+<meta property="article:published_time" content="2021-09-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T04:36:52.596Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="13th_鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/CxzuHN2.png">
+
+
+<link rel="canonical" href="http://example.com/2021/09/21/ithome-13th-day21/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/21/ithome-13th-day21/","path":"2021/09/21/ithome-13th-day21/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator | 阿熊的空間</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的空間</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day21%EF%BC%8CPrometheus-Operator"><span class="nav-number">1.</span> <span class="nav-text">Day21，Prometheus Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/21/ithome-13th-day21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的空間">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-21 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-21T00:00:00+08:00">2021-09-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 12:36:52" itemprop="dateModified" datetime="2021-11-16T12:36:52+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Day21，Prometheus-Operator"><a href="#Day21，Prometheus-Operator" class="headerlink" title="Day21，Prometheus Operator"></a>Day21，Prometheus Operator</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要使用helm來安裝 Prometheus Operator，原先的prometheus operator chart已經被棄用，目前轉為新的prometheus-community/kube-prometheus-stack，而kube-prometheus就是基於prometheus + prometheus operator上的設定與佈署並整合在kubernetes上。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">helm repo add prometheus-community https://prometheus-community.github.io/helm-charts</span><br><span class="line">helm repo update</span><br><span class="line"></span><br><span class="line">kubectl create ns monitoring</span><br><span class="line"></span><br><span class="line">helm install homelab-monitoring prometheus-community/kube-prometheus-stack --version 18.0.8 -n monitoring</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以設定的實在太多，就從預設的安裝來反看吧。</p>
+</blockquote>
+<p><img src="https://i.imgur.com/CxzuHN2.png"></p>
+<p>安裝的instance，簡單來說就是prometheus、prometheus operator、alertmanager、grafana<br><img src="https://i.imgur.com/tu6lTtp.png"></p>
+<p>另外也會根據prometheus operator產出crd，以及不少的custom resources<br><img src="https://i.imgur.com/zaUHn8X.png"></p>
+<p>舉例prometheuses的custom resource來看<br><img src="https://i.imgur.com/9neJtGY.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get prometheuses.monitoring.coreos.com homelab-monitoring-kube-pr-prometheus -o yaml  -n monitoring</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">monitoring.coreos.com/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Prometheus</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">meta.helm.sh/release-name:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">    <span class="attr">meta.helm.sh/release-namespace:</span> <span class="string">monitoring</span></span><br><span class="line">  <span class="attr">creationTimestamp:</span> <span class="string">&quot;2021-09-15T13:39:16Z&quot;</span></span><br><span class="line">  <span class="attr">generation:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">kube-prometheus-stack-prometheus</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/instance:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/managed-by:</span> <span class="string">Helm</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/part-of:</span> <span class="string">kube-prometheus-stack</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/version:</span> <span class="number">18.0</span><span class="number">.8</span></span><br><span class="line">    <span class="attr">chart:</span> <span class="string">kube-prometheus-stack-18.0.8</span></span><br><span class="line">    <span class="attr">heritage:</span> <span class="string">Helm</span></span><br><span class="line">    <span class="attr">release:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">homelab-monitoring-kube-pr-prometheus</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">monitoring</span></span><br><span class="line">  <span class="attr">resourceVersion:</span> <span class="string">&quot;304609&quot;</span></span><br><span class="line">  <span class="attr">uid:</span> <span class="string">8ebae130-9d60-462c-bdd7-be25853c1754</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">alerting:</span></span><br><span class="line">    <span class="attr">alertmanagers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">apiVersion:</span> <span class="string">v2</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">homelab-monitoring-kube-pr-alertmanager</span></span><br><span class="line">      <span class="attr">namespace:</span> <span class="string">monitoring</span></span><br><span class="line">      <span class="attr">pathPrefix:</span> <span class="string">/</span></span><br><span class="line">      <span class="attr">port:</span> <span class="string">web</span></span><br><span class="line">  <span class="attr">enableAdminAPI:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">externalUrl:</span> <span class="string">http://homelab-monitoring-kube-pr-prometheus.monitoring:9090</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">quay.io/prometheus/prometheus:v2.28.1</span></span><br><span class="line">  <span class="attr">listenLocal:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">logFormat:</span> <span class="string">logfmt</span></span><br><span class="line">  <span class="attr">logLevel:</span> <span class="string">info</span></span><br><span class="line">  <span class="attr">paused:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">podMonitorNamespaceSelector:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">podMonitorSelector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">release:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">  <span class="attr">portName:</span> <span class="string">web</span></span><br><span class="line">  <span class="attr">probeNamespaceSelector:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">probeSelector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">release:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">retention:</span> <span class="string">10d</span></span><br><span class="line">  <span class="attr">routePrefix:</span> <span class="string">/</span></span><br><span class="line">  <span class="attr">ruleNamespaceSelector:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">ruleSelector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">kube-prometheus-stack</span></span><br><span class="line">      <span class="attr">release:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">  <span class="attr">securityContext:</span></span><br><span class="line">    <span class="attr">fsGroup:</span> <span class="number">2000</span></span><br><span class="line">    <span class="attr">runAsGroup:</span> <span class="number">2000</span></span><br><span class="line">    <span class="attr">runAsNonRoot:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">runAsUser:</span> <span class="number">1000</span></span><br><span class="line">  <span class="attr">serviceAccountName:</span> <span class="string">homelab-monitoring-kube-pr-prometheus</span></span><br><span class="line">  <span class="attr">serviceMonitorNamespaceSelector:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">serviceMonitorSelector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">release:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">  <span class="attr">shards:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">v2.28.1</span></span><br></pre></td></tr></table></figure>
+<p>從這份文檔當中，我們可以大概得知的設定如資料保存為預設10天 ，且由於我們一開始並沒有設定任何參數<br>像podmonitor、servicemonitor、rules、probe 這些在custom resources建立時都需要matchLabels <code>release: homelab-monitoring</code>，所在namespaces的選擇則是不受限制。</p>
+<p>繼續看一下預設幫忙產出的metrics service</p>
+<p><img src="https://i.imgur.com/IwtPnAN.png"></p>
+<p>可以看到servicemonitor也有被建立</p>
+<p><img src="https://i.imgur.com/CIpclO8.png"></p>
+<p>將prometheus port-forward到本機看看</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl port-forward svc/homelab-monitoring-kube-pr-prometheus 9090:9090 -n monitoring</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/ajOIO7y.png"><br>可以看到kube-proxy、kube-controller-manager狀態為dwon，kube-proxy是因為我們只有開啟127.0.0.1的服務監聽，導致使用IP時無法存取，修改過後便能夠使用。而kube-controller-manager則是因為設定上關閉了http的存取，僅能使用身份驗證的https，這邊都先想辦法讓他打開，再檢查後如下<br><img src="https://i.imgur.com/clXPi4k.png"></p>
+<blockquote>
+<p>這邊認真查了一下1.20的文件kube-controller-manager上面已經找不到<code>--port=0</code>，而port號使用也從10252修改為10257，但透過kubespray佈署的static pod上面仍存在<code>--port=0</code>這段設定，索性把他註解掉之後發現還是有作用的，10252 Port又出來了listen了。</p>
+<p>我的感覺是，看起來在後續的版本這個helm chart這邊都會需要再做調整(完全棄用時)，而servicemonitor存取的metrics service這塊最終看起來都會希望是以https+serviceaccount(authorized)作為較高安全性的考量來存取。</p>
+</blockquote>
+<p>可以看到預設已帶入非常多dashboard<br><img src="https://i.imgur.com/Lnvk71b.png"><br>到這邊就可以根據需求在grafana上做一些可觀測性的工作<br><img src="https://i.imgur.com/QSrLGfK.png"></p>
+<p>接著看看 alertmanagers.monitoring.coreos.com 這邊的alertmanager custom resource，如下所示，<code>alertmanagerConfigNamespaceSelector: &#123;&#125;</code>&amp; <code>alertmanagerConfigSelector: &#123;&#125;</code><br>    預設就是全部的namespaces且不限制config</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">items:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">apiVersion:</span> <span class="string">monitoring.coreos.com/v1</span></span><br><span class="line">  <span class="attr">kind:</span> <span class="string">Alertmanager</span></span><br><span class="line">  <span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">annotations:</span></span><br><span class="line">      <span class="attr">meta.helm.sh/release-name:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">      <span class="attr">meta.helm.sh/release-namespace:</span> <span class="string">monitoring</span></span><br><span class="line">    <span class="attr">creationTimestamp:</span> <span class="string">&quot;2021-09-15T13:39:16Z&quot;</span></span><br><span class="line">    <span class="attr">generation:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">kube-prometheus-stack-alertmanager</span></span><br><span class="line">      <span class="attr">app.kubernetes.io/instance:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">      <span class="attr">app.kubernetes.io/managed-by:</span> <span class="string">Helm</span></span><br><span class="line">      <span class="attr">app.kubernetes.io/part-of:</span> <span class="string">kube-prometheus-stack</span></span><br><span class="line">      <span class="attr">app.kubernetes.io/version:</span> <span class="number">18.0</span><span class="number">.8</span></span><br><span class="line">      <span class="attr">chart:</span> <span class="string">kube-prometheus-stack-18.0.8</span></span><br><span class="line">      <span class="attr">heritage:</span> <span class="string">Helm</span></span><br><span class="line">      <span class="attr">release:</span> <span class="string">homelab-monitoring</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">homelab-monitoring-kube-pr-alertmanager</span></span><br><span class="line">    <span class="attr">namespace:</span> <span class="string">monitoring</span></span><br><span class="line">    <span class="attr">resourceVersion:</span> <span class="string">&quot;304594&quot;</span></span><br><span class="line">    <span class="attr">uid:</span> <span class="string">5f05b7a3-ed7f-43bf-b1b1-be6e907aa187</span></span><br><span class="line">  <span class="attr">spec:</span></span><br><span class="line">    <span class="attr">alertmanagerConfigNamespaceSelector:</span> &#123;&#125;</span><br><span class="line">    <span class="attr">alertmanagerConfigSelector:</span> &#123;&#125;</span><br><span class="line">    <span class="attr">externalUrl:</span> <span class="string">http://homelab-monitoring-kube-pr-alertmanager.monitoring:9093</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">quay.io/prometheus/alertmanager:v0.22.2</span></span><br><span class="line">    <span class="attr">listenLocal:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">logFormat:</span> <span class="string">logfmt</span></span><br><span class="line">    <span class="attr">logLevel:</span> <span class="string">info</span></span><br><span class="line">    <span class="attr">paused:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">portName:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">retention:</span> <span class="string">120h</span></span><br><span class="line">    <span class="attr">routePrefix:</span> <span class="string">/</span></span><br><span class="line">    <span class="attr">securityContext:</span></span><br><span class="line">      <span class="attr">fsGroup:</span> <span class="number">2000</span></span><br><span class="line">      <span class="attr">runAsGroup:</span> <span class="number">2000</span></span><br><span class="line">      <span class="attr">runAsNonRoot:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">runAsUser:</span> <span class="number">1000</span></span><br><span class="line">    <span class="attr">serviceAccountName:</span> <span class="string">homelab-monitoring-kube-pr-alertmanager</span></span><br><span class="line">    <span class="attr">version:</span> <span class="string">v0.22.2</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">List</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">resourceVersion:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="attr">selfLink:</span> <span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>而設定alermangerconfig的方式也與一般alertmanager相同，可以參考<a target="_blank" rel="noopener" href="https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/alerting.md">連結</a>，最後這邊就不繼續設定下去囉。</p>
+<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>今天做LAB的時候才赫然發現，以前在用的prometheus operator竟然棄用了而我卻渾然不知，看來真的是太久沒裝了QQ，還有昨天loki-stack的Grafana 版本7.x，今天的kube-prometheus Grafana 版本8.x，登入頁面長不一樣帶給我的衝擊都好大唷XD。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/13th-%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 13th_鐵人賽</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/20/ithome-13th-day20/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day20，Grafana Loki 不一樣的log選擇">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day20，Grafana Loki 不一樣的log選擇
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/22/ithome-13th-day22/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

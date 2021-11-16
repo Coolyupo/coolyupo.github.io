@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Day20，Grafana Loki 不一樣的log選擇正文今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK&#x2F;EFK)。 簡單補充一下官方 loki 架構其中agent的選擇有  Promtail Docker Driver Fluentd Fluent Bit Logstash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day20，Grafana Loki 不一樣的log選擇">
+<meta property="og:url" content="http://example.com/2021/09/20/ithome-13th-day20/index.html">
+<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:description" content="Day20，Grafana Loki 不一樣的log選擇正文今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK&#x2F;EFK)。 簡單補充一下官方 loki 架構其中agent的選擇有  Promtail Docker Driver Fluentd Fluent Bit Logstash">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/X3uQjlV.png">
+<meta property="og:image" content="https://i.imgur.com/z93SgL3.png">
+<meta property="og:image" content="https://i.imgur.com/aT25P02.png">
+<meta property="og:image" content="https://i.imgur.com/L0kP75f.png">
+<meta property="og:image" content="https://i.imgur.com/KLyD3t3.png">
+<meta property="og:image" content="https://i.imgur.com/KZMLd1A.png">
+<meta property="og:image" content="https://i.imgur.com/95BZPg5.png">
+<meta property="og:image" content="https://i.imgur.com/3WtpjaL.png">
+<meta property="og:image" content="https://i.imgur.com/7eoxytq.png">
+<meta property="og:image" content="https://i.imgur.com/brJ0k5h.png">
+<meta property="og:image" content="https://i.imgur.com/UlFZ5lP.png">
+<meta property="og:image" content="https://i.imgur.com/jIn4Bch.png">
+<meta property="og:image" content="https://i.imgur.com/1xivZC3.png">
+<meta property="article:published_time" content="2021-09-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T04:36:01.145Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="13th_鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/X3uQjlV.png">
+
+
+<link rel="canonical" href="http://example.com/2021/09/20/ithome-13th-day20/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/20/ithome-13th-day20/","path":"2021/09/20/ithome-13th-day20/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day20，Grafana Loki 不一樣的log選擇"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day20，Grafana Loki 不一樣的log選擇 | 阿熊的空間</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的空間</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day20%EF%BC%8CGrafana-Loki-%E4%B8%8D%E4%B8%80%E6%A8%A3%E7%9A%84log%E9%81%B8%E6%93%87"><span class="nav-number">1.</span> <span class="nav-text">Day20，Grafana Loki 不一樣的log選擇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/ithome-13th-day20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的空間">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HomeLab 30天，胡搞瞎搞亂弄一通，Day20，Grafana Loki 不一樣的log選擇
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-20T00:00:00+08:00">2021-09-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 12:36:01" itemprop="dateModified" datetime="2021-11-16T12:36:01+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Day20，Grafana-Loki-不一樣的log選擇"><a href="#Day20，Grafana-Loki-不一樣的log選擇" class="headerlink" title="Day20，Grafana Loki 不一樣的log選擇"></a>Day20，Grafana Loki 不一樣的log選擇</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK/EFK)。</p>
+<p>簡單補充一下官方 loki 架構<br><img src="https://i.imgur.com/X3uQjlV.png"><br>其中agent的選擇有</p>
+<ul>
+<li>Promtail</li>
+<li>Docker Driver</li>
+<li>Fluentd</li>
+<li>Fluent Bit</li>
+<li>Logstash</li>
+<li>Lambda Promtail</li>
+</ul>
+<p>這邊一樣使用Helm安裝</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add grafana https://grafana.github.io/helm-charts</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
+<p>這邊要安裝的是loki-stack<br><img src="https://i.imgur.com/z93SgL3.png"></p>
+<p>loki-stack 是使用dependency chart的方式，所以可以選擇的agent很多種<br><img src="https://i.imgur.com/aT25P02.png"></p>
+<p>這邊選擇的angent是預設的promtail，一併安裝grafana&amp;prometheus</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">helm install homelab-loki grafana/loki-stack --version 2.4.1 \</span><br><span class="line">--set grafana.enabled=true \</span><br><span class="line">--set prometheus.enabled=true \</span><br><span class="line">--set prometheus.alertmanager.persistentVolume.enabled=false \</span><br><span class="line">--set prometheus.server.persistentVolume.enabled=false \</span><br><span class="line">--set loki.persistence.enabled=true \</span><br><span class="line">--set loki.persistence.storageClassName=nfs-client \</span><br><span class="line">--set loki.persistence.size=30Gi \</span><br><span class="line">--namespace loki</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/L0kP75f.png"></p>
+<blockquote>
+<p>安裝的過程跳出不少1.22將棄用的API XD</p>
+</blockquote>
+<p>安裝完後的長相<br><img src="https://i.imgur.com/KLyD3t3.png"></p>
+<p>來看一下promtail的config，這邊的scrape_config的設定方式基本就跟prometheus的設定相同，kubernetes_sd_configs指定來源為kubernetes pod</p>
+<p><img src="https://i.imgur.com/KZMLd1A.png"><br>貼在vs code上稍微折疊一下，可以看到一堆relabel的config<br><img src="https://i.imgur.com/95BZPg5.png"></p>
+<p>接著先取得garfana的admin密碼，並使用port-forward的方式導到本機</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get secret --namespace loki homelab-loki-grafana -o jsonpath=&quot;&#123;.data.admin-password&#125;&quot; | base64 --decode ; echo</span><br><span class="line"></span><br><span class="line">kubectl port-forward svc/homelab-loki-grafana 8080:80 -n loki </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/3WtpjaL.png"></p>
+<p>左邊explore的按鈕點一下，左上的下拉選擇為loki。可以看到這邊與kibana性質非常相像，這邊的查詢則是基於<a target="_blank" rel="noopener" href="https://grafana.com/docs/loki/latest/logql/">LogQL</a>的語法<br><img src="https://i.imgur.com/7eoxytq.png"></p>
+<p>點開Log browser 也有輔助label可以協助search<br><img src="https://i.imgur.com/brJ0k5h.png"></p>
+<p>點開help則是有些Cheat Sheet可供參考<br><img src="https://i.imgur.com/UlFZ5lP.png"></p>
+<p>也有query history，能夠再次執行過去的query<br><img src="https://i.imgur.com/jIn4Bch.png"></p>
+<p>當然也可以從DashBoard import個quick search dashboard做簡易快速查詢<br><img src="https://i.imgur.com/1xivZC3.png"></p>
+<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>如果你想把syslog收進loki當然也可以辦到的喔，透過job scrap config去蒐集<code>/var/log/*log</code>之類的，可以在官網上看到相關的設定指引喔。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/13th-%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 13th_鐵人賽</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/19/ithome-13th-day19/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day19，ArgoCD ( 2 / 2 )">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day19，ArgoCD ( 2 / 2 )
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/21/ithome-13th-day21/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

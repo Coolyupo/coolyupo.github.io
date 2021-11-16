@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Day22，Cert-Manager正文既上次 Day 16 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出.well-knownpath在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。 首先為這次的實驗，我先從godadd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager">
+<meta property="og:url" content="http://example.com/2021/09/22/ithome-13th-day22/index.html">
+<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:description" content="Day22，Cert-Manager正文既上次 Day 16 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出.well-knownpath在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。 首先為這次的實驗，我先從godadd">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/qfC34yV.png">
+<meta property="og:image" content="https://i.imgur.com/wDcQTjg.png">
+<meta property="og:image" content="https://i.imgur.com/4Hu1IMG.png">
+<meta property="og:image" content="https://i.imgur.com/M0uAppF.png">
+<meta property="og:image" content="https://i.imgur.com/QbIzkVB.png">
+<meta property="og:image" content="https://i.imgur.com/U75C8rZ.png">
+<meta property="og:image" content="https://i.imgur.com/Tg8TcFM.png">
+<meta property="og:image" content="https://i.imgur.com/yQkWU3W.png">
+<meta property="article:published_time" content="2021-09-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T04:37:29.082Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="13th_鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/qfC34yV.png">
+
+
+<link rel="canonical" href="http://example.com/2021/09/22/ithome-13th-day22/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/22/ithome-13th-day22/","path":"2021/09/22/ithome-13th-day22/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager | 阿熊的空間</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的空間</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day22%EF%BC%8CCert-Manager"><span class="nav-number">1.</span> <span class="nav-text">Day22，Cert-Manager</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/22/ithome-13th-day22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的空間">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-22 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-22T00:00:00+08:00">2021-09-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 12:37:29" itemprop="dateModified" datetime="2021-11-16T12:37:29+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Day22，Cert-Manager"><a href="#Day22，Cert-Manager" class="headerlink" title="Day22，Cert-Manager"></a>Day22，Cert-Manager</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>既上次 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10265212">Day 16</a> 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出<code>.well-known</code>path在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。</p>
+<p>首先為這次的實驗，我先從godaddy租了一個(首年)99元的憑證，因為預計是要透過cloudflare託管的，需要去注意一下domain的level是要能夠被cloudflare支援的。而domain託管的意思就是修改原domain供應商的dns server，將其修改設定為透過cloudflare的dns。<br><img src="https://i.imgur.com/qfC34yV.png"></p>
+<blockquote>
+<p>如果明年沒打算要續用，記得都要去取消自動續約喔。</p>
+</blockquote>
+<p>接著我們透過helm安裝 Cert-Manager</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">helm repo add jetstack https://charts.jetstack.io</span><br><span class="line"></span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/wDcQTjg.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns cert-manager</span><br><span class="line"></span><br><span class="line">helm install cert-manager jetstack/cert-manager \</span><br><span class="line">--namespace cert-manager \</span><br><span class="line">--version v1.5.3 \</span><br><span class="line">--set prometheus.enabled=false \</span><br><span class="line">--set webhook.timeoutSeconds=4 \</span><br><span class="line">--set installCRDs=true</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/4Hu1IMG.png"></p>
+<p>接著我們要去cloudflare上設定使用的api token，需要開啟的範圍為：</p>
+<ul>
+<li>Permissions:<ul>
+<li>Zone - DNS - Edit</li>
+<li>Zone - Zone - Read</li>
+</ul>
+</li>
+<li>Zone Resources:<ul>
+<li>Include - All Zones</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/M0uAppF.png"><br>會產出一組token，我們需要將它設定在kubernetes secret中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f cloudflare-secret.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">cloudflare-api-token-secret</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">cert-manager</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">Opaque</span></span><br><span class="line"><span class="attr">stringData:</span></span><br><span class="line">  <span class="attr">api-token:</span> <span class="string">xxxxx-token</span>  </span><br></pre></td></tr></table></figure>
+<p>接著我們這次是直接使用cluster-issuer(與issuer不同，能跨越namespace)，先創建測試用的<code>kubectl apply -f cluster-issuer-stage.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">cert-manager.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterIssuer</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">letsencrypt-staging</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">cert-manager</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">acme:</span></span><br><span class="line">    <span class="attr">email:</span> <span class="string">xxxxx@gmail.com</span></span><br><span class="line">    <span class="attr">server:</span> <span class="string">https://acme-staging-v02.api.letsencrypt.org/directory</span></span><br><span class="line">    <span class="attr">privateKeySecretRef:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">letsencrypt-stage</span></span><br><span class="line">    <span class="attr">solvers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">dns01:</span></span><br><span class="line">        <span class="attr">cloudflare:</span></span><br><span class="line">          <span class="attr">email:</span> <span class="string">xxxxxx@gmail.com</span></span><br><span class="line">          <span class="attr">apiTokenSecretRef:</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">cloudflare-api-token-secret</span></span><br><span class="line">            <span class="attr">key:</span> <span class="string">api-token</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>接著調整ingress，將host置換為homelab.gurubear.info、放入cluster-issuer的annotation</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">&quot;nginx&quot;</span></span><br><span class="line">    <span class="attr">cert-manager.io/cluster-issuer:</span> <span class="string">&quot;letsencrypt-staging&quot;</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-ing</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">homelab.gurubear.info</span></span><br><span class="line">      <span class="attr">http:</span></span><br><span class="line">        <span class="attr">paths:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-react-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                  <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-api-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                  <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/API</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tls:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">hosts:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">homelab.gurubear.info</span></span><br><span class="line">      <span class="attr">secretName:</span> <span class="string">gurubear-new-tls</span></span><br></pre></td></tr></table></figure>
+<p>檢查event，觀察到tls rotate 成功<br><img src="https://i.imgur.com/QbIzkVB.png"></p>
+<p>打開瀏覽器,檢視憑證確實是let’encrypt的憑證(不安全是正常現象)<br><img src="https://i.imgur.com/U75C8rZ.png"></p>
+<p>這樣子的流程沒問題後，我們再去新增cluster-issuer-prod，最主要就是將acme server調整為正式的server。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">cert-manager.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterIssuer</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">letsencrypt-prod</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">cert-manager</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">acme:</span></span><br><span class="line">    <span class="attr">email:</span> <span class="string">xxxxx@gmail.com</span></span><br><span class="line">    <span class="attr">server:</span> <span class="string">https://acme-v02.api.letsencrypt.org/directory</span></span><br><span class="line">    <span class="attr">privateKeySecretRef:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">letsencrypt-prod</span></span><br><span class="line">    <span class="attr">solvers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">dns01:</span></span><br><span class="line">        <span class="attr">cloudflare:</span></span><br><span class="line">          <span class="attr">email:</span> <span class="string">xxxxxx@gmail.com</span></span><br><span class="line">          <span class="attr">apiTokenSecretRef:</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">cloudflare-api-token-secret</span></span><br><span class="line">            <span class="attr">key:</span> <span class="string">api-token</span></span><br></pre></td></tr></table></figure>
+<p>調整ingress annotation的cluster-issuer</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">&quot;nginx&quot;</span></span><br><span class="line">    <span class="attr">cert-manager.io/cluster-issuer:</span> <span class="string">&quot;letsencrypt-prod&quot;</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-ing</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line"><span class="string">.</span></span><br><span class="line"><span class="string">.</span></span><br><span class="line"><span class="string">.</span></span><br></pre></td></tr></table></figure>
+<p>一樣檢查event，觀察到tls rotate 成功<br><img src="https://i.imgur.com/Tg8TcFM.png"></p>
+<p>打開瀏覽器檢查憑證，可以看到被識別為安全的憑證了<br><img src="https://i.imgur.com/yQkWU3W.png"></p>
+<p>因為正式的憑證簽署是有限制的，所以我們確立流程前會先使用測試的server進行驗證，沒問題就轉為正式。透過這樣子方式就可以免費簽署到有效的憑證啦，而後續也能夠透過自動更新來當個實實在在的免費仔。</p>
+<p>檢查custom resources內容可以看到</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get certificates.cert-manager.io gurubear-new-tls -n ithomelab -o yaml</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">cert-manager.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Certificate</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="string">.......</span></span><br><span class="line"><span class="string">.......</span></span><br><span class="line"><span class="attr">status:</span></span><br><span class="line">  <span class="attr">conditions:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">lastTransitionTime:</span> <span class="string">&quot;2021-09-18T08:03:07Z&quot;</span></span><br><span class="line">    <span class="attr">message:</span> <span class="string">Certificate</span> <span class="string">is</span> <span class="string">up</span> <span class="string">to</span> <span class="string">date</span> <span class="string">and</span> <span class="string">has</span> <span class="string">not</span> <span class="string">expired</span></span><br><span class="line">    <span class="attr">observedGeneration:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">reason:</span> <span class="string">Ready</span></span><br><span class="line">    <span class="attr">status:</span> <span class="string">&quot;True&quot;</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">Ready</span></span><br><span class="line">  <span class="attr">notAfter:</span> <span class="string">&quot;2021-12-17T07:03:04Z&quot;</span></span><br><span class="line">  <span class="attr">notBefore:</span> <span class="string">&quot;2021-09-18T07:03:05Z&quot;</span></span><br><span class="line">  <span class="attr">renewalTime:</span> <span class="string">&quot;2021-11-17T07:03:04Z&quot;</span></span><br><span class="line">  <span class="attr">revision:</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>憑證的有效期限為90天，更新時間為到期前30天，而這些設定也能夠在annotation上去調整，有需要可以自己去官網認真看看囉~</p>
+<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>到今天為止，我的鐵人賽第二階段算是告一段落啦。從開發點小程式到建置環境、佈署、發行、domain&amp;憑證、log&amp;monitoring相信都是一般公司不可少的，當然可能還有不足的地方就多多包容了~接下的部分就會是比較亂的內容了，我想到什麼做什麼XD</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/13th-%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 13th_鐵人賽</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/21/ithome-13th-day21/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/23/ithome-13th-day23/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

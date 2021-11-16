@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Day04，弄幾隻API正文弄完資料庫後，花了一點時間的寫了這幾隻API。 主要的routing分成  API&#x2F;[Controller]&#x2F;[Action] GetList 回傳貼文清單 GetDetail 回傳單比貼文含詳細內容   Internal&#x2F;[Controller]&#x2F;[Action] AddUser 新增作者 GetUser 給我查作者用的(UserID) AddPost 新增貼文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day04，弄幾隻API">
+<meta property="og:url" content="http://example.com/2021/09/04/ithome-13th-day04/index.html">
+<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:description" content="Day04，弄幾隻API正文弄完資料庫後，花了一點時間的寫了這幾隻API。 主要的routing分成  API&#x2F;[Controller]&#x2F;[Action] GetList 回傳貼文清單 GetDetail 回傳單比貼文含詳細內容   Internal&#x2F;[Controller]&#x2F;[Action] AddUser 新增作者 GetUser 給我查作者用的(UserID) AddPost 新增貼文">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/3IIkGA7.png">
+<meta property="article:published_time" content="2021-09-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T03:58:38.738Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="13th_鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/3IIkGA7.png">
+
+
+<link rel="canonical" href="http://example.com/2021/09/04/ithome-13th-day04/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/04/ithome-13th-day04/","path":"2021/09/04/ithome-13th-day04/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day04，弄幾隻API"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day04，弄幾隻API | 阿熊的空間</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的空間</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day04%EF%BC%8C%E5%BC%84%E5%B9%BE%E9%9A%BBAPI"><span class="nav-number">1.</span> <span class="nav-text">Day04，弄幾隻API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/04/ithome-13th-day04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的空間">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HomeLab 30天，胡搞瞎搞亂弄一通，Day04，弄幾隻API
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-04T00:00:00+08:00">2021-09-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 11:58:38" itemprop="dateModified" datetime="2021-11-16T11:58:38+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Day04，弄幾隻API"><a href="#Day04，弄幾隻API" class="headerlink" title="Day04，弄幾隻API"></a>Day04，弄幾隻API</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>弄完資料庫後，花了一點時間的寫了這幾隻API。</p>
+<p>主要的routing分成</p>
+<ul>
+<li>API/[Controller]/[Action]<ul>
+<li>GetList 回傳貼文清單</li>
+<li>GetDetail 回傳單比貼文含詳細內容</li>
+</ul>
+</li>
+<li>Internal/[Controller]/[Action]<ul>
+<li>AddUser 新增作者</li>
+<li>GetUser 給我查作者用的(UserID)</li>
+<li>AddPost 新增貼文</li>
+</ul>
+</li>
+</ul>
+<p>前者預計給之後的頁面使用，後者是我自己在家呼叫用的。</p>
+<p><a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabapi">程式碼大致上長這樣</a></p>
+<p>Swagger的畫面(<a target="_blank" rel="noopener" href="https://swagger.io/specification/">OAS3</a>)<br><img src="https://i.imgur.com/3IIkGA7.png"></p>
+<p>再來先把這個API Containerize，dockerfile 如下:</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/sdk:<span class="number">5.0</span> AS build</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /<span class="built_in">source</span></span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> dotnet publish -c release -o /app </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/aspnet:<span class="number">5.0</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build /app ./</span></span><br><span class="line"><span class="keyword">USER</span> <span class="number">1001</span></span><br><span class="line"><span class="keyword">ENV</span> TZ=Asia/Taipei</span><br><span class="line"><span class="keyword">ENV</span> ASPNETCORE_URLS=http://+:<span class="number">7777</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;dotnet&quot;</span>, <span class="string">&quot;homelabAPI.dll&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>這邊也是走rootless的方式，並且修改bind的port為7777(預設會是80)，以前有遇過unix system要bind 0-1024 的 port需要root的身份的問題，所以這邊刻意修改port。<br>然後原本想說要bind 6666 port，試了一下怪怪的Curl能通，Chrome卻不通，於是乎又google了一下才知道<a target="_blank" rel="noopener" href="https://https//superuser.com/questions/188058/which-ports-are-considered-unsafe-by-chrome">Chrome竟然有限制這些port</a>，又學了一課~</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker build -t homelab:dev .</span><br><span class="line">docker save homelab:dev &gt; homelab.tar</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># nas上，之後會弄成Auto Build這邊先讓我手動搬過去執行~</span></span></span><br><span class="line">docker load &lt; homlab.tar</span><br><span class="line">docker run -itd --env ASPNETCORE_ENVIRONMENT=Development -p 7777:7777 homelab:dev</span><br></pre></td></tr></table></figure>
+
+<p>就先這樣把我這個API佈署在我的小NAS上面。</p>
+<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>先說明一下，這邊純粹是個人興趣亂開發。如果各位真的有Blog/筆記需求的話，不妨去用像hackmd、ithome、點部落或Medium之類的線上平台，如果真的想要試試自己hosting與maintain的話，也可以使用像是<a target="_blank" rel="noopener" href="https://hexo.io/zh-tw/">hexo</a>或<a target="_blank" rel="noopener" href="https://gohugo.io/">hugo</a>這類的工具很簡單的就可以幫助你佈署在github page上，相關的教學可以在網路上google一下應該不難查到。<del>不要像我一樣蝦逼逼在這邊亂搞XD</del></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/13th-%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 13th_鐵人賽</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/03/ithome-13th-day03/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/05/ithome-13th-day05/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day05，滑水的一天">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day05，滑水的一天 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Day11，看法講完後該安裝了正文目前Kubernetes的安裝方式有很多種可以參考CNCF Landscape中的certified installer 也可以參考高塔(kelseyhightower)大神的kubernetes the hardway，透過binary安裝有助於熟悉各個元件。 也可以用官方文件教學所使用的kubeadm，kubeadm早在1.13版本時就已經GA了，現下很多in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day11，看法講完後該安裝了">
+<meta property="og:url" content="http://example.com/2021/09/11/ithome-13th-day11/index.html">
+<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:description" content="Day11，看法講完後該安裝了正文目前Kubernetes的安裝方式有很多種可以參考CNCF Landscape中的certified installer 也可以參考高塔(kelseyhightower)大神的kubernetes the hardway，透過binary安裝有助於熟悉各個元件。 也可以用官方文件教學所使用的kubeadm，kubeadm早在1.13版本時就已經GA了，現下很多in">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/BWvQcj2.png">
+<meta property="og:image" content="https://i.imgur.com/ULHmRm1.png">
+<meta property="og:image" content="https://i.imgur.com/U16pSkl.png">
+<meta property="og:image" content="https://i.imgur.com/7MHUcWG.png">
+<meta property="og:image" content="https://i.imgur.com/ibDmMLI.png">
+<meta property="og:image" content="https://i.imgur.com/F9r1emz.png">
+<meta property="article:published_time" content="2021-09-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T04:01:39.619Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="13th_鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/BWvQcj2.png">
+
+
+<link rel="canonical" href="http://example.com/2021/09/11/ithome-13th-day11/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/11/ithome-13th-day11/","path":"2021/09/11/ithome-13th-day11/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day11，看法講完後該安裝了"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day11，看法講完後該安裝了 | 阿熊的空間</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的空間</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day11%EF%BC%8C%E7%9C%8B%E6%B3%95%E8%AC%9B%E5%AE%8C%E5%BE%8C%E8%A9%B2%E5%AE%89%E8%A3%9D%E4%BA%86"><span class="nav-number">1.</span> <span class="nav-text">Day11，看法講完後該安裝了</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/11/ithome-13th-day11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的空間">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HomeLab 30天，胡搞瞎搞亂弄一通，Day11，看法講完後該安裝了
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-11T00:00:00+08:00">2021-09-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 12:01:39" itemprop="dateModified" datetime="2021-11-16T12:01:39+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Day11，看法講完後該安裝了"><a href="#Day11，看法講完後該安裝了" class="headerlink" title="Day11，看法講完後該安裝了"></a>Day11，看法講完後該安裝了</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>目前Kubernetes的安裝方式有很多種可以參考CNCF Landscape中的certified installer<br><img src="https://i.imgur.com/BWvQcj2.png"></p>
+<p>也可以參考高塔(kelseyhightower)大神的<a target="_blank" rel="noopener" href="https://github.com/kelseyhightower/kubernetes-the-hard-way">kubernetes the hardway</a>，透過binary安裝有助於熟悉各個元件。</p>
+<p>也可以用官方文件教學所使用的kubeadm，kubeadm早在1.13版本時就已經GA了，現下很多installer也都是基於kubeadm做延伸佈署。</p>
+<p>我自己是認為沒有誰優誰劣、只有適與不適的評估。</p>
+<p>我這次的lab則是選用kubespray安裝</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/v2.16.0.tar.gz</span><br><span class="line">tar -xvf v2.16.0.tar.gz</span><br><span class="line">cd kubespray-2.16.0/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 根據步驟</span></span></span><br><span class="line"></span><br><span class="line">sudo pip3 install -r requirements.txt</span><br><span class="line"></span><br><span class="line">cp -rfp inventory/sample inventory/ithomelab</span><br><span class="line"></span><br><span class="line">declare -a IPS=(192.168.1.231 192.168.1.232 192.168.1.233 192.168.1.234 192.168.1.235)</span><br><span class="line"></span><br><span class="line">CONFIG_FILE=inventory/ithomelab/hosts.yml python3 contrib/inventory_builder/inventory.py $&#123;IPS[@]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改下列的檔案:</p>
+<ul>
+<li><code>inventory\ithomelab\hosts.yml</code> </li>
+<li><code>inventory\ithomelab\group_vars\etcd.yml</code></li>
+<li><code>inventory\ithomelab\group_vars\k8s_cluster\k8s_cluster.yml</code></li>
+<li><code>inventory\ithomelab\group_vars\k8s_cluster\addons.yml</code></li>
+<li><code>inventory\ithomelab\group_vars\k8s_cluster\k8s-net-calico.yml</code></li>
+</ul>
+<p>調整的內容就不細講了，大家思考自己想做啥就好</p>
+<p>先用我的筆電對每台機器設定non-password login</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#user皆相同（包含筆電）</span></span></span><br><span class="line">ssh-copy-id 192.168.1.231</span><br><span class="line">ssh-copy-id 192.168.1.232</span><br><span class="line">ssh-copy-id 192.168.1.233</span><br><span class="line">ssh-copy-id 192.168.1.234</span><br><span class="line">ssh-copy-id 192.168.1.235</span><br></pre></td></tr></table></figure>
+<p>執行playbook</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook -i inventory/ithomelab/hosts.yml  --become --become-user=root cluster.yml -K</span><br></pre></td></tr></table></figure>
+<p>執行完成的畫面(如果順的話應該不會太久，但我的過程中家裡網路不太穩定花了比較多的時間再拉取外部的image上甚至fail需要retry)<br><img src="https://i.imgur.com/ULHmRm1.png"></p>
+<p>佈署的過程與完成後可以看到使用VMWare的機器記憶體使用的如預期一般。(VM分別是4Gx4+8Gx1)<br><img src="https://i.imgur.com/U16pSkl.png"></p>
+<p>佈署完成後需要去安裝Kubectl，並從master上複製admin.conf放置於要使用kubectl的機器上，<code>/home/user/.kube/config</code>，然後記得修改Master的IP。(後續也可以改用service account token的方式產出kubeconfig)</p>
+<p>之後先設定一下kubectl於bash的auto completed</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source &lt;(kubectl completion bash) </span><br><span class="line">echo &quot;source &lt;(kubectl completion bash)&quot; &gt;&gt; ~/.bashrc </span><br></pre></td></tr></table></figure>
+
+<p>最後檢查一下節點<br><img src="https://i.imgur.com/7MHUcWG.png"></p>
+<p>看一下佈署完的所有Pod<br><img src="https://i.imgur.com/ibDmMLI.png"></p>
+<p>檢查一下metrics server addons是否正常<br><img src="https://i.imgur.com/F9r1emz.png"></p>
+<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>原本想試看看在社群中呼聲很高的CRI-O，但遇到了些問題一直失敗，然後網路又一直斷很不開心，只好先放著了。今天是打完疫苗的隔天，雖然沒有像被車撞過這麼誇張，不過仍處在無力的狀態。</p>
+<p>然後聽說晚上颱風有可能會停電，趕緊上來PO文，結束這一天。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/13th-%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 13th_鐵人賽</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/10/ithome-13th-day10/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/12/ithome-13th-day12/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day12，YAML Engineer 初登板">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day12，YAML Engineer 初登板 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Day02，先來建個開發資料庫好了。正文預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。 這邊是直接使用bitnami包好的image，沒有做什麼特別的調整，使用的docker-compose檔案配置如下： 12345678910111213services:  postgresql:    image">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day02，先來建個開發資料庫好了。">
+<meta property="og:url" content="http://example.com/2021/09/02/ithome-13th-day02/index.html">
+<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:description" content="Day02，先來建個開發資料庫好了。正文預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。 這邊是直接使用bitnami包好的image，沒有做什麼特別的調整，使用的docker-compose檔案配置如下： 12345678910111213services:  postgresql:    image">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/lHvXxe0.png">
+<meta property="og:image" content="https://i.imgur.com/SUJ48o3.png">
+<meta property="article:published_time" content="2021-09-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T03:58:38.738Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="13th_鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/lHvXxe0.png">
+
+
+<link rel="canonical" href="http://example.com/2021/09/02/ithome-13th-day02/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/02/ithome-13th-day02/","path":"2021/09/02/ithome-13th-day02/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day02，先來建個開發資料庫好了。"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day02，先來建個開發資料庫好了。 | 阿熊的空間</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的空間</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day02%EF%BC%8C%E5%85%88%E4%BE%86%E5%BB%BA%E5%80%8B%E9%96%8B%E7%99%BC%E8%B3%87%E6%96%99%E5%BA%AB%E5%A5%BD%E4%BA%86%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">Day02，先來建個開發資料庫好了。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/ithome-13th-day02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的空間">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HomeLab 30天，胡搞瞎搞亂弄一通，Day02，先來建個開發資料庫好了。
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-02T00:00:00+08:00">2021-09-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 11:58:38" itemprop="dateModified" datetime="2021-11-16T11:58:38+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Day02，先來建個開發資料庫好了。"><a href="#Day02，先來建個開發資料庫好了。" class="headerlink" title="Day02，先來建個開發資料庫好了。"></a>Day02，先來建個開發資料庫好了。</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。</p>
+<p>這邊是直接使用<a target="_blank" rel="noopener" href="https://github.com/bitnami/bitnami-docker-postgresql">bitnami</a>包好的image，沒有做什麼特別的調整，使用的docker-compose檔案配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">  postgresql:</span><br><span class="line">    image: docker.io/bitnami/postgresql:13</span><br><span class="line">    ports:</span><br><span class="line">      - &#x27;5555:5432&#x27;</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x27;/volume1/homes/pg_data:/bitnami/postgresql&#x27;</span><br><span class="line">    restart: always</span><br><span class="line">    user: &#x27;1026&#x27;</span><br><span class="line">    environment:</span><br><span class="line">      - POSTGRES_USERNAME=postgres</span><br><span class="line">      - POSTGRES_PASSWORD=**********</span><br><span class="line">      - POSTGRES_REPLICATION_MODE=master</span><br></pre></td></tr></table></figure>
+<p>bitnami範本的image，預設運行的使用者都是1001(rootless)，這邊切換成我的NAS上的使用者1026，目錄的部分也需要調整為相對應的權限。<br><img src="https://i.imgur.com/lHvXxe0.png"></p>
+<p>再來進去container裡面做create database與指定database owner。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it --user root 2b6f sh</span><br><span class="line">psql -U postgres</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 輸入密碼</span></span></span><br><span class="line">create database homelab_blog ;</span><br><span class="line">create user homelab030;</span><br><span class="line">alter role homelab030 with password &#x27;********&#x27;;</span><br><span class="line">grant all privileges on database homelab_blog to homelab030;</span><br></pre></td></tr></table></figure>
+<p>喵一下目前database，退出。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\l</span><br><span class="line">\q</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/SUJ48o3.png"></p>
+<p>明天就可以來處理Model相關的事情了。</p>
+<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>這幾年來docker/container的興起，在用自己的電腦測試或開發串接一些open source的服務，相對來說都變得輕鬆許多，而且電腦也不會像過去一樣因安裝而弄得亂七八糟。</p>
+<blockquote>
+<p>題外話聊一下最近docker的授權有所異動，其中影響比較大的會是在<a target="_blank" rel="noopener" href="https://www.docker.com/blog/updating-product-subscriptions/?fbclid=IwAR2y_QqM-Gz94VtrKdYgtc4uXK6flaZhDAZgifBgrEe_dCTC5liExYE7MbI">docker desktop</a>這個tool上，大家要記得去follow、了解一下規則避免侵權唷~</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/13th-%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 13th_鐵人賽</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/01/ithome-13th-day01/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day01，旅途的起點">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day01，旅途的起點
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/03/ithome-13th-day03/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

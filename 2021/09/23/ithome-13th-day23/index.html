@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Day23，替你的Gitlab pipeline 添加點搞事正文在前面介紹gitlab-ci的pipeline中我僅僅只用到了build stage作為container image build的動作。 然而在實務上，我們可能還會有許多需要整合的stages單元測試、整合測試、各種佈署細節、各種通報細節以及與gitlab issue、dashboard整合的動作。 這邊我就準備來搞三個官方有在主導">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事">
+<meta property="og:url" content="http://example.com/2021/09/23/ithome-13th-day23/index.html">
+<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:description" content="Day23，替你的Gitlab pipeline 添加點搞事正文在前面介紹gitlab-ci的pipeline中我僅僅只用到了build stage作為container image build的動作。 然而在實務上，我們可能還會有許多需要整合的stages單元測試、整合測試、各種佈署細節、各種通報細節以及與gitlab issue、dashboard整合的動作。 這邊我就準備來搞三個官方有在主導">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/9MP63T9.png">
+<meta property="article:published_time" content="2021-09-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T04:38:08.484Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="13th_鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/9MP63T9.png">
+
+
+<link rel="canonical" href="http://example.com/2021/09/23/ithome-13th-day23/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/23/ithome-13th-day23/","path":"2021/09/23/ithome-13th-day23/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事 | 阿熊的空間</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的空間</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day23%EF%BC%8C%E6%9B%BF%E4%BD%A0%E7%9A%84Gitlab-pipeline-%E6%B7%BB%E5%8A%A0%E9%BB%9E%E6%90%9E%E4%BA%8B"><span class="nav-number">1.</span> <span class="nav-text">Day23，替你的Gitlab pipeline 添加點搞事</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/23/ithome-13th-day23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的空間">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-23 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-23T00:00:00+08:00">2021-09-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 12:38:08" itemprop="dateModified" datetime="2021-11-16T12:38:08+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Day23，替你的Gitlab-pipeline-添加點搞事"><a href="#Day23，替你的Gitlab-pipeline-添加點搞事" class="headerlink" title="Day23，替你的Gitlab pipeline 添加點搞事"></a>Day23，替你的Gitlab pipeline 添加點搞事</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在前面介紹gitlab-ci的pipeline中我僅僅只用到了build stage作為container image build的動作。</p>
+<p>然而在實務上，我們可能還會有許多需要整合的stages單元測試、整合測試、各種佈署細節、各種通報細節以及與gitlab issue、dashboard整合的動作。</p>
+<p>這邊我就準備來搞三個官方有在主導的安全項目，不過不是完全以官方的方式去進行，因為部分的功能在介面上需要enterpirse版本才能夠支援，<strong>但不代表無法使用他</strong>，只是說我們無法在官方的介面上看到對應的功能畫面。</p>
+<p>三個動作則分別是 SAST、Container Scanning、DAST</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/user/application_security/sast/">SAST</a> - Static Application Security Testing<ul>
+<li>靜態程式碼掃描，這個部分是完全開放的，也就是說無論是在CE/EE的gitlab版本中皆可以從介面上直接套用他，而他支援的語言掃描也非常多種，可以直接參考連結，而寫法上大概就像這樣，修改<code>.gitlab-ci.yaml</code><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">sast</span></span><br><span class="line"><span class="attr">sast:</span></span><br><span class="line">  <span class="attr">variables:</span></span><br><span class="line">    <span class="attr">SAST_EXCLUDED_ANALYZERS:</span> <span class="string">bandit,</span> <span class="string">brakeman,</span> <span class="string">eslint,</span> <span class="string">flawfinder,</span> <span class="string">gosec,</span> <span class="string">kubesec,</span></span><br><span class="line">  <span class="string">nodejs-scan,</span> <span class="string">phpcs-security-audit,</span> <span class="string">pmd-apex,</span> <span class="string">semgrep,</span> <span class="string">sobelow,</span> <span class="string">spotbugs</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">sast</span>    </span><br><span class="line"><span class="attr">include:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">template:</span> <span class="string">Security/SAST.gitlab-ci.yml</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>相關的variables都可以再去參考官方</p>
+</blockquote>
+</li>
+<li>輸出的json則是像這樣(特地找一個有vulnerability的)，最終都可以搭配jq做操作。<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;14.0.0&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;vulnerabilities&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;65f3cc30cdd0fea1d39c9f7b3300112aa84194829d19c8288038473877b1e549&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;category&quot;</span>: <span class="string">&quot;sast&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Weak random generator&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;message&quot;</span>: <span class="string">&quot;Weak random generator&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;cve&quot;</span>: <span class="string">&quot;sast-test/Controllers/WeatherForecastController.cs:33:SCS0005&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;scanner&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;security_code_scan&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Security Code Scan&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;location&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;file&quot;</span>: <span class="string">&quot;sast-test/Controllers/WeatherForecastController.cs&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;start_line&quot;</span>: <span class="number">33</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;identifiers&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;security_code_scan_rule_id&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;SCS0005&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;SCS0005&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;url&quot;</span>: <span class="string">&quot;https://security-code-scan.github.io/#SCS0005&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;1a69e74a7f4a5242b1ff87276f31f151f8a1a7aacc27106a2991de3a0a7ca28e&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;category&quot;</span>: <span class="string">&quot;sast&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Weak random generator&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;message&quot;</span>: <span class="string">&quot;Weak random generator&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;cve&quot;</span>: <span class="string">&quot;sast-test/Controllers/WeatherForecastController.cs:34:SCS0005&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;scanner&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;security_code_scan&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Security Code Scan&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;location&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;file&quot;</span>: <span class="string">&quot;sast-test/Controllers/WeatherForecastController.cs&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;start_line&quot;</span>: <span class="number">34</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;identifiers&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;security_code_scan_rule_id&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;SCS0005&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;SCS0005&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;url&quot;</span>: <span class="string">&quot;https://security-code-scan.github.io/#SCS0005&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;remediations&quot;</span>: [],</span><br><span class="line">  <span class="attr">&quot;scan&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;scanner&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;id&quot;</span>: <span class="string">&quot;security_code_scan&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;Security Code Scan&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;url&quot;</span>: <span class="string">&quot;https://security-code-scan.github.io&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;vendor&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;GitLab&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;3.5.3&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;sast&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;start_time&quot;</span>: <span class="string">&quot;2021-09-08T07:09:20&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;end_time&quot;</span>: <span class="string">&quot;2021-09-08T07:09:38&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;status&quot;</span>: <span class="string">&quot;success&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/user/application_security/container_scanning/">Container Scanning</a><ul>
+<li>這邊就是針對container的掃瞄，gitlab官方則是基於trivy、grype來使用，而因為我日常在使用的gitlab為CE版本這個部分就必須自己填上，會直接使用<a target="_blank" rel="noopener" href="https://github.com/aquasecurity/trivy">trivy</a>的source image來做掃描，舉例如下<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">container_scan</span></span><br><span class="line"><span class="attr">image-scanner:</span></span><br><span class="line">  <span class="attr">image:</span> </span><br><span class="line">    <span class="attr">name:</span> <span class="string">aquasec/trivy:latest</span></span><br><span class="line">    <span class="attr">entrypoint:</span> [<span class="string">&quot;&quot;</span>]</span><br><span class="line">  <span class="attr">stage:</span> <span class="string">container_scan</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">apk</span> <span class="string">add</span> <span class="string">--no-cache</span> <span class="string">docker</span> <span class="string">openrc</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">rc-update</span> <span class="string">add</span> <span class="string">docker</span> <span class="string">boot</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docker</span> <span class="string">login</span> <span class="string">-u</span> <span class="string">&quot;$CI_REGISTRY_USER&quot;</span> <span class="string">-p</span> <span class="string">&quot;$CI_REGISTRY_PASSWORD&quot;</span> <span class="string">$CI_REGISTRY</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line"><span class="string">    if [[ &quot;$CI_COMMIT_BRANCH&quot; == &quot;master&quot; ]]; then</span></span><br><span class="line"><span class="string">      tag=&quot;:dev&quot;</span></span><br><span class="line"><span class="string">    else</span></span><br><span class="line"><span class="string">      tag=&quot;:$CI_COMMIT_REF_NAME&quot;</span></span><br><span class="line"><span class="string">    fi</span></span><br><span class="line"><span class="string"></span>  <span class="bullet">-</span> <span class="string">trivy</span> <span class="string">image</span> <span class="string">-f</span> <span class="string">json</span> <span class="string">-o</span> <span class="string">report.json</span> <span class="string">$CI_REGISTRY_IMAGE$&#123;tag&#125;</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">paths:</span> </span><br><span class="line">    <span class="bullet">-</span> <span class="string">report.json</span>    </span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">docker</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>trivy還有相關多的指令能使用，如也能夠搭配 trivy image –exit-code 1 之類的來讓你的pipeline fail，也能夠做針對部分語言做package scanner的動作，有興趣可以去閱讀官方文件</p>
+</blockquote>
+</li>
+<li>一樣會是json的輸出，也可以搭配jq操作<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;Target&quot;</span>: <span class="string">&quot;registry.gitlab.com/gurubear-ithome-13th/homelabapi:dev (debian 10.10)&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;Class&quot;</span>: <span class="string">&quot;os-pkgs&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;Type&quot;</span>: <span class="string">&quot;debian&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;Vulnerabilities&quot;</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">&quot;VulnerabilityID&quot;</span>: <span class="string">&quot;CVE-2011-3374&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;PkgName&quot;</span>: <span class="string">&quot;apt&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;InstalledVersion&quot;</span>: <span class="string">&quot;1.8.2.3&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Layer&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:a330b6cecb98cd2425fd25fce36669073f593b3176b4ee14731e48c05d678cdd&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;DiffID&quot;</span>: <span class="string">&quot;sha256:d000633a56813933cb0ac5ee3246cf7a4c0205db6290018a169d7cb096581046&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;SeveritySource&quot;</span>: <span class="string">&quot;nvd&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;PrimaryURL&quot;</span>: <span class="string">&quot;https://avd.aquasec.com/nvd/cve-2011-3374&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Description&quot;</span>: <span class="string">&quot;It was found that apt-key in apt, all versions, do not correctly validate gpg keys with the master keyring, leading to a potential man-in-the-middle attack.&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Severity&quot;</span>: <span class="string">&quot;LOW&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;CweIDs&quot;</span>: [</span><br><span class="line">          <span class="string">&quot;CWE-347&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;CVSS&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;nvd&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;V2Vector&quot;</span>: <span class="string">&quot;AV:N/AC:M/Au:N/C:N/I:P/A:N&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;V3Vector&quot;</span>: <span class="string">&quot;CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;V2Score&quot;</span>: <span class="number">4.3</span>,</span><br><span class="line">            <span class="attr">&quot;V3Score&quot;</span>: <span class="number">3.7</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;References&quot;</span>: [</span><br><span class="line">          <span class="string">&quot;https://access.redhat.com/security/cve/cve-2011-3374&quot;</span>,</span><br><span class="line">          <span class="string">&quot;https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=642480&quot;</span>,</span><br><span class="line">          <span class="string">&quot;https://people.canonical.com/~ubuntu-security/cve/2011/CVE-2011-3374.html&quot;</span>,</span><br><span class="line">          <span class="string">&quot;https://seclists.org/fulldisclosure/2011/Sep/221&quot;</span>,</span><br><span class="line">          <span class="string">&quot;https://security-tracker.debian.org/tracker/CVE-2011-3374&quot;</span>,</span><br><span class="line">          <span class="string">&quot;https://snyk.io/vuln/SNYK-LINUX-APT-116518&quot;</span>,</span><br><span class="line">          <span class="string">&quot;https://ubuntu.com/security/CVE-2011-3374&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;PublishedDate&quot;</span>: <span class="string">&quot;2019-11-26T00:15:00Z&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;LastModifiedDate&quot;</span>: <span class="string">&quot;2021-02-09T16:08:00Z&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      .</span><br><span class="line">      .</span><br><span class="line">      . 大量略過</span><br><span class="line">      .</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">&quot;VulnerabilityID&quot;</span>: <span class="string">&quot;CVE-2021-37600&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;PkgName&quot;</span>: <span class="string">&quot;util-linux&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;InstalledVersion&quot;</span>: <span class="string">&quot;2.33.1-0.1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Layer&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;Digest&quot;</span>: <span class="string">&quot;sha256:a330b6cecb98cd2425fd25fce36669073f593b3176b4ee14731e48c05d678cdd&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;DiffID&quot;</span>: <span class="string">&quot;sha256:d000633a56813933cb0ac5ee3246cf7a4c0205db6290018a169d7cb096581046&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;SeveritySource&quot;</span>: <span class="string">&quot;nvd&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;PrimaryURL&quot;</span>: <span class="string">&quot;https://avd.aquasec.com/nvd/cve-2021-37600&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Title&quot;</span>: <span class="string">&quot;util-linux: integer overflow can lead to buffer overflow in get_sem_elements() in sys-utils/ipcutils.c&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Description&quot;</span>: <span class="string">&quot;An integer overflow in util-linux through 2.37.1 can potentially cause a buffer overflow if an attacker were able to use system resources in a way that leads to a large number in the /proc/sysvipc/sem file.&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Severity&quot;</span>: <span class="string">&quot;MEDIUM&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;CweIDs&quot;</span>: [</span><br><span class="line">          <span class="string">&quot;CWE-190&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;CVSS&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;nvd&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;V2Vector&quot;</span>: <span class="string">&quot;AV:L/AC:H/Au:N/C:N/I:N/A:P&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;V3Vector&quot;</span>: <span class="string">&quot;CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;V2Score&quot;</span>: <span class="number">1.2</span>,</span><br><span class="line">            <span class="attr">&quot;V3Score&quot;</span>: <span class="number">5.5</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">&quot;redhat&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;V3Vector&quot;</span>: <span class="string">&quot;CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:H&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;V3Score&quot;</span>: <span class="number">4.7</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;References&quot;</span>: [</span><br><span class="line">          <span class="string">&quot;https://github.com/karelzak/util-linux/commit/1c9143d0c1f979c3daf10e1c37b5b1e916c22a1c&quot;</span>,</span><br><span class="line">          <span class="string">&quot;https://github.com/karelzak/util-linux/issues/1395&quot;</span>,</span><br><span class="line">          <span class="string">&quot;https://security.netapp.com/advisory/ntap-20210902-0002/&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;PublishedDate&quot;</span>: <span class="string">&quot;2021-07-30T14:15:00Z&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;LastModifiedDate&quot;</span>: <span class="string">&quot;2021-09-02T09:15:00Z&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>實務上使用可能會要加上 –ignore-unfixed，不然可能就會像我這樣多到炸裂~   </p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/user/application_security/dast/">DAST</a> - Dynamic Application Security Testing<ul>
+<li>這邊也是使用gitlab官方包好的image，不過非EE版本不支援從介面直接新增，所以我們需要去看他的open source並將加入到自己的pipeline當中，而這邊的DAST則是基於<a target="_blank" rel="noopener" href="https://www.zaproxy.org/">ZAP</a>這套開源掃描工具，我們撰寫的方式也很簡單<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">dast</span></span><br><span class="line"><span class="attr">dast:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">dast</span></span><br><span class="line">  <span class="attr">image:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">&quot;$SECURE_ANALYZERS_PREFIX/dast:$DAST_VERSION&quot;</span></span><br><span class="line">  <span class="attr">variables:</span></span><br><span class="line">    <span class="attr">GIT_STRATEGY:</span> <span class="string">none</span></span><br><span class="line">    <span class="attr">DAST_VERSION:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">DAST_MARKDOWN_REPORT:</span> <span class="string">report.md</span></span><br><span class="line">    <span class="attr">SECURE_ANALYZERS_PREFIX:</span> <span class="string">&quot;registry.gitlab.com/gitlab-org/security-products/analyzers&quot;</span></span><br><span class="line">  <span class="attr">allow_failure:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">export</span> <span class="string">DAST_WEBSITE=&quot;https://homelab.gurubear.info/&quot;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/analyze</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">&quot;dast-report&quot;</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gl-dast-report.json</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$DAST_MARKDOWN_REPORT</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>這邊一樣有大量變數可以參考官方設定，可以輸出的有json、html、markdown</p>
+</blockquote>
+</li>
+<li>這邊我就不輸出json改輸出markdown看看了~以下截圖<br><img src="https://i.imgur.com/9MP63T9.png"></li>
+</ul>
+</li>
+</ul>
+<p>本次使用的<a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabapi/-/pipelines/373074832">repo pipeline</a></p>
+<p>以上就是不透過官方正規管道產出的3種掃描方式，如果有EE版本授權、Ultimate subscription的話，還是建議照著官方來，也能夠配合搭配dashboard使用，相信能夠更有效率。</p>
+<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>這一兩年來資安的議題非常熱絡，市面也是充斥著各種原碼掃描、端點掃描軟體。自己是覺得在流程確立的情況下用什麼工具都好(具公信力的)，<strong>重點還是在有沒有人能解決、有沒有人要處理</strong>，不過現實總會有各種無奈~</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/13th-%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag"># 13th_鐵人賽</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/22/ithome-13th-day22/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/24/ithome-13th-day24/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day24，試著用Rancher交差Dashboard">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day24，試著用Rancher交差Dashboard <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
