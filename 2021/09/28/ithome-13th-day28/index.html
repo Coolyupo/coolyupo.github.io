@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -25,14 +25,14 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1&#x2F;2)">
 <meta property="og:url" content="http://example.com/2021/09/28/ithome-13th-day28/index.html">
-<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1&#x2F;2)正文過去我們在使用Kubernetes的權限，往往可能就是用admin.conf，或是serviceaccount搭配clusterrole、clusterrolebinding、role、rolebinding，再配合token產出kubeconfig，而這樣子的配置對於安全性來說可能有些不洽當(例如保留在本機的to">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/mrwT9kb.png">
 <meta property="og:image" content="https://i.imgur.com/9ewvhZC.png">
 <meta property="og:image" content="https://i.imgur.com/SaNrotz.png">
 <meta property="article:published_time" content="2021-09-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:43:19.481Z">
+<meta property="article:modified_time" content="2021-11-16T11:27:14.818Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -43,10 +43,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/28/ithome-13th-day28/","path":"2021/09/28/ithome-13th-day28/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/28/ithome-13th-day28/","path":"2021/09/28/ithome-13th-day28/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2)"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2) | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2) | 阿熊的日常筆記</title>
   
 
 
@@ -75,9 +75,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -131,7 +132,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -181,17 +182,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/28/ithome-13th-day28/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -213,7 +214,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:43:19" itemprop="dateModified" datetime="2021-11-16T12:43:19+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:27:14" itemprop="dateModified" datetime="2021-11-16T19:27:14+08:00">2021-11-16</time>
       </span>
 
   
@@ -227,6 +228,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖-1-2"><a href="#Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖-1-2" class="headerlink" title="Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2)"></a>Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2)</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>過去我們在使用Kubernetes的權限，往往可能就是用admin.conf，或是serviceaccount搭配clusterrole、clusterrolebinding、role、rolebinding，再配合token產出kubeconfig，而這樣子的配置對於安全性來說可能有些不洽當(例如保留在本機的token也許不會過期之類的)，而且當想要直接kubectl access cluster的人一多起來，管理也會變得相對混亂。這次要來介紹使用Dex與Gitlab OIDC並搭配kubelogin進行身分控管。</p>
+<span id="more"></span>
 <p>簡單來看一下dex connector的架構，我們使用者存取某項應用時，這項應用他需要外部IdP的身分認證才能夠執行的時候，我們就可以透過dex server作為中介傳遞，這邊的最大的好處我想就是在當有多個外部IdP的時候，可以有效減少程式的開發，透過dex server能夠達到multiple connectors的功能，而程式端僅需專注在與dex server的應對。</p>
 <blockquote>
 <p>眼尖的朋友應該有發現，<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10267438">ArgoCD SSO</a>那章節那邊也是基於dex server來實作的<br>另外dex本身也是一個IdP的實作，透過設定可以開啟local帳號的功能。</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,13 +21,13 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day16，Domain&amp;自簽憑證正文以前有透過Freenom註冊了一個邊緣網域，這次就設定了一個homelab domain，將A Record設定在我的固定IP上。 Router的部分也要設定Port-forward 80&#x2F;443 對應我昨天開的LoadBalancerIP 就可以打開瀏覽器 接者使用cfssl處理自簽憑證 1234567wget https:&#x2F;&#x2F;github.com&#x2F;">
+<meta name="description" content="Day16，Domain&amp;自簽憑證正文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day16，Domain&amp;自簽憑證">
 <meta property="og:url" content="http://example.com/2021/09/16/ithome-13th-day16/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:description" content="Day16，Domain&amp;自簽憑證正文以前有透過Freenom註冊了一個邊緣網域，這次就設定了一個homelab domain，將A Record設定在我的固定IP上。 Router的部分也要設定Port-forward 80&#x2F;443 對應我昨天開的LoadBalancerIP 就可以打開瀏覽器 接者使用cfssl處理自簽憑證 1234567wget https:&#x2F;&#x2F;github.com&#x2F;">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Day16，Domain&amp;自簽憑證正文">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/H9xUtXO.png">
 <meta property="og:image" content="https://i.imgur.com/d5pbKfl.png">
 <meta property="og:image" content="https://i.imgur.com/V2L8I7h.png">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://i.imgur.com/Bk4gpSO.png">
 <meta property="og:image" content="https://i.imgur.com/RZqEg5G.png">
 <meta property="article:published_time" content="2021-09-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:26:53.867Z">
+<meta property="article:modified_time" content="2021-11-16T11:28:36.456Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -50,10 +50,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/16/ithome-13th-day16/","path":"2021/09/16/ithome-13th-day16/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day16，Domain&自簽憑證"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/16/ithome-13th-day16/","path":"2021/09/16/ithome-13th-day16/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day16，Domain&自簽憑證"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day16，Domain&自簽憑證 | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day16，Domain&自簽憑證 | 阿熊的日常筆記</title>
   
 
 
@@ -82,9 +82,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -138,7 +139,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -188,17 +189,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/16/ithome-13th-day16/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -220,7 +221,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:26:53" itemprop="dateModified" datetime="2021-11-16T12:26:53+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:36" itemprop="dateModified" datetime="2021-11-16T19:28:36+08:00">2021-11-16</time>
       </span>
 
   
@@ -233,7 +234,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day16，Domain-amp-自簽憑證"><a href="#Day16，Domain-amp-自簽憑證" class="headerlink" title="Day16，Domain&amp;自簽憑證"></a>Day16，Domain&amp;自簽憑證</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>以前有透過Freenom註冊了一個邊緣網域，這次就設定了一個homelab domain，將A Record設定在我的固定IP上。<br><img src="https://i.imgur.com/H9xUtXO.png"></p>
+        <h1 id="Day16，Domain-amp-自簽憑證"><a href="#Day16，Domain-amp-自簽憑證" class="headerlink" title="Day16，Domain&amp;自簽憑證"></a>Day16，Domain&amp;自簽憑證</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><span id="more"></span>
+<p>以前有透過Freenom註冊了一個邊緣網域，這次就設定了一個homelab domain，將A Record設定在我的固定IP上。<br><img src="https://i.imgur.com/H9xUtXO.png"></p>
 <p>Router的部分也要設定Port-forward 80/443 對應我昨天開的LoadBalancerIP<br><img src="https://i.imgur.com/d5pbKfl.png"></p>
 <p>就可以打開瀏覽器<br><img src="https://i.imgur.com/V2L8I7h.png"></p>
 <p>接者使用<a target="_blank" rel="noopener" href="https://github.com/cloudflare/cfssl">cfssl</a>處理自簽憑證</p>

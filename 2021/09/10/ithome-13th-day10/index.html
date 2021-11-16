@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,15 +21,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day10，先來聊聊我的Kubernetes看法正文在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套container orchestration platform眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。 我自己認為Kubernetes有趣的地方在於，Kubernetes中大部分的內容、Resources、APIs等……">
+<meta name="description" content="Day10，先來聊聊我的Kubernetes看法正文在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套container orchestration platform眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法">
 <meta property="og:url" content="http://example.com/2021/09/10/ithome-13th-day10/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:description" content="Day10，先來聊聊我的Kubernetes看法正文在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套container orchestration platform眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。 我自己認為Kubernetes有趣的地方在於，Kubernetes中大部分的內容、Resources、APIs等……">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Day10，先來聊聊我的Kubernetes看法正文在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套container orchestration platform眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。">
+<meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:00:24.602Z">
+<meta property="article:modified_time" content="2021-11-16T11:29:14.239Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -39,10 +39,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/10/ithome-13th-day10/","path":"2021/09/10/ithome-13th-day10/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/10/ithome-13th-day10/","path":"2021/09/10/ithome-13th-day10/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法 | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day10，先來聊聊我的Kubernetes看法 | 阿熊的日常筆記</title>
   
 
 
@@ -71,9 +71,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -127,7 +128,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -177,17 +178,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/ithome-13th-day10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -209,7 +210,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:00:24" itemprop="dateModified" datetime="2021-11-16T12:00:24+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:14" itemprop="dateModified" datetime="2021-11-16T19:29:14+08:00">2021-11-16</time>
       </span>
 
   
@@ -223,6 +224,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="Day10，先來聊聊我的Kubernetes看法"><a href="#Day10，先來聊聊我的Kubernetes看法" class="headerlink" title="Day10，先來聊聊我的Kubernetes看法"></a>Day10，先來聊聊我的Kubernetes看法</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套<strong>container orchestration platform</strong>眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。</p>
+<span id="more"></span>
+
 <p>我自己認為Kubernetes有趣的地方在於，Kubernetes中大部分的內容、Resources、APIs等……都是基於<strong>declarative</strong>、基於<strong>標準</strong>來建立的。而這樣的方式直接與間接促成了強大的共通性。這也是為什麼常常有人說學一套Kubernetes，可以穿梭地端(自建或vendor support)與雲端(AKS、EKS、GKE……)，儘管這未必完全正確。</p>
 <p>這樣提及強大的共通性，其實指的是在platform上operator的這一塊，而非是system architecture這一塊。也就是說如果找10個人來建置Kubernetes Cluster、那很高的機率就會建出10個不太一樣的Cluster、但對於Cluster的使用來者來說卻又是高度互通的。</p>
 <p>為什麼會說每個人建的Kubernetes，很容易都會產生些許的落差呢？</p>

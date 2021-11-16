@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,12 +21,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="紀錄一些我的學習筆記">
 <meta property="og:type" content="website">
-<meta property="og:title" content="阿熊的空間">
+<meta property="og:title" content="阿熊的日常筆記">
 <meta property="og:url" content="http://example.com/page/3/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="紀錄一些我的學習筆記">
+<meta property="og:locale" content="zh_TW">
 <meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="GuruBear">
 <meta name="twitter:card" content="summary">
 
 
@@ -34,10 +37,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/3/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-tw","comments":"","permalink":"","path":"page/3/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>阿熊的空間</title>
+<title>阿熊的日常筆記</title>
   
 
 
@@ -66,9 +69,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -121,7 +125,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -176,11 +180,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -202,7 +206,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:00:24" itemprop="dateModified" datetime="2021-11-16T12:00:24+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:14" itemprop="dateModified" datetime="2021-11-16T19:29:14+08:00">2021-11-16</time>
       </span>
 
   
@@ -216,27 +220,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day10，先來聊聊我的Kubernetes看法"><a href="#Day10，先來聊聊我的Kubernetes看法" class="headerlink" title="Day10，先來聊聊我的Kubernetes看法"></a>Day10，先來聊聊我的Kubernetes看法</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套<strong>container orchestration platform</strong>眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。</p>
-<p>我自己認為Kubernetes有趣的地方在於，Kubernetes中大部分的內容、Resources、APIs等……都是基於<strong>declarative</strong>、基於<strong>標準</strong>來建立的。而這樣的方式直接與間接促成了強大的共通性。這也是為什麼常常有人說學一套Kubernetes，可以穿梭地端(自建或vendor support)與雲端(AKS、EKS、GKE……)，儘管這未必完全正確。</p>
-<p>這樣提及強大的共通性，其實指的是在platform上operator的這一塊，而非是system architecture這一塊。也就是說如果找10個人來建置Kubernetes Cluster、那很高的機率就會建出10個不太一樣的Cluster、但對於Cluster的使用來者來說卻又是高度互通的。</p>
-<p>為什麼會說每個人建的Kubernetes，很容易都會產生些許的落差呢？</p>
-<p>以核心元件(kubelet、kube-scheduler、kube-apiserver、kube-controller-mangement、kube-proxy(iptables/ipvs)、etcd…..)來說功能倒是大同小異。</p>
-<p>但從大方向來說，第一步面臨到可能就是該選擇哪個的Opertaion System?，作業系統百百種支援Kubernetes建置的亦不在少數。接著是要以何種方式建立？Container、Binary、Kubeadm，還有如核心元件是不是要用static pod等等……議題，或是整個直接使用CNCF Certified installer的project(open source or subscription)，或著直接使用Cloud PaaS，這些其實都是能夠納入考量的環節。</p>
-<p>再從細一點的方向來說，Kubernete著重在interface的標準、提供interface、只要符合實作便能為之所用，這也讓建置者更加選擇障礙了XD，三個著名的標準分別要選擇的是：</p>
-<ul>
-<li>CRI (Container Runtime Interface)<br>也就是選擇容器執行的agent，現行來說也有很多選擇，如Containerd、CRI-O、Kata Container等等……<blockquote>
-<p>要注意Docker並非CRI的一環，Docker是透過Dockershim才符合CRI的，而<a target="_blank" rel="noopener" href="https://kubernetes.io/blog/2020/12/02/dockershim-faq/">Dockershim目前也將面臨deprecated的問題</a>。  </p>
-</blockquote>
-</li>
-<li>CNI (Container Network Interface)<br>CNI指的大概就是Cluster中，Container與Container之間的網路交換是基於那些方式&amp;Protocol，與host之間的關係去實作的。在實務上我們會根據一些特性需求或環境限制去決定要使用那個CNI。<blockquote>
-<p> <a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1qCOlor16Wp5mHd6MQxB5gUEQILnijyDLIExEpqmee2k/edit#gid=1028366989">過去學習時看過別人整理的CNI清單(不確定後續有沒有持續更新)</a>有需要可以參考。</p>
-</blockquote>
-</li>
-<li>CSI (Container storage interface)<br>指的就是Cluster中與Storage之間的行為與關係，為了讓服務(pod)能夠去存取不同的storage架構、自由的叫用空間資源，而需要實作統一的介面。</li>
-</ul>
-<p>此外像是<strong>LoadBalancer type</strong>這種東西也需要做抉擇，也許是cloud vendor support、也許是地端open source solution，也許是地端hardware vendor support……諸如此類好像還有很多東西沒提到，不過就先這樣吧~</p>
-<p>就像汽車一樣，不一樣的鋼板、螺絲、引擎，輪胎…….合成的車車，最終只要駕駛有駕照都可以上路。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>今天這一篇好像全部都是閒聊的範圍呢XD，選擇很多很複雜、同時也因為選擇很多而生動有趣。等等要來去打AZ了，希望明天還能繼續發文。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/10/ithome-13th-day10/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -267,11 +258,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -293,7 +284,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:59:28" itemprop="dateModified" datetime="2021-11-16T11:59:28+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:17" itemprop="dateModified" datetime="2021-11-16T19:29:17+08:00">2021-11-16</time>
       </span>
 
   
@@ -307,28 +298,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day09，我也好想用用看Terraform"><a href="#Day09，我也好想用用看Terraform" class="headerlink" title="Day09，我也好想用用看Terraform"></a>Day09，我也好想用用看Terraform</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來開機器，先去下載server版的<a target="_blank" rel="noopener" href="https://releases.ubuntu.com/20.04/">Ubuntu 20.04 iso</a>，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。</p>
-<ul>
-<li>這次LAB預計使用的兩張網卡<br><img src="https://i.imgur.com/ABqvrsU.png"></li>
-</ul>
-<p>先建立第一台VM，執行一下更新、調整一些設定(如Chrony時間同步)，然後關機，就能夠將此VM作為範本。</p>
-<p><em><strong>接下來想做一些不一樣的奇怪的事情(需要有授權)……</strong></em></p>
-<p>在VMware安裝的目錄打開CMD，輸入<code>vmrest.exe -C</code>，設定帳號密碼。</p>
-<p>再於目錄執行 <code>vmrest</code> 將會啟動VMWare的REST API服務，預設listen 127.0.0.1:8697，打開瀏覽器可以看到他的Swagger UI。</p>
-<p><img src="https://i.imgur.com/HSvqKsh.png"></p>
-<p>由於要綁定非localhost的ip需要以https啟動服務，所以透過openssl產出self-signed憑證</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -newkey rsa:4096 -keyout workstationapi-key.pem -out workstationapi-cert.pem -days 365 -nodes</span><br></pre></td></tr></table></figure>
-<p>以https啟動並綁IP</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmrest.exe -c certs\workstationapi-cert.pem -k certs\workstationapi-key.pem -i 192.168.1.45</span><br></pre></td></tr></table></figure>
-
-<p>打開我的Ubuntu 20.04筆電，雀躍著試著使用看剛剛google到的<a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/elsudano/vmworkstation/latest">vmware workstation terraform provider</a>，發現問題還真的是不少，最新版本的plugin使用到<strong>glibc2.32</strong>這個東西我無法安裝在ubuntu20.04上，除非我將它升級成20.10(但我不想這樣做)。</p>
-<p>後續我就將provider降版成0.17，終於可以clone VM的時候卻發現plugin無法正確接收repsond message（Clone的動作還是有執行目錄與檔案也有生成）…… </p>
-<p>原以為是terraform版本太新導致，就順手降成對應的版本測試，但還是沒有改善，我也還不知道為什麼。也因為這樣我沒辦法直接順順的create 5台 VM出來，最終只好硬著頭皮一台一台create出來了。</p>
-<p><img src="https://i.imgur.com/RK81aSL.png"><br><img src="https://i.imgur.com/Tvzg8MT.png"></p>
-<p>因為我的Workstation 15的REST API，clone完成後好像不會自動register至UI上，所以還是透過介面將他Scan回來了。</p>
-<p><img src="https://i.imgur.com/B8bq66X.png"></p>
-<p>之後我就進去補設定了一下IP，就決定先這樣了，力氣不夠我再搞其他事了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>好心人士開源的玩具，就這樣花了我一個下午的時間XD，真是感慨光陰似箭呀~</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/09/ithome-13th-day09/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -359,11 +336,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -385,7 +362,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:59:20" itemprop="dateModified" datetime="2021-11-16T11:59:20+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:24" itemprop="dateModified" datetime="2021-11-16T19:29:24+08:00">2021-11-16</time>
       </span>
 
   
@@ -398,46 +375,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day08，先介紹一下預備的家中環境"><a href="#Day08，先介紹一下預備的家中環境" class="headerlink" title="Day08，先介紹一下預備的家中環境"></a>Day08，先介紹一下預備的家中環境</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>動手做之前，今天先來簡單介紹一下目前有限的家中環境規劃，大概如圖。<br><img src="https://i.imgur.com/aFYFbB9.jpg"></p>
-<blockquote>
-<p>   圖片產自<a target="_blank" rel="noopener" href="https://app.diagrams.net/">Draw.io</a></p>
-</blockquote>
-<p>因為要跟家中的使用者共存，只做了一些簡單的調整。</p>
-<ul>
-<li><p>Synology Router RT-2600AC</p>
-<ul>
-<li>PPPoE 靜態IP取得</li>
-<li>DHCP 192.168.1.2-192.168.1.230 分配</li>
-<li>保留IP 192.168.1.231-192.168.1.254等待之後VM靜態IP/或是IPAM分配用途</li>
-<li>預計使用Port-Forward協助LAB中對應domain的一環</li>
-<li>SSL VPN是平常我私人的用途</li>
-</ul>
-</li>
-<li><p>Mi-WIFI-Pro</p>
-<ul>
-<li>這台主要提供家人WI-FI使用</li>
-<li>我有一台ubuntu 20.04的notebook可能會在這次LAB中使用。</li>
-</ul>
-</li>
-<li><p>Desktop PC</p>
-<ul>
-<li>會使用這台老機器進行VM的創建，規格如下(開個3-5台做做LAB應該OK，再視情況調整)<ul>
-<li>CPU: Intel(R) Xeon(R) CPU E3-1231 v3 </li>
-<li>RAM: 32.0 GB DDR3</li>
-<li>Disk: SSD       </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Synology DS718+</p>
-<ul>
-<li>在這次LAB中擔任NFS Storage的角色，以及前些日子開發時暫時用的container agent。</li>
-</ul>
-</li>
-</ul>
-<p>明天就來開機器了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>這邊就先用有限的環境來處理了，將來有時間應該會去試試玩玩像是<a target="_blank" rel="noopener" href="https://vyos.io/">vyos</a>這種software router/firewall，畢竟在家裡買這些硬體現階段對我好像不太實際~</p>
-
+          <h1 id="Day08，先介紹一下預備的家中環境"><a href="#Day08，先介紹一下預備的家中環境" class="headerlink" title="Day08，先介紹一下預備的家中環境"></a>Day08，先介紹一下預備的家中環境</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>動手做之前，今天先來簡單介紹一下目前有限的家中環境規劃，大概如圖。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/08/ithome-13th-day08/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -468,11 +414,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -494,7 +440,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:59:12" itemprop="dateModified" datetime="2021-11-16T11:59:12+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:29" itemprop="dateModified" datetime="2021-11-16T19:29:29+08:00">2021-11-16</time>
       </span>
 
   
@@ -508,25 +454,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day07，搭配gitlab-ci執行image-auto-build"><a href="#Day07，搭配gitlab-ci執行image-auto-build" class="headerlink" title="Day07，搭配gitlab-ci執行image auto build"></a>Day07，搭配gitlab-ci執行image auto build</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要設定gitlab上的專案，讓他們能夠在git commit時自動打包成docker image並存放於gitlab registry。</p>
-<p>目前gitlab上面都有提供許多shared runner，舉凡像是一些無關緊要、無機敏性考量的內容，都可以直接透過官方提供的shared runner 來進行pipeline，這次的homelab也會使用這個shared runner 進行auto build的動作。</p>
-<p>反之，如果是一些private repository，有機敏性考量、有對應網路環境限制(如地端自動化佈署等等……)，那就是透過sepcific runners於自己的機器中建置與維護專用的runner，符合當下環境的需求，且不用與陌生人競爭資源，安裝與註冊的流程上面&amp;官網介紹的都算詳細，看大家如何選擇而已。</p>
-<p>gitlab repository左邊選單 <strong>Settings &gt; CI/CD &gt; 展開 Runners</strong>，從圖片上我們可以看到許多shared runners，而runner下方許多藍色的tag則是告知你該runner的使用情境/環境。<br><img src="https://i.imgur.com/GtHaZXi.png"></p>
-<p>下圖是官方所展示的gitlab runner execution flow<br><img src="https://i.imgur.com/Wcy8LJu.png"></p>
-<p>那如何觸發runner運作呢？就是要搭配.gitlab-ci.yml，當該檔案存在於gitlab repository且內容的撰寫<a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/">符合官方所規範的方式</a>，就可以觸發gitlab runner來工作啦。</p>
-<p>那我這邊就是簡單的修改一下官方範本，撰寫一份.gitlab-ci.yml 如下，使用的是docker in docker(dind)的方式：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker-build:</span><br><span class="line">  image: docker:latest</span><br><span class="line">  stage: build</span><br><span class="line">  services:</span><br><span class="line">    - docker:dind</span><br><span class="line">  before_script:</span><br><span class="line">    - docker login -u &quot;$CI_REGISTRY_USER&quot; -p &quot;$CI_REGISTRY_PASSWORD&quot; $CI_REGISTRY</span><br><span class="line">  script:</span><br><span class="line">    - |</span><br><span class="line">      if [[ &quot;$CI_COMMIT_BRANCH&quot; == &quot;master&quot; ]]; then</span><br><span class="line">        tag=&quot;:dev&quot;</span><br><span class="line">      else</span><br><span class="line">        tag=&quot;:$CI_COMMIT_REF_NAME&quot;</span><br><span class="line">      fi</span><br><span class="line">    - docker build -t &quot;$CI_REGISTRY_IMAGE$&#123;tag&#125;&quot; .</span><br><span class="line">    - docker push &quot;$CI_REGISTRY_IMAGE$&#123;tag&#125;&quot;</span><br><span class="line">  tags:</span><br><span class="line">    - docker</span><br><span class="line">  only:</span><br><span class="line">    - master</span><br><span class="line">    - /^Release-v[0-9]+(?:.[0-9]+)+$/</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>gitlab runner中其實預先定義了許多變數，與當下gitlab的使用者/repo/環境都息息相關，初學者不熟悉有哪些變數可以用的話不妨在runner中執行export將變數輸出看一看，或是花點時間認真閱讀<a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/variables/predefined_variables.html">官方文件</a>看看有哪些是自己需要的。</p>
-</blockquote>
-<p>.gitlab-ci.yml的內容可以搭配左邊選單CI/CD &gt; pipeline &gt; 畫面右上角CI Lint做檢驗。會告訴你語法是否正確，預計如何執行pipeline。<br><img src="https://i.imgur.com/1sCJVC9.png"></p>
-<p>執行的過程，可以點選pipeline查看Console，那這邊的邏輯就是master主線會將image打包成dev 而<code>/^Release-v[0-9]+(?:.[0-9]+)+$/</code>則是只要是這樣的名字就將image如此打包，如下圖所示。<br><img src="https://i.imgur.com/uEbSAmS.png"></p>
-<p>那這樣子我前幾天寫的兩個應用都完成Auto Build囉，明天可以開始規劃基礎環境建設了。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabapi/-/pipelines">https://gitlab.com/gurubear-ithome-13th/homelabapi/-/pipelines</a></li>
-<li><a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabreact/-/pipelines">https://gitlab.com/gurubear-ithome-13th/homelabreact/-/pipelines</a></li>
-</ul>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>gitlab官方的免費仔，在使用gitlab CI時是有Quota限制的，每個月只能執行400分鐘的pipeline(<strong>open source則不受限制</strong>)，如果超過就需要升級會員或是購買額外時間(在user settings那邊有詳細的usage quotas可以參閱唷)。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/07/ithome-13th-day07/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -557,11 +492,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -583,7 +518,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:58:31" itemprop="dateModified" datetime="2021-11-16T11:58:31+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:33" itemprop="dateModified" datetime="2021-11-16T19:29:33+08:00">2021-11-16</time>
       </span>
 
   
@@ -597,18 +532,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day06，將昨日的靜態頁面打包"><a href="#Day06，將昨日的靜態頁面打包" class="headerlink" title="Day06，將昨日的靜態頁面打包"></a>Day06，將昨日的靜態頁面打包</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天來把昨天寫的頁面進行容器化的動作，首先撰寫Dockerfile</p>
-<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># static build</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">14.17</span>.<span class="number">6</span> As Builder</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /homelab</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># using nginx hosting</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:latest</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> default.conf /etc/nginx/conf.d/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=Builder /homelab/build /usr/share/nginx/html/</span></span><br></pre></td></tr></table></figure>
-
-<p>根據上述的內容可以看到，因為前端的頁面編譯出來的結果是屬於純靜態的檔案，所以我們會需要搭配另外的http server進行hosting。</p>
-<p>常見的http server 有很多種 ex. apache、httpd、Nginx、haproxy，這邊使用Nginx做一個簡單的搭配設定</p>
-<p>修改/etc/nginx/conf.d/default.conf</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    listen  [::]:80;</span><br><span class="line">    server_name  localhost;</span><br><span class="line">    #access_log  /var/log/nginx/host.access.log  main;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">        index  index.html;</span><br><span class="line">        try_files $uri /index.html;</span><br><span class="line">    &#125;</span><br><span class="line">    error_page   500 502 503 504  /50x.html;</span><br><span class="line">    location = /50x.html &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接著執行build image的指令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t homelab-nginx:dev .</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/zQhJLTc.png"></p>
-<p>一個簡單的打包就這麼完成了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>這些reverse proxy其實都還有相當大的參數調整空間，可以用來效能調校，或是根據security規範進行特別的設定。而我這裡就是是讓他能跑起來而已啦XD</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/06/ithome-13th-day06/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -639,11 +570,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -665,7 +596,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:49:54" itemprop="dateModified" datetime="2021-11-16T11:49:54+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:36" itemprop="dateModified" datetime="2021-11-16T19:29:36+08:00">2021-11-16</time>
       </span>
 
   
@@ -679,33 +610,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day05，滑水的一天"><a href="#Day05，滑水的一天" class="headerlink" title="Day05，滑水的一天"></a>Day05，滑水的一天</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來產出一個簡單的畫面，目的是串接昨天的API，雖說預計是很簡單的畫面，但我對前端也不怎麼熟悉(何苦找洞給自己跳QQ)，只好趕快來抱佛腳一下。</p>
-<p>google了一下，目前主流的前端框架應該主要還是react/angular/vue，這裡我就隨意選了個react來實作。</p>
-<p>不管如何都要先安裝<a target="_blank" rel="noopener" href="https://nodejs.org/en">nodejs</a></p>
-<p>還不清楚怎麼開始，趕快google ithome過去的react教學，就照著<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10242451">前人的教學</a>設定了環境</p>
-<p>最終胡搞瞎搞弄了一點頁面出來(搭配呼叫前幾天寫的API)，很簡陋卻花了很多時間(在下資質駑鈍)，功能大概如下</p>
-<table>
-<thead>
-<tr>
-<th>route</th>
-<th>功能</th>
-<th>搭配API</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>/</td>
-<td>清單展示頁面，包含tag過濾</td>
-<td>/API/Blog/GetList?tag=null</td>
-</tr>
-<tr>
-<td>/Details/:id</td>
-<td>單筆資料render</td>
-<td>/API/Blog/GetDetail?ID=xxxx</td>
-</tr>
-</tbody></table>
-<p><img src="https://i.imgur.com/UbcfKPf.gif"></p>
-<p><a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabreact">程式碼連結</a><br>今天先這樣好了，然後之後會將他搭配nginx，並用container打包起來……</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>今天的內容比較水一點，因為我也不知道要寫什麼，感覺怎麼寫都不對，只好亂寫一通。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/05/ithome-13th-day05/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -736,11 +648,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -762,7 +674,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:58:38" itemprop="dateModified" datetime="2021-11-16T11:58:38+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:41" itemprop="dateModified" datetime="2021-11-16T19:29:41+08:00">2021-11-16</time>
       </span>
 
   
@@ -776,33 +688,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day04，弄幾隻API"><a href="#Day04，弄幾隻API" class="headerlink" title="Day04，弄幾隻API"></a>Day04，弄幾隻API</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>弄完資料庫後，花了一點時間的寫了這幾隻API。</p>
-<p>主要的routing分成</p>
-<ul>
-<li>API/[Controller]/[Action]<ul>
-<li>GetList 回傳貼文清單</li>
-<li>GetDetail 回傳單比貼文含詳細內容</li>
-</ul>
-</li>
-<li>Internal/[Controller]/[Action]<ul>
-<li>AddUser 新增作者</li>
-<li>GetUser 給我查作者用的(UserID)</li>
-<li>AddPost 新增貼文</li>
-</ul>
-</li>
-</ul>
-<p>前者預計給之後的頁面使用，後者是我自己在家呼叫用的。</p>
-<p><a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabapi">程式碼大致上長這樣</a></p>
-<p>Swagger的畫面(<a target="_blank" rel="noopener" href="https://swagger.io/specification/">OAS3</a>)<br><img src="https://i.imgur.com/3IIkGA7.png"></p>
-<p>再來先把這個API Containerize，dockerfile 如下:</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/sdk:<span class="number">5.0</span> AS build</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /<span class="built_in">source</span></span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> dotnet publish -c release -o /app </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> mcr.microsoft.com/dotnet/aspnet:<span class="number">5.0</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=build /app ./</span></span><br><span class="line"><span class="keyword">USER</span> <span class="number">1001</span></span><br><span class="line"><span class="keyword">ENV</span> TZ=Asia/Taipei</span><br><span class="line"><span class="keyword">ENV</span> ASPNETCORE_URLS=http://+:<span class="number">7777</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;dotnet&quot;</span>, <span class="string">&quot;homelabAPI.dll&quot;</span>]</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>這邊也是走rootless的方式，並且修改bind的port為7777(預設會是80)，以前有遇過unix system要bind 0-1024 的 port需要root的身份的問題，所以這邊刻意修改port。<br>然後原本想說要bind 6666 port，試了一下怪怪的Curl能通，Chrome卻不通，於是乎又google了一下才知道<a target="_blank" rel="noopener" href="https://https//superuser.com/questions/188058/which-ports-are-considered-unsafe-by-chrome">Chrome竟然有限制這些port</a>，又學了一課~</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker build -t homelab:dev .</span><br><span class="line">docker save homelab:dev &gt; homelab.tar</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># nas上，之後會弄成Auto Build這邊先讓我手動搬過去執行~</span></span></span><br><span class="line">docker load &lt; homlab.tar</span><br><span class="line">docker run -itd --env ASPNETCORE_ENVIRONMENT=Development -p 7777:7777 homelab:dev</span><br></pre></td></tr></table></figure>
-
-<p>就先這樣把我這個API佈署在我的小NAS上面。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>先說明一下，這邊純粹是個人興趣亂開發。如果各位真的有Blog/筆記需求的話，不妨去用像hackmd、ithome、點部落或Medium之類的線上平台，如果真的想要試試自己hosting與maintain的話，也可以使用像是<a target="_blank" rel="noopener" href="https://hexo.io/zh-tw/">hexo</a>或<a target="_blank" rel="noopener" href="https://gohugo.io/">hugo</a>這類的工具很簡單的就可以幫助你佈署在github page上，相關的教學可以在網路上google一下應該不難查到。<del>不要像我一樣蝦逼逼在這邊亂搞XD</del></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/04/ithome-13th-day04/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -833,11 +726,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -859,7 +752,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:58:38" itemprop="dateModified" datetime="2021-11-16T11:58:38+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:46" itemprop="dateModified" datetime="2021-11-16T19:29:46+08:00">2021-11-16</time>
       </span>
 
   
@@ -872,33 +765,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day03，Model摸象"><a href="#Day03，Model摸象" class="headerlink" title="Day03，Model摸象"></a>Day03，Model摸象</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>我預計做的是一個很簡易的post/get application，而目前只預計會有<strong>4隻極度簡陋的API</strong>。</p>
-<ul>
-<li>HttpGet-文章清單</li>
-<li>HttpGet-文章內容</li>
-<li>HttpPost-新增文章</li>
-<li>HttpPost-新增使用者</li>
-</ul>
-<p>其中HttpPost，將只會限縮在內網(預計使用postman/swagger，前端實在有點障礙)，所以對外只會有兩個公開的GET API，權限的部分我就全部省略了(耶)，table schema也只會預計有下列這兩張</p>
-<p><img src="https://i.imgur.com/RFW0Ezx.png"><br><a target="_blank" rel="noopener" href="https://sqldbm.com/Home/">圖片產自sqldbm</a></p>
-<p>接著安裝<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">vscode</a><br>安裝<a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/download/dotnet/5.0">dotnet core 5.0 sdk</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dotnet new WebAPI -o homelabAPI</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore --version 5.0.9</span><br><span class="line">dotnet add package Npgsql --version 5.0.7</span><br><span class="line">dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 5.0.7</span><br></pre></td></tr></table></figure>
-<p>把上面的Table定義成Class Model，設定相關的DBContext與Connection String。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.ComponentModel.DataAnnotations;</span><br><span class="line"><span class="keyword">using</span> System.ComponentModel.DataAnnotations.Schema;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">homelabAPI</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Posts</span></span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="meta">Key</span>]</span><br><span class="line">        [<span class="meta">DatabaseGenerated(DatabaseGeneratedOption.Identity)</span>]</span><br><span class="line">        <span class="keyword">public</span> Guid PostID &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">MaxLength(50)</span>]</span><br><span class="line">        [<span class="meta">Required</span>]</span><br><span class="line">        <span class="keyword">public</span> String Title &#123; <span class="keyword">get</span>; <span class="keyword">set</span>;&#125;</span><br><span class="line">        <span class="keyword">public</span> String Content &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">MaxLength(50)</span>]</span><br><span class="line">        <span class="keyword">public</span> String Tag &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">Required</span>]</span><br><span class="line">        <span class="keyword">public</span> DateTime CreateTime &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">Required</span>]</span><br><span class="line">        <span class="keyword">public</span> DateTime ModifyTime &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">Required</span>]</span><br><span class="line">        <span class="keyword">public</span> Guid UserID &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">ForeignKey(<span class="meta-string">&quot;UserID&quot;</span>)</span>]</span><br><span class="line">        <span class="keyword">public</span> Users Users &#123;<span class="keyword">get</span>; <span class="keyword">set</span>;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.ComponentModel.DataAnnotations;</span><br><span class="line"><span class="keyword">using</span> System.ComponentModel.DataAnnotations.Schema;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">homelabAPI</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Users</span></span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="meta">Key</span>]</span><br><span class="line">        [<span class="meta">DatabaseGenerated(DatabaseGeneratedOption.Identity)</span>]</span><br><span class="line">        <span class="keyword">public</span> Guid UserID &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">MaxLength(20)</span>]</span><br><span class="line">        <span class="keyword">public</span> String Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">Required</span>]</span><br><span class="line">        <span class="keyword">public</span> DateTime CreateTime &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        [<span class="meta">Required</span>]</span><br><span class="line">        <span class="keyword">public</span> DateTime ModifyTime &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Microsoft.EntityFrameworkCore;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">homelabAPI</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BloggerContext</span> : <span class="title">DbContext</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span>  <span class="title">BloggerContext</span>(<span class="params">DbContextOptions&lt;BloggerContext&gt; options</span>): <span class="title">base</span>(<span class="params">options</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span>  DbSet&lt;Posts&gt; Posts &#123;<span class="keyword">get</span>; <span class="keyword">set</span>;&#125;</span><br><span class="line">        <span class="keyword">public</span>  DbSet&lt;Users&gt; Users &#123;<span class="keyword">get</span>; <span class="keyword">set</span>;&#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>於startup中註冊DBContext的<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-5.0">DI服務</a>(預設Lifetime為<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.extensions.dependencyinjection.servicelifetime?view=dotnet-plat-ext-5.0#Microsoft_Extensions_DependencyInjection_ServiceLifetime_Scoped">scope</a>)，appsettings放入連線字串。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">services.AddDbContext&lt;BloggerContext&gt;(options =&gt; options.UseNpgsql(<span class="string">&quot;name=ConnectionStrings:DefaultConnection&quot;</span>));</span><br></pre></td></tr></table></figure>
-<p>用Code First來把table建起來(先安裝對應的工具才能執行dotnet ef相關指令)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dotnet tool install --global dotnet-ef</span><br><span class="line">dotnet add package Microsoft.EntityFrameworkCore.Design</span><br><span class="line">dotnet ef migrations add InitialCreate -c BloggerContext</span><br><span class="line">dotnet ef database update</span><br></pre></td></tr></table></figure>
-<p>使用<a target="_blank" rel="noopener" href="https://www.pgadmin.org/">pgadmin</a>來看看是不是真的建立成功。<br><img src="https://i.imgur.com/93CYQoO.png"></p>
-<p>明天就可以來寫個簡單的API了，順便一併上傳git repo。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>很久沒寫這些東西了，這次算是簡單的複習了一下。過去IDE的部分都是使用Visual Studio開發，更為無腦簡單。且2-3年前其實也有試著用VS Code開發過 .NET Core 2.0，但實在是有點障礙，不過今時今日試著弄了一下發現比當初友善了好多，Extensions也相當完善，倒是沒有當初那種強烈的障礙感了~</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/ef/core/get-started/overview/first-app?tabs=netcore-cli">https://docs.microsoft.com/zh-tw/ef/core/get-started/overview/first-app?tabs=netcore-cli</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.npgsql.org/doc/index.html">https://www.npgsql.org/doc/index.html</a></li>
-</ul>
-
+          <h1 id="Day03，Model摸象"><a href="#Day03，Model摸象" class="headerlink" title="Day03，Model摸象"></a>Day03，Model摸象</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/03/ithome-13th-day03/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -929,11 +804,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -955,7 +830,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:58:38" itemprop="dateModified" datetime="2021-11-16T11:58:38+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:48" itemprop="dateModified" datetime="2021-11-16T19:29:48+08:00">2021-11-16</time>
       </span>
 
   
@@ -969,20 +844,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day02，先來建個開發資料庫好了。"><a href="#Day02，先來建個開發資料庫好了。" class="headerlink" title="Day02，先來建個開發資料庫好了。"></a>Day02，先來建個開發資料庫好了。</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。</p>
-<p>這邊是直接使用<a target="_blank" rel="noopener" href="https://github.com/bitnami/bitnami-docker-postgresql">bitnami</a>包好的image，沒有做什麼特別的調整，使用的docker-compose檔案配置如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">  postgresql:</span><br><span class="line">    image: docker.io/bitnami/postgresql:13</span><br><span class="line">    ports:</span><br><span class="line">      - &#x27;5555:5432&#x27;</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x27;/volume1/homes/pg_data:/bitnami/postgresql&#x27;</span><br><span class="line">    restart: always</span><br><span class="line">    user: &#x27;1026&#x27;</span><br><span class="line">    environment:</span><br><span class="line">      - POSTGRES_USERNAME=postgres</span><br><span class="line">      - POSTGRES_PASSWORD=**********</span><br><span class="line">      - POSTGRES_REPLICATION_MODE=master</span><br></pre></td></tr></table></figure>
-<p>bitnami範本的image，預設運行的使用者都是1001(rootless)，這邊切換成我的NAS上的使用者1026，目錄的部分也需要調整為相對應的權限。<br><img src="https://i.imgur.com/lHvXxe0.png"></p>
-<p>再來進去container裡面做create database與指定database owner。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it --user root 2b6f sh</span><br><span class="line">psql -U postgres</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 輸入密碼</span></span></span><br><span class="line">create database homelab_blog ;</span><br><span class="line">create user homelab030;</span><br><span class="line">alter role homelab030 with password &#x27;********&#x27;;</span><br><span class="line">grant all privileges on database homelab_blog to homelab030;</span><br></pre></td></tr></table></figure>
-<p>喵一下目前database，退出。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\l</span><br><span class="line">\q</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/SUJ48o3.png"></p>
-<p>明天就可以來處理Model相關的事情了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>這幾年來docker/container的興起，在用自己的電腦測試或開發串接一些open source的服務，相對來說都變得輕鬆許多，而且電腦也不會像過去一樣因安裝而弄得亂七八糟。</p>
-<blockquote>
-<p>題外話聊一下最近docker的授權有所異動，其中影響比較大的會是在<a target="_blank" rel="noopener" href="https://www.docker.com/blog/updating-product-subscriptions/?fbclid=IwAR2y_QqM-Gz94VtrKdYgtc4uXK6flaZhDAZgifBgrEe_dCTC5liExYE7MbI">docker desktop</a>這個tool上，大家要記得去follow、了解一下規則避免侵權唷~</p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/02/ithome-13th-day02/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1013,11 +882,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1039,7 +908,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:58:38" itemprop="dateModified" datetime="2021-11-16T11:58:38+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:57" itemprop="dateModified" datetime="2021-11-16T19:29:57+08:00">2021-11-16</time>
       </span>
 
   
@@ -1056,14 +925,14 @@
 <blockquote>
 <p>只求小力一點XD。</p>
 </blockquote>
-<h2 id="規劃"><a href="#規劃" class="headerlink" title="規劃"></a>規劃</h2><p>本次預計分三個段落</p>
-<ol>
-<li>一段非常簡易的Application開發過程，最終包含Containerize且搭配一些CI tools執行Auto Build等等的過程。 (預估佔比 1/4 )</li>
-<li>這段會預計先簡介一下目前打算使用的硬體環境，從VM的建立與簡易的設定到Kubernetes的選型與佈署集成，並搭配1的成果，將服務發行在Cluster上。 (預估佔比 2/4 )</li>
-<li>最後預計測試一些與服務發行運作沒有直接關聯，但也許能夠幫助<del>維運</del>的CNCF project(尚未決定要搞什麼)，反正大概就是一些over design的事情。 (預估佔比 1/4 )</li>
-</ol>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>因為這幾年工作多半著重在容器、系統環境處理以及CI/CD自動化工程的範疇當中，第一個段落可以預期的是會慘不忍睹了XD，雖然規劃了三段但最終還是將會依照我當下的心情做微幅的變動，反正是HomeLab，就讓我做主吧!</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/01/ithome-13th-day01/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

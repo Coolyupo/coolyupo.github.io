@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -25,12 +25,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事">
 <meta property="og:url" content="http://example.com/2021/09/23/ithome-13th-day23/index.html">
-<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day23，替你的Gitlab pipeline 添加點搞事正文在前面介紹gitlab-ci的pipeline中我僅僅只用到了build stage作為container image build的動作。 然而在實務上，我們可能還會有許多需要整合的stages單元測試、整合測試、各種佈署細節、各種通報細節以及與gitlab issue、dashboard整合的動作。 這邊我就準備來搞三個官方有在主導">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/9MP63T9.png">
 <meta property="article:published_time" content="2021-09-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:38:08.484Z">
+<meta property="article:modified_time" content="2021-11-16T11:27:58.934Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -41,10 +41,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/23/ithome-13th-day23/","path":"2021/09/23/ithome-13th-day23/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/23/ithome-13th-day23/","path":"2021/09/23/ithome-13th-day23/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事 | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事 | 阿熊的日常筆記</title>
   
 
 
@@ -73,9 +73,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -129,7 +130,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -179,17 +180,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/23/ithome-13th-day23/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -211,7 +212,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:38:08" itemprop="dateModified" datetime="2021-11-16T12:38:08+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:27:58" itemprop="dateModified" datetime="2021-11-16T19:27:58+08:00">2021-11-16</time>
       </span>
 
   
@@ -227,6 +228,7 @@
         <h1 id="Day23，替你的Gitlab-pipeline-添加點搞事"><a href="#Day23，替你的Gitlab-pipeline-添加點搞事" class="headerlink" title="Day23，替你的Gitlab pipeline 添加點搞事"></a>Day23，替你的Gitlab pipeline 添加點搞事</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在前面介紹gitlab-ci的pipeline中我僅僅只用到了build stage作為container image build的動作。</p>
 <p>然而在實務上，我們可能還會有許多需要整合的stages單元測試、整合測試、各種佈署細節、各種通報細節以及與gitlab issue、dashboard整合的動作。</p>
 <p>這邊我就準備來搞三個官方有在主導的安全項目，不過不是完全以官方的方式去進行，因為部分的功能在介面上需要enterpirse版本才能夠支援，<strong>但不代表無法使用他</strong>，只是說我們無法在官方的介面上看到對應的功能畫面。</p>
+<span id="more"></span>
 <p>三個動作則分別是 SAST、Container Scanning、DAST</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/user/application_security/sast/">SAST</a> - Static Application Security Testing<ul>

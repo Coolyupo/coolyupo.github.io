@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -25,9 +25,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day14，來試試 OpenELB">
 <meta property="og:url" content="http://example.com/2021/09/14/ithome-13th-day14/index.html">
-<meta property="og:site_name" content="阿熊的空間">
+<meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day14，來試試 OpenELB正文前面幾個章節有提到Service type LoadBalancer，這個service type在雲端上依賴cloud vendor的loadbalancer得以實作，而在地端想要有同樣的功能體驗則大致上有兩種做法，第一種是透過硬體Loadbalancer串接，且有提供Kubernetes custom controller&#x2F;CRD之類的廠商(ex. F5">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/UFGe06J.png">
 <meta property="og:image" content="https://i.imgur.com/rubK6Pj.png">
 <meta property="og:image" content="https://i.imgur.com/97cjezS.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://i.imgur.com/3Yl3Cow.png">
 <meta property="og:image" content="https://i.imgur.com/et4Znw9.png">
 <meta property="article:published_time" content="2021-09-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:03:12.730Z">
+<meta property="article:modified_time" content="2021-11-16T11:28:52.862Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -49,10 +49,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/14/ithome-13th-day14/","path":"2021/09/14/ithome-13th-day14/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day14，來試試 OpenELB"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/14/ithome-13th-day14/","path":"2021/09/14/ithome-13th-day14/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day14，來試試 OpenELB"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day14，來試試 OpenELB | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day14，來試試 OpenELB | 阿熊的日常筆記</title>
   
 
 
@@ -81,9 +81,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -137,7 +138,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -187,17 +188,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/14/ithome-13th-day14/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -219,7 +220,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:03:12" itemprop="dateModified" datetime="2021-11-16T12:03:12+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:52" itemprop="dateModified" datetime="2021-11-16T19:28:52+08:00">2021-11-16</time>
       </span>
 
   
@@ -233,6 +234,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="Day14，來試試-OpenELB"><a href="#Day14，來試試-OpenELB" class="headerlink" title="Day14，來試試 OpenELB"></a>Day14，來試試 OpenELB</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>前面幾個章節有提到Service type LoadBalancer，這個service type在雲端上依賴cloud vendor的loadbalancer得以實作，而在地端想要有同樣的功能體驗則大致上有兩種做法，第一種是透過硬體Loadbalancer串接，且有提供Kubernetes custom controller/CRD之類的廠商(ex. <a target="_blank" rel="noopener" href="https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/v1.5/">F5 BIG-IP</a>)，而另一種則是透過software實作，達成類似情境。</p>
+<span id="more"></span>
 <p>而我們這裡能選擇就只有後者這種方式(沒有前者的機器)，過去提到這一塊最著名的莫過於<a target="_blank" rel="noopener" href="https://metallb.universe.tf/">MetalLB</a>，也是我工作上常選擇的。但前陣子因緣際會參與了一場線上的meetup，內容是介紹kubesphere的架構，kubesphere內的NLB選擇為<a target="_blank" rel="noopener" href="https://github.com/kubesphere/openelb">OpenELB(PorterLB)</a>，這也讓我心裡想著改天也得來試玩看看。</p>
 <p>進行安裝</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubesphere/porter/master/deploy/porter.yaml</span><br></pre></td></tr></table></figure>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,13 +21,13 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day25，Kubeapps 體驗正文kubeapps是一個由vmware&#x2F;bitnami主導的開元項目，主旨為在kubernetes中讓你透過網頁UI去佈署與管理許多應用程式。 那我們就根據 getting start 引導來使用helm進行安裝 1234helm repo add bitnami https:&#x2F;&#x2F;charts.bitnami.com&#x2F;bitnamihelm repo updat">
+<meta name="description" content="Day25，Kubeapps 體驗正文kubeapps是一個由vmware&#x2F;bitnami主導的開元項目，主旨為在kubernetes中讓你透過網頁UI去佈署與管理許多應用程式。 那我們就根據 getting start 引導來使用helm進行安裝">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day25，Kubeapps 體驗">
 <meta property="og:url" content="http://example.com/2021/09/25/ithome-13th-day25/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:description" content="Day25，Kubeapps 體驗正文kubeapps是一個由vmware&#x2F;bitnami主導的開元項目，主旨為在kubernetes中讓你透過網頁UI去佈署與管理許多應用程式。 那我們就根據 getting start 引導來使用helm進行安裝 1234helm repo add bitnami https:&#x2F;&#x2F;charts.bitnami.com&#x2F;bitnamihelm repo updat">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Day25，Kubeapps 體驗正文kubeapps是一個由vmware&#x2F;bitnami主導的開元項目，主旨為在kubernetes中讓你透過網頁UI去佈署與管理許多應用程式。 那我們就根據 getting start 引導來使用helm進行安裝">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/TmsOZTj.png">
 <meta property="og:image" content="https://i.imgur.com/vjz0Ids.png">
 <meta property="og:image" content="https://i.imgur.com/gBegaf0.png">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://i.imgur.com/k0nIcSJ.png">
 <meta property="og:image" content="https://i.imgur.com/qa2tBpV.png">
 <meta property="article:published_time" content="2021-09-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:39:27.500Z">
+<meta property="article:modified_time" content="2021-11-16T11:27:44.488Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -50,10 +50,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/25/ithome-13th-day25/","path":"2021/09/25/ithome-13th-day25/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day25，Kubeapps 體驗"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/25/ithome-13th-day25/","path":"2021/09/25/ithome-13th-day25/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day25，Kubeapps 體驗"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day25，Kubeapps 體驗 | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day25，Kubeapps 體驗 | 阿熊的日常筆記</title>
   
 
 
@@ -82,9 +82,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -138,7 +139,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -188,17 +189,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/25/ithome-13th-day25/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -220,7 +221,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:39:27" itemprop="dateModified" datetime="2021-11-16T12:39:27+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:27:44" itemprop="dateModified" datetime="2021-11-16T19:27:44+08:00">2021-11-16</time>
       </span>
 
   
@@ -235,6 +236,7 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="Day25，Kubeapps-體驗"><a href="#Day25，Kubeapps-體驗" class="headerlink" title="Day25，Kubeapps 體驗"></a>Day25，Kubeapps 體驗</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>kubeapps是一個由vmware/bitnami主導的開元項目，主旨為在kubernetes中讓你透過網頁UI去佈署與管理許多應用程式。</p>
 <p>那我們就根據 getting start 引導來使用helm進行安裝</p>
+<span id="more"></span>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">helm repo add bitnami https://charts.bitnami.com/bitnami</span><br><span class="line">helm repo update</span><br><span class="line">kubectl create namespace kubeapps</span><br><span class="line">helm install kubeapps --namespace kubeapps bitnami/kubeapps</span><br></pre></td></tr></table></figure>
 <p>Deploy成功<br><img src="https://i.imgur.com/TmsOZTj.png"><br>佈署完成後產生的instances清單，其中亦有包含postgresql(作為backend，有需要持久性儲存的話就要去調整values.yml)<br><img src="https://i.imgur.com/vjz0Ids.png"></p>
 <p>這邊的話因為我們的cluster沒有透過oidc/oauth2.0之類的機制去強化我們的cluster身份安全性，所以我們需要用最原使的方式，將kubernetes的中的權限透過榜定指派給到對應的service account，再使用token進行存取。</p>

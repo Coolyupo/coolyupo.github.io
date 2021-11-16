@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,13 +21,13 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day13，先讓我設定一下terminal(插曲)正文前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。 安裝一下zsh跟oh-my-zsh 12345678910sudo apt-get install zsh##安裝oh-m">
+<meta name="description" content="Day13，先讓我設定一下terminal(插曲)正文前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day13，先讓我設定一下terminal(插曲)">
 <meta property="og:url" content="http://example.com/2021/09/13/ithome-13th-day13/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:description" content="Day13，先讓我設定一下terminal(插曲)正文前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。 安裝一下zsh跟oh-my-zsh 12345678910sudo apt-get install zsh##安裝oh-m">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Day13，先讓我設定一下terminal(插曲)正文前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/C15nEi2.png">
 <meta property="og:image" content="https://i.imgur.com/Y9Y1W14.png">
 <meta property="og:image" content="https://i.imgur.com/QYFbgcl.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://i.imgur.com/vjJjNtE.png">
 <meta property="og:image" content="https://i.imgur.com/zYsVEhO.png">
 <meta property="article:published_time" content="2021-09-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:02:39.045Z">
+<meta property="article:modified_time" content="2021-11-16T11:28:57.493Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -46,10 +46,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/13/ithome-13th-day13/","path":"2021/09/13/ithome-13th-day13/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day13，先讓我設定一下terminal(插曲)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/13/ithome-13th-day13/","path":"2021/09/13/ithome-13th-day13/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day13，先讓我設定一下terminal(插曲)"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day13，先讓我設定一下terminal(插曲) | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day13，先讓我設定一下terminal(插曲) | 阿熊的日常筆記</title>
   
 
 
@@ -78,9 +78,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -134,7 +135,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -184,17 +185,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/ithome-13th-day13/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -216,7 +217,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:02:39" itemprop="dateModified" datetime="2021-11-16T12:02:39+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:57" itemprop="dateModified" datetime="2021-11-16T19:28:57+08:00">2021-11-16</time>
       </span>
 
   
@@ -230,6 +231,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="Day13，先讓我設定一下terminal-插曲"><a href="#Day13，先讓我設定一下terminal-插曲" class="headerlink" title="Day13，先讓我設定一下terminal(插曲)"></a>Day13，先讓我設定一下terminal(插曲)</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。</p>
+<span id="more"></span>
 <p>安裝一下zsh跟oh-my-zsh</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install zsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#安裝oh-my-zsh</span></span></span><br><span class="line">sh -c &quot;$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#指定zsh為default shell</span></span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#重開機</span></span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
 

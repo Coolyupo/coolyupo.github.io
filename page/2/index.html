@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,12 +21,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="紀錄一些我的學習筆記">
 <meta property="og:type" content="website">
-<meta property="og:title" content="阿熊的空間">
+<meta property="og:title" content="阿熊的日常筆記">
 <meta property="og:url" content="http://example.com/page/2/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="紀錄一些我的學習筆記">
+<meta property="og:locale" content="zh_TW">
 <meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="GuruBear">
 <meta name="twitter:card" content="summary">
 
 
@@ -34,10 +37,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/2/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-tw","comments":"","permalink":"","path":"page/2/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>阿熊的空間</title>
+<title>阿熊的日常筆記</title>
   
 
 
@@ -66,9 +69,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -121,7 +125,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -176,11 +180,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -202,7 +206,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:36:01" itemprop="dateModified" datetime="2021-11-16T12:36:01+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:13" itemprop="dateModified" datetime="2021-11-16T19:28:13+08:00">2021-11-16</time>
       </span>
 
   
@@ -216,40 +220,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day20，Grafana-Loki-不一樣的log選擇"><a href="#Day20，Grafana-Loki-不一樣的log選擇" class="headerlink" title="Day20，Grafana Loki 不一樣的log選擇"></a>Day20，Grafana Loki 不一樣的log選擇</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK/EFK)。</p>
-<p>簡單補充一下官方 loki 架構<br><img src="https://i.imgur.com/X3uQjlV.png"><br>其中agent的選擇有</p>
-<ul>
-<li>Promtail</li>
-<li>Docker Driver</li>
-<li>Fluentd</li>
-<li>Fluent Bit</li>
-<li>Logstash</li>
-<li>Lambda Promtail</li>
-</ul>
-<p>這邊一樣使用Helm安裝</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add grafana https://grafana.github.io/helm-charts</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
-<p>這邊要安裝的是loki-stack<br><img src="https://i.imgur.com/z93SgL3.png"></p>
-<p>loki-stack 是使用dependency chart的方式，所以可以選擇的agent很多種<br><img src="https://i.imgur.com/aT25P02.png"></p>
-<p>這邊選擇的angent是預設的promtail，一併安裝grafana&amp;prometheus</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">helm install homelab-loki grafana/loki-stack --version 2.4.1 \</span><br><span class="line">--set grafana.enabled=true \</span><br><span class="line">--set prometheus.enabled=true \</span><br><span class="line">--set prometheus.alertmanager.persistentVolume.enabled=false \</span><br><span class="line">--set prometheus.server.persistentVolume.enabled=false \</span><br><span class="line">--set loki.persistence.enabled=true \</span><br><span class="line">--set loki.persistence.storageClassName=nfs-client \</span><br><span class="line">--set loki.persistence.size=30Gi \</span><br><span class="line">--namespace loki</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/L0kP75f.png"></p>
-<blockquote>
-<p>安裝的過程跳出不少1.22將棄用的API XD</p>
-</blockquote>
-<p>安裝完後的長相<br><img src="https://i.imgur.com/KLyD3t3.png"></p>
-<p>來看一下promtail的config，這邊的scrape_config的設定方式基本就跟prometheus的設定相同，kubernetes_sd_configs指定來源為kubernetes pod</p>
-<p><img src="https://i.imgur.com/KZMLd1A.png"><br>貼在vs code上稍微折疊一下，可以看到一堆relabel的config<br><img src="https://i.imgur.com/95BZPg5.png"></p>
-<p>接著先取得garfana的admin密碼，並使用port-forward的方式導到本機</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get secret --namespace loki homelab-loki-grafana -o jsonpath=&quot;&#123;.data.admin-password&#125;&quot; | base64 --decode ; echo</span><br><span class="line"></span><br><span class="line">kubectl port-forward svc/homelab-loki-grafana 8080:80 -n loki </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/3WtpjaL.png"></p>
-<p>左邊explore的按鈕點一下，左上的下拉選擇為loki。可以看到這邊與kibana性質非常相像，這邊的查詢則是基於<a target="_blank" rel="noopener" href="https://grafana.com/docs/loki/latest/logql/">LogQL</a>的語法<br><img src="https://i.imgur.com/7eoxytq.png"></p>
-<p>點開Log browser 也有輔助label可以協助search<br><img src="https://i.imgur.com/brJ0k5h.png"></p>
-<p>點開help則是有些Cheat Sheet可供參考<br><img src="https://i.imgur.com/UlFZ5lP.png"></p>
-<p>也有query history，能夠再次執行過去的query<br><img src="https://i.imgur.com/jIn4Bch.png"></p>
-<p>當然也可以從DashBoard import個quick search dashboard做簡易快速查詢<br><img src="https://i.imgur.com/1xivZC3.png"></p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>如果你想把syslog收進loki當然也可以辦到的喔，透過job scrap config去蒐集<code>/var/log/*log</code>之類的，可以在官網上看到相關的設定指引喔。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/ithome-13th-day20/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -280,11 +258,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -306,7 +284,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:28:25" itemprop="dateModified" datetime="2021-11-16T12:28:25+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:18" itemprop="dateModified" datetime="2021-11-16T19:28:18+08:00">2021-11-16</time>
       </span>
 
   
@@ -319,28 +297,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day19，ArgoCD-2-2"><a href="#Day19，ArgoCD-2-2" class="headerlink" title="Day19，ArgoCD ( 2 / 2 )"></a>Day19，ArgoCD ( 2 / 2 )</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來Demo ArgoCD上透過Gitlab的SSO與權限控管<br>先創建一個namespace</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns group1</span><br></pre></td></tr></table></figure>
-<p>然後在gitlab上的group再創建一個subgroup 創建這次demo使用的<a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/group1/argo-demo-group1">repo</a></p>
-<p>創建後我們group的示意圖如下<br><img src="https://i.imgur.com/GSAQjg5.png"></p>
-<p>點入我們的subgroup，這時候就要請出我們的分身一號gitlab帳號加入這個subgroup啦<br><img src="https://i.imgur.com/6rJOdAw.png"></p>
-<p>回到外層的group點選application創建供dex server sso使用ClientID &amp; ClientSecret，並設定CallBackURL<br><img src="https://i.imgur.com/clsf9Lz.png"></p>
-<p>最後回到ArgoCD的UI，在上面多create一個repository&amp;project，project名為group1<br><img src="https://i.imgur.com/8GXAqrM.png"></p>
-<p>並將<a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/group1/argo-demo-group1">這個repo</a>設定為demogroup1的application<br><img src="https://i.imgur.com/5uxkQ1j.png"></p>
-<p>接著調整昨天的values.yml 修改dex.config與policy.csv 重新佈署 </p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">configEnabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">config:</span></span><br><span class="line">  <span class="comment"># Argo CD&#x27;s externally facing base URL (optional). Required when configuring SSO</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">https://192.168.1.241</span></span><br><span class="line">  <span class="comment"># Argo CD instance label key</span></span><br><span class="line">  <span class="attr">application.instanceLabelKey:</span> <span class="string">argocd.argoproj.io/instance</span></span><br><span class="line">  <span class="attr">dex.config:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    connectors: </span></span><br><span class="line"><span class="string">      - type: gitlab</span></span><br><span class="line"><span class="string">        id: gitlab</span></span><br><span class="line"><span class="string">        name: gitlab</span></span><br><span class="line"><span class="string">        config:</span></span><br><span class="line"><span class="string">          baseURL: https://gitlab.com</span></span><br><span class="line"><span class="string">          clientID: xxx</span></span><br><span class="line"><span class="string">          clientSecret: xxx</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="comment">## Annotations to be added to ArgoCD ConfigMap</span></span><br><span class="line"><span class="attr">configAnnotations:</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">## ArgoCD rbac config</span></span><br><span class="line"><span class="comment">## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md</span></span><br><span class="line"><span class="attr">rbacConfig:</span></span><br><span class="line">  <span class="attr">policy.csv:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    p, role:group1role, applications, *, group1/*, allow</span></span><br><span class="line"><span class="string">    p, role:group1role, clusters, get, *, allow</span></span><br><span class="line"><span class="string">    p, role:group1role, repositories, get, *, allow</span></span><br><span class="line"><span class="string">    p, role:group1role, projects, get, *, allow</span></span><br><span class="line"><span class="string">    p, role:mainrole, applications, *, *, allow</span></span><br><span class="line"><span class="string">    p, role:mainrole, clusters, *, *, allow</span></span><br><span class="line"><span class="string">    p, role:mainrole, repositories, *, *, allow</span></span><br><span class="line"><span class="string">    p, role:mainrole, projects, *, *, allow</span></span><br><span class="line"><span class="string">    g, gurubear-ithome-13th/group1, role:group1role</span></span><br><span class="line"><span class="string">    g, gurubear-ithome-13th, role:mainrole</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>這邊設定的規則大概就是gurubear-ithome-13th/group1能對group1 project下的所有application做異動，針對clusters、repositories、projects全部僅能GET。gurubear-ithome-13th則是全部都可以。</p>
-</blockquote>
-<p>執行helm更新佈署的動作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm upgrade homelab-argo argo/argo-cd --version 3.17.6 -f values.yml -n argocd</span><br></pre></td></tr></table></figure>
-<p>可以看到介面上已經有<strong>LOG IN VIA GITLAB</strong>的按鈕了<br><img src="https://i.imgur.com/zpyJkT0.jpg"></p>
-<p>分別使用分身與本尊登入，登入時需要同意授權<br><img src="https://i.imgur.com/rzrxkSg.png"></p>
-<p>本尊帳號能看到全部的applications<br><img src="https://i.imgur.com/3no1k0y.png"></p>
-<p>分身帳號因為group的限制(下圖顯示該分身帳號底下只有這個gurubear-ithome-13th/group1)，所以只能看到的group1的applications<br><img src="https://i.imgur.com/JbM4X4O.png"><br><img src="https://i.imgur.com/kouNkHd.png"></p>
-<p>透過這樣的方式就能去做一定的權限控管了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>今天這樣大概就把我想講的ArgoCD部分結束了，在實務上也都可以搭配CI/CD、argocd CLI來處理這一連串的pipeline，就是需要去設計一下而已~</p>
-
+          <h1 id="Day19，ArgoCD-2-2"><a href="#Day19，ArgoCD-2-2" class="headerlink" title="Day19，ArgoCD ( 2 / 2 )"></a>Day19，ArgoCD ( 2 / 2 )</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來Demo ArgoCD上透過Gitlab的SSO與權限控管</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/19/ithome-13th-day19/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -371,11 +336,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -397,7 +362,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:27:46" itemprop="dateModified" datetime="2021-11-16T12:27:46+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:21" itemprop="dateModified" datetime="2021-11-16T19:28:21+08:00">2021-11-16</time>
       </span>
 
   
@@ -410,36 +375,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day-18，ArgoCD-1-2"><a href="#Day-18，ArgoCD-1-2" class="headerlink" title="Day 18，ArgoCD ( 1 / 2 )"></a>Day 18，ArgoCD ( 1 / 2 )</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>先天要來裝GitOPs的工具之一，ArgoCD<br>透過helm來安裝</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add argo https://argoproj.github.io/argo-helm</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/ofWvIud.png"></p>
-<p>一樣產出設定檔</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm show values argo/argo-cd --version 3.17.6 &gt; values.yml</span><br></pre></td></tr></table></figure>
-
-<p>調整設定（這邊能夠設定非常之多），我們這次LAB必要的調整為service為Loadbalancer 並將他指派ip 192.168.1.241，搭配前幾天的openELB</p>
-<p><img src="https://i.imgur.com/4xL5WLj.png"></p>
-<p>安裝</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns argocd</span><br><span class="line">helm install homelab-argo argo/argo-cd --version 3.17.6 -f values.yml -n argocd</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/6bvNFtO.png"></p>
-<p>下載ArgoCD command line tools，並登入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64</span><br><span class="line"></span><br><span class="line">sudo chmod +x  /usr/local/bin/argocd </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 先取得預設密碼</span></span></span><br><span class="line">kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=&quot;&#123;.data.password&#125;&quot; | base64 -d</span><br><span class="line"></span><br><span class="line">argocd login 192.168.1.241</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/Yi6i6VB.png"><br>修改admin密碼</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">argocd account update-password  </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/278BbEL.png"></p>
-<blockquote>
-<p>argocd的admin密碼，其實會放置在secrets底下，但因為有特別進行過加解密機制，無法單純以base64的方式置換cm，這邊用CLI進行update最快。</p>
-</blockquote>
-<p>再來我們前往預計使用的 <a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/argo-cd-demo">Gitlab Repo</a>，當中我已把day12的YAML放在這個repo當中了。<br><img src="https://i.imgur.com/FvPHnJS.png"></p>
-<p>回到瀏覽器打開 <a target="_blank" rel="noopener" href="https://192.168.1.241/">https://192.168.1.241</a> 從UI登入，設定相關repositroy</p>
-<p><img src="https://i.imgur.com/R8pee5k.png"></p>
-<p>創建application</p>
-<p><img src="https://i.imgur.com/8vqF9k3.png"></p>
-<p>最終的結果，如下兩張圖<br><img src="https://i.imgur.com/rYxYLNT.png"></p>
-<p><img src="https://i.imgur.com/3fN58xQ.png"></p>
-<p>之後我們就能透過異動gitlab上的repo來執行佈署了，明天會持續介紹ArgoCD SSO的功能</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>每次裝argocd的時候，都感覺介面產生了些變化，更新的也是挺頻繁的，真是令人頭痛。</p>
-
+          <h1 id="Day-18，ArgoCD-1-2"><a href="#Day-18，ArgoCD-1-2" class="headerlink" title="Day 18，ArgoCD ( 1 / 2 )"></a>Day 18，ArgoCD ( 1 / 2 )</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>先天要來裝GitOPs的工具之一，ArgoCD</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/18/ithome-13th-day18/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -470,11 +414,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -496,7 +440,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:27:20" itemprop="dateModified" datetime="2021-11-16T12:27:20+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:24" itemprop="dateModified" datetime="2021-11-16T19:28:24+08:00">2021-11-16</time>
       </span>
 
   
@@ -510,29 +454,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day17，NFS-provisioner"><a href="#Day17，NFS-provisioner" class="headerlink" title="Day17，NFS provisioner"></a>Day17，NFS provisioner</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來安裝Kubernetes上的NFS provisioner，主要就是搭配我的DS718+做dynamic provisioner</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner">Github Repo</a></p>
-<p><a target="_blank" rel="noopener" href="https://artifacthub.io/packages/helm/nfs-subdir-external-provisioner/nfs-subdir-external-provisioner">artifacthub</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/4ZDIrrN.png"></p>
-<p>檢查一下我們準備要使用的路徑為IThomeNFS<br><img src="https://i.imgur.com/KlX8KhX.png"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 先create一個namespace</span></span></span><br><span class="line">kubectl create ns nfs-provisioner</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#使用指令簡易安裝</span></span></span><br><span class="line">helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \</span><br><span class="line">    --set nfs.server=192.168.1.107 \</span><br><span class="line">    --set nfs.path=/volume1/IThomeNFS \</span><br><span class="line">    --version 4.0.13 \</span><br><span class="line">    -n nfs-provisioner</span><br></pre></td></tr></table></figure>
-<p>安裝完成後可以看到如下圖<br><img src="https://i.imgur.com/0dx6E8z.png"></p>
-<blockquote>
-<p>這邊要注意，所有節點必須要安裝nfs-common(ubuntu)，才能夠支援nfs mount<br>retain policy,volumebindmode 這些有需要都要記得在安裝時調整</p>
-</blockquote>
-<p>寫一份yaml測試，其中pvc指定storage class為nfs-client</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test-pv-pod</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">task-pv-storage</span></span><br><span class="line">      <span class="attr">persistentVolumeClaim:</span></span><br><span class="line">        <span class="attr">claimName:</span> <span class="string">test-pvc</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">task-pv-container</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">&quot;http-server&quot;</span></span><br><span class="line">      <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">&quot;/usr/share/nginx/html&quot;</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">task-pv-storage</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolumeClaim</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test-pvc</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">accessModes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">ReadWriteMany</span></span><br><span class="line">  <span class="attr">storageClassName:</span> <span class="string">nfs-client</span></span><br><span class="line">  <span class="attr">resources:</span></span><br><span class="line">    <span class="attr">requests:</span></span><br><span class="line">      <span class="attr">storage:</span> <span class="string">30Gi</span></span><br></pre></td></tr></table></figure>
-<p>成功綁定並運行</p>
-<p><img src="https://i.imgur.com/iAr2dLt.png"></p>
-<p>exec進入container目錄放個檔案測試</p>
-<p><img src="https://i.imgur.com/SoIzQDt.png"></p>
-<p>在本機將nfs目錄mount到mnt做檢查。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -t nfs 192.168.1.107:/volume1/IThomeNFS /mnt</span><br></pre></td></tr></table></figure>
-<p>沒有問題，確實有資料。<br><img src="https://i.imgur.com/c40n79N.png"></p>
-<p>那這樣之後有pvc/pv需求時都可以直接用這個storage class了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>storage實在也是一門高深的學問，不夠懂storage與分散式儲存的我往往能選擇的也只剩NFS、local persistent volumes這種東西(實在也不敢亂用)……就加減用吧。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/17/ithome-13th-day17/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -563,11 +492,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -589,7 +518,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:26:53" itemprop="dateModified" datetime="2021-11-16T12:26:53+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:36" itemprop="dateModified" datetime="2021-11-16T19:28:36+08:00">2021-11-16</time>
       </span>
 
   
@@ -602,31 +531,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day16，Domain-amp-自簽憑證"><a href="#Day16，Domain-amp-自簽憑證" class="headerlink" title="Day16，Domain&amp;自簽憑證"></a>Day16，Domain&amp;自簽憑證</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>以前有透過Freenom註冊了一個邊緣網域，這次就設定了一個homelab domain，將A Record設定在我的固定IP上。<br><img src="https://i.imgur.com/H9xUtXO.png"></p>
-<p>Router的部分也要設定Port-forward 80/443 對應我昨天開的LoadBalancerIP<br><img src="https://i.imgur.com/d5pbKfl.png"></p>
-<p>就可以打開瀏覽器<br><img src="https://i.imgur.com/V2L8I7h.png"></p>
-<p>接者使用<a target="_blank" rel="noopener" href="https://github.com/cloudflare/cfssl">cfssl</a>處理自簽憑證</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/cloudflare/cfssl/releases/download/v1.6.1/cfssljson_1.6.1_linux_amd64</span><br><span class="line">sudo mv cfssljson_1.6.1_linux_amd64 /usr/local/bin/cfssljson</span><br><span class="line">chmod +x /usr/local/bin/cfssljson</span><br><span class="line"></span><br><span class="line">wget https://github.com/cloudflare/cfssl/releases/download/v1.6.1/cfssl_1.6.1_linux_amd64</span><br><span class="line">sudo mv cfssl_1.6.1_linux_amd64 /usr/local/bin/cfssl</span><br><span class="line">chmod +x /usr/local/bin/cfssl</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; ca-config.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;signing&quot;: &#123;</span><br><span class="line">    &quot;default&quot;: &#123;</span><br><span class="line">      &quot;expiry&quot;: &quot;8760h&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;profiles&quot;: &#123;</span><br><span class="line">      &quot;Homelab&quot;: &#123;</span><br><span class="line">        &quot;usages&quot;: [</span><br><span class="line">            &quot;signing&quot;,</span><br><span class="line">            &quot;key encipherment&quot;,</span><br><span class="line">            &quot;server auth&quot;,</span><br><span class="line">            &quot;client auth&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;expiry&quot;: &quot;8760h&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &gt; ca-csr.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;CN&quot;: &quot;Homelab Root CA&quot;,</span><br><span class="line">    &quot;key&quot;: &#123;</span><br><span class="line">      &quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">      &quot;size&quot;: 2048</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;names&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;C&quot;: &quot;TW&quot;,</span><br><span class="line">      &quot;L&quot;: &quot;Taipei&quot;,</span><br><span class="line">      &quot;O&quot;: &quot;Homelab&quot;,</span><br><span class="line">      &quot;OU&quot;: &quot;Homelab Root CA&quot;,</span><br><span class="line">      &quot;ST&quot;: &quot;Xizhi&quot;</span><br><span class="line">    &#125;</span><br><span class="line">   ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cfssl gencert --initca ca-csr.json | cfssljson -bare ca</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/IdCIVMp.png"></p>
-<p><img src="https://i.imgur.com/2ZctMnx.png"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; homelab-csr.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;CN&quot;: &quot;homelab.gurubear.cf&quot;,</span><br><span class="line">    &quot;key&quot;: &#123;</span><br><span class="line">      &quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">      &quot;size&quot;: 2048</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;names&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;C&quot;: &quot;TW&quot;,</span><br><span class="line">      &quot;L&quot;: &quot;Taipei&quot;,</span><br><span class="line">      &quot;O&quot;: &quot;Homelab&quot;,</span><br><span class="line">      &quot;OU&quot;: &quot;Homelab CA&quot;,</span><br><span class="line">      &quot;ST&quot;: &quot;Xizhi&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;hosts&quot;: [</span><br><span class="line">      &quot;homelab.gurubear.cf&quot;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cfssl gencert -ca ca.pem -ca-key ca-key.pem -config ca-config.json -profile=Homelab homelab-csr.json | cfssljson -bare homelab</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/QR5jGN7.png"></p>
-<p><img src="https://i.imgur.com/DXEzc66.png"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create secret tls gurubear-tls  --cert=homelab.pem --key=homelab-key.pem -n ithomelab</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">&quot;nginx&quot;</span></span><br><span class="line">    <span class="attr">nginx.ingress.kubernetes.io/rewrite-target:</span> <span class="string">/</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-ing</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">homelab.gurubear.cf</span></span><br><span class="line">      <span class="attr">http:</span></span><br><span class="line">        <span class="attr">paths:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-react-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                  <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-api-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                  <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/API</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">tls:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">hosts:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">homelab.gurubear.cf</span></span><br><span class="line">      <span class="attr">secretName:</span> <span class="string">gurubear-tls</span></span><br></pre></td></tr></table></figure>
-<p>可以看到仍然為不安全，因為並不認得這個ROOT CA<br><img src="https://i.imgur.com/sv1CGOC.png"></p>
-<p>這邊要想辦法去信任這個自簽的CA</p>
-<blockquote>
-<p>ubuntu透過update-ca-certificate，chromium則要透過介面or指令<br>windows點兩下CA放進可信任的授權單位……</p>
-</blockquote>
-<p><img src="https://i.imgur.com/Bk4gpSO.png"></p>
-<p><img src="https://i.imgur.com/RZqEg5G.png"></p>
-<p>再打開瀏覽器可以發現這台電腦瀏覽器顯示已經是安全了~</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>原本預計是要寫cert-manager的，但因為domain有些問題處理不定，就決定先用自簽憑證來擋一下。可能會在之後的章節再度挑戰。</p>
-
+          <h1 id="Day16，Domain-amp-自簽憑證"><a href="#Day16，Domain-amp-自簽憑證" class="headerlink" title="Day16，Domain&amp;自簽憑證"></a>Day16，Domain&amp;自簽憑證</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/16/ithome-13th-day16/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -657,11 +570,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -683,7 +596,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:03:51" itemprop="dateModified" datetime="2021-11-16T12:03:51+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:40" itemprop="dateModified" datetime="2021-11-16T19:28:40+08:00">2021-11-16</time>
       </span>
 
   
@@ -697,41 +610,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day15，設定一下Ingress"><a href="#Day15，設定一下Ingress" class="headerlink" title="Day15，設定一下Ingress"></a>Day15，設定一下Ingress</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。</p>
-<p>而Ingress controller 則是在Kubernetes中被提出的一種solution，以api yaml的方式撰寫規則，背後透過controller進行轉譯，從而達到想要的reverse proxy效果。</p>
-<p>目前檯面上的Ingress class 也有許多種選擇如nginx、haproxy、traefik、kong等等……<br>我這邊選擇的是我常用ingress-nginx，選擇的考量其實也很單純，在還未導入Kubernetes的前，nginx &amp; kong 算是一直以來就比較常接觸的工具，其中Kong的定義為Api Gateway，雖說與nginx也頗有淵源，也能夠達到類似效果，但與nginx不同的是更著重在<strong>API控管</strong>這一塊，如身份驗證、流量控制，等等眾多plugin……</p>
-<blockquote>
-<p>kong是基於OpenResty延伸，而OpenResty則是基於nginx+LuaJIT<br>順代一提ingress-nginx controller也是基於lua，如果我沒記錯的話</p>
-</blockquote>
-<p>而這裡我的需求要的只是個支援mutidomain的reverse proxy，在這裡ingress-nginx更貼切我的需求</p>
-<p>那今天要來安裝Ingress-nginx的controller<a target="_blank" rel="noopener" href="https://github.com/kubernetes/ingress-nginx/">(ingress-nginx的github連結)</a></p>
-<p>我們這邊要使用helm佈署，所以要先執行下列的動作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx</span><br><span class="line">helm repo update</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 查看可裝版本</span></span></span><br><span class="line">helm search repo ingress -l</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/L2KSrUH.png"></p>
-<p>比對官網的readme support version，本次lab的kubernetes為1.20，所以最新版本應該都能裝。</p>
-<p><img src="https://i.imgur.com/tdSEgz8.png"></p>
-<p>使用helm指令操作產出設定檔</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 產出ingress-nginx 使用helm佈署時的參數調整檔</span></span></span><br><span class="line">helm show values ingress-nginx/ingress-nginx --version 4.0.1 &gt; values.yml</span><br></pre></td></tr></table></figure>
-<p>修改value.yaml，將昨日設定的openELB設定帶入，使地端的LoadBalancer得以運作</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">service:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">lb.kubesphere.io/v1alpha1:</span> <span class="string">porter</span></span><br><span class="line">    <span class="attr">protocol.porter.kubesphere.io/v1alpha1:</span> <span class="string">layer2</span></span><br><span class="line">    <span class="attr">eip.porter.kubesphere.io/v1alpha2:</span> <span class="string">porter-layer2-eip</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>使用helm指定版本與設定檔案進行佈署</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm install  ithome-ingress ingress-nginx/ingress-nginx --version 4.0.1 -f values.yaml  -n ithomelab </span><br></pre></td></tr></table></figure>
-
-<p>佈署完成的結果展示</p>
-<p><img src="https://i.imgur.com/ZX3ZBHC.png"></p>
-<p><img src="https://i.imgur.com/6WGClMw.png"></p>
-<p>接著必須要設定並佈署ingress.yaml，設定完成後會根據設定的規則被ingress-controller轉譯成對應的nginx設定檔。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">&quot;nginx&quot;</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-ing</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">www.gurubear.cf</span></span><br><span class="line">      <span class="attr">http:</span></span><br><span class="line">        <span class="attr">paths:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-react-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                 <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-api-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                 <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/API</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>檢查ingress 是否確實綁到IP</p>
-<p><img src="https://i.imgur.com/84ua5GI.png"></p>
-<p>因為尚未設定domain與IP Forward，佈署完成後先在本機 <code>/etc/hosts</code> 設定偽造的A Record</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.240 www.gurubear.cf</span><br></pre></td></tr></table></figure>
-<p>打開瀏覽器檢查，左邊為輸入domain的情況，右邊為ip直連</p>
-<p><img src="https://i.imgur.com/hDex5El.png"></p>
-<p><img src="https://i.imgur.com/BamGncy.png"></p>
-<p>進去container可以看到/etc/nginx中被轉譯的nginx.conf檔案<br><img src="https://i.imgur.com/6UmuC1r.png"></p>
-<p>那到這邊服務都沒問題，明天就來設定真正的domain與憑證的事情了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>其實如果很擅長寫Reverse Proxy Rules的話Ingress好像也不是那麼必要XD。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/15/ithome-13th-day15/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -762,11 +648,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -788,7 +674,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:03:12" itemprop="dateModified" datetime="2021-11-16T12:03:12+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:52" itemprop="dateModified" datetime="2021-11-16T19:28:52+08:00">2021-11-16</time>
       </span>
 
   
@@ -802,31 +688,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day14，來試試-OpenELB"><a href="#Day14，來試試-OpenELB" class="headerlink" title="Day14，來試試 OpenELB"></a>Day14，來試試 OpenELB</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>前面幾個章節有提到Service type LoadBalancer，這個service type在雲端上依賴cloud vendor的loadbalancer得以實作，而在地端想要有同樣的功能體驗則大致上有兩種做法，第一種是透過硬體Loadbalancer串接，且有提供Kubernetes custom controller/CRD之類的廠商(ex. <a target="_blank" rel="noopener" href="https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/v1.5/">F5 BIG-IP</a>)，而另一種則是透過software實作，達成類似情境。</p>
-<p>而我們這裡能選擇就只有後者這種方式(沒有前者的機器)，過去提到這一塊最著名的莫過於<a target="_blank" rel="noopener" href="https://metallb.universe.tf/">MetalLB</a>，也是我工作上常選擇的。但前陣子因緣際會參與了一場線上的meetup，內容是介紹kubesphere的架構，kubesphere內的NLB選擇為<a target="_blank" rel="noopener" href="https://github.com/kubesphere/openelb">OpenELB(PorterLB)</a>，這也讓我心裡想著改天也得來試玩看看。</p>
-<p>進行安裝</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubesphere/porter/master/deploy/porter.yaml</span><br></pre></td></tr></table></figure>
-<p>確認porter-system namespace下，有兩個completed、一個running<br><img src="https://i.imgur.com/UFGe06J.png"></p>
-<p>當節點存在複數網卡時，需定義Annotation的網卡IP。(單一網卡則不用)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl annotate nodes vm01 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.231&quot;</span><br><span class="line">kubectl annotate nodes vm02 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.232&quot;</span><br><span class="line">kubectl annotate nodes vm03 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.233&quot;</span><br><span class="line">kubectl annotate nodes vm04 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.234&quot;</span><br><span class="line">kubectl annotate nodes vm05 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.235&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/rubK6Pj.png"></p>
-<p>佈署layer2的設定，與IP Pools。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f porter-layer2-eip.yaml</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">network.kubesphere.io/v1alpha2</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Eip</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">porter-layer2-eip</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">address:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.240</span><span class="number">-192.168</span><span class="number">.1</span><span class="number">.250</span></span><br><span class="line">  <span class="attr">interface:</span> <span class="string">ens34</span> <span class="comment">##對應server上網卡</span></span><br><span class="line">  <span class="attr">protocol:</span> <span class="string">layer2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>快速一個測試用的Nginx</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns test</span><br><span class="line">kubectl apply -f test-nginx.yml</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-deployment</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">nginx:1.14.2</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test-nginx-svc</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">lb.kubesphere.io/v1alpha1:</span> <span class="string">porter</span></span><br><span class="line">    <span class="attr">protocol.porter.kubesphere.io/v1alpha1:</span> <span class="string">layer2</span></span><br><span class="line">    <span class="attr">eip.porter.kubesphere.io/v1alpha2:</span> <span class="string">porter-layer2-eip</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">http</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="attr">externalTrafficPolicy:</span> <span class="string">Cluster</span></span><br></pre></td></tr></table></figure>
-<p>我們這邊設定的externalTrafficPolicy: Cluster，特性上是不會保留Client IP的。<br>incomming request會進入任一worker節點，透過cluster(kube-proxy轉發至對應pod)</p>
-<p>觀察一下service確認我們拿到了192.168.1.240的ip<br><img src="https://i.imgur.com/97cjezS.png"></p>
-<p>打開瀏覽器檢查一下，服務正常<br><img src="https://i.imgur.com/hxm2WEf.png"></p>
-<p>檢查一下log，發現來源IP為10.233系列的，為cluser內的IP，如預期沒有留存到Client IP。<br><img src="https://i.imgur.com/W1b12Z4.png"></p>
-<p>在筆電上試著PING看看192.168.1.240，會發現是由192.168.1.234(vm04)回應<br><img src="https://i.imgur.com/Y5QaPz9.png"></p>
-<p>而<strong>我們的nginx則是在192.168.1.235(vm05)上</strong>。<br><img src="https://i.imgur.com/GzKhZo5.png"></p>
-<p>再次將service移除、並重新添加並修改規則為<code>externalTrafficPolicy: local</code>這是能夠保留client IP的方式(實務上我們很多情境皆會要求保留來源IP)，因為這個規則不會透過kube-proxy轉發，而是直接流向host pod，也就是說incomming request會流入能夠回應的pod的節點(這裡指的就是nginx所在節點)。</p>
-<p>佈署完後一樣是取得192.168.1.240的IP，使用ping呼叫，發現就是由192.168.1.235(vm05進行回傳)，與預期一致。<br><img src="https://i.imgur.com/3Yl3Cow.png"></p>
-<p>檢查nginx log，確認可以看到log真正的client ip(192.168.1.134)了<br><img src="https://i.imgur.com/et4Znw9.png"></p>
-<p>明天就可以來用用ingress controller將服務正式hosting起來了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>官網有強調要打開kube-proxy IPVS strict ARP，這個部分倒是與MetalLB一致，但我這次用的是iptables，所以不管好像也沒差。初步看起來的感覺是openELB應該是更lightweight的選擇(雖然我認為MetalLB也是十分輕巧、設定簡單)，不過還用的很少需要再觀察觀察~</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/14/ithome-13th-day14/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -857,11 +726,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -883,7 +752,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:02:39" itemprop="dateModified" datetime="2021-11-16T12:02:39+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:57" itemprop="dateModified" datetime="2021-11-16T19:28:57+08:00">2021-11-16</time>
       </span>
 
   
@@ -897,37 +766,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="Day13，先讓我設定一下terminal-插曲"><a href="#Day13，先讓我設定一下terminal-插曲" class="headerlink" title="Day13，先讓我設定一下terminal(插曲)"></a>Day13，先讓我設定一下terminal(插曲)</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。</p>
-<p>安裝一下zsh跟oh-my-zsh</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install zsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#安裝oh-my-zsh</span></span></span><br><span class="line">sh -c &quot;$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#指定zsh為default shell</span></span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#重開機</span></span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-
-<p>下載bullet-train themes，並設定</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $ZSH_CUSTOM/themes</span><br><span class="line">wget https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme</span><br></pre></td></tr></table></figure>
-
-<p>編輯.zshrc檔案，設定ZSH_THEME</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/C15nEi2.png"></p>
-<p>部分符號會亂碼，需要特別安裝字形(這邊使用MesloLGS NF Regular)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf</span><br></pre></td></tr></table></figure>
-
-<p>設定ubuntu的terminal字形與顏色<br><img src="https://i.imgur.com/Y9Y1W14.png"></p>
-<p><img src="https://i.imgur.com/QYFbgcl.png"></p>
-<p>將kubectl auto complete設定於.zshrc</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;source &lt;(kubectl completion zsh)&#x27; &gt;&gt; ~/.zshrc</span><br></pre></td></tr></table></figure>
-<p>安裝我常用的兩個工具kubectx(切換context)與kubens(切換namespace)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubens</span><br><span class="line">wget https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx</span><br><span class="line">chmod +x ./kubectx</span><br><span class="line">chmod +x ./kubens</span><br><span class="line">sudo mv ./kubectx kubens /usr/bin/</span><br></pre></td></tr></table></figure>
-<p>檢查一下結果<br><img src="https://i.imgur.com/GqH79I1.png"></p>
-<p>安裝Kubectl Krew(Kubectl plugin管理工具)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(</span><br><span class="line">  set -x; cd &quot;$(mktemp -d)&quot; &amp;&amp;</span><br><span class="line">  OS=&quot;$(uname | tr &#x27;[:upper:]&#x27; &#x27;[:lower:]&#x27;)&quot; &amp;&amp;</span><br><span class="line">  ARCH=&quot;$(uname -m | sed -e &#x27;s/x86_64/amd64/&#x27; -e &#x27;s/\(arm\)\(64\)\?.*/\1\2/&#x27; -e &#x27;s/aarch64$/arm64/&#x27;)&quot; &amp;&amp;</span><br><span class="line">  curl -fsSLO &quot;https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.tar.gz&quot; &amp;&amp;</span><br><span class="line">  tar zxvf krew.tar.gz &amp;&amp;</span><br><span class="line">  KREW=./krew-&quot;$&#123;OS&#125;_$&#123;ARCH&#125;&quot; &amp;&amp;</span><br><span class="line">  &quot;$KREW&quot; install krew</span><br><span class="line">)</span><br><span class="line">export PATH=&quot;$&#123;KREW_ROOT:-$HOME/.krew&#125;/bin:$PATH&quot;</span><br></pre></td></tr></table></figure>
-<p>檢查一下結果<br><img src="https://i.imgur.com/vjJjNtE.png"></p>
-<p>利用krew 安裝我比較常用的3個plugin</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl krew install status</span><br><span class="line">kubectl krew install sniff</span><br><span class="line">kubectl krew install view-allocations</span><br></pre></td></tr></table></figure>
-
-<p>下載helm3(kubenetes package manager)的binary</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz</span><br><span class="line">tar -xvf helm-v3.6.3-linux-amd64.tar.gz</span><br><span class="line">sudo mv linux_amd64/helm /usr/bin </span><br></pre></td></tr></table></figure>
-<p>檢查一下結果<br><img src="https://i.imgur.com/zYsVEhO.png"></p>
-<p>到這邊設定完，就接近我平常使用的環境囉~接下來應該對我來說應該可以順一點，明天再接著佈署的動作。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>原本想說只是做做lab而已，這些都可以偷懶反正這台筆電也不常用……試了幾天馬上就後悔了，只好補上這個插曲。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/13/ithome-13th-day13/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -958,11 +804,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -984,7 +830,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:02:09" itemprop="dateModified" datetime="2021-11-16T12:02:09+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:03" itemprop="dateModified" datetime="2021-11-16T19:29:03+08:00">2021-11-16</time>
       </span>
 
   
@@ -997,35 +843,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day12，YAML-Engineer-初登板"><a href="#Day12，YAML-Engineer-初登板" class="headerlink" title="Day12，YAML Engineer 初登板"></a>Day12，YAML Engineer 初登板</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天準備來將Day04、Day06的東西佈署上來。<br>先寫個namespace的yaml之後，東西會放在這個namespace底下</p>
-<blockquote>
-<p>這些所有的yaml都是執行 kubectl apply -f xxxx.yml</p>
-</blockquote>
-<p>ithomelab-ns.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Namespace</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab</span></span><br></pre></td></tr></table></figure>
-<p>這邊的話因為資料庫連線字串的考量，程式的部分是設計在Production讀取環境變數取得connection string(開發時讀appsettings.json)，而這邊則是使用configMap將connection string儲存起來，供之後deployment的環境變數讀取。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">### 程式碼片段</span></span><br><span class="line"><span class="keyword">if</span>(Environment.GetEnvironmentVariable(<span class="string">&quot;ASPNETCORE_ENVIRONMENT&quot;</span>)==<span class="string">&quot;Production&quot;</span>)</span><br><span class="line">    services.AddDbContext&lt;BloggerContext&gt;(options =&gt; options.UseNpgsql(Environment.GetEnvironmentVariable(<span class="string">&quot;ConnectionStrings&quot;</span>)));</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    services.AddDbContext&lt;BloggerContext&gt;(options =&gt; options.UseNpgsql(<span class="string">&quot;name=ConnectionStrings:DefaultConnection&quot;</span>));</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>再多一點安全考量的話，則可以將這段connection string加密後再放入configMap，不過程式端也要實作對應的解密就對了。</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create cm apicm --from-file=api-day04-cm -n ithomelab</span><br></pre></td></tr></table></figure>
-
-<p>Day04 API的deployment，api-day04-deploy.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-api-deployment</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">ithomelab-api</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">ithomelab-api</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">ithomelab-api</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">api</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">registry.gitlab.com/gurubear-ithome-13th/homelabapi:Release-v0.0.1</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ASPNETCORE_ENVIRONMENT</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">&quot;Production&quot;</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">TZ</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">&quot;Asia/Taipei&quot;</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ConnectionStrings</span></span><br><span class="line">          <span class="attr">valueFrom:</span></span><br><span class="line">           <span class="attr">configMapKeyRef:</span></span><br><span class="line">             <span class="attr">name:</span> <span class="string">apicm</span></span><br><span class="line">             <span class="attr">key:</span> <span class="string">api-day04-cm</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">7777</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>將API運行起來後，確實有讀到<br><img src="https://i.imgur.com/UiHbrgM.png"></p>
-<p>使用Port-forward 檢查看看有沒有正確顯示API出來。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl port-forward ithomelab-api-deployment-7bb967b947-xqgpb 7777:7777 -n ithomelab</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/NmDvzp9.png"><br>一切正常，所以如法炮製佈署Day06的react+nginx deployment，react-day06-deploy.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-react-deployment</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">ithomelab-react</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">ithomelab-react</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">ithomelab-react</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">react</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">registry.gitlab.com/gurubear-ithome-13th/homelabreact:Release-v0.0.1</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">TZ</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">&quot;Asia/Taipei&quot;</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>最後將兩個deployment接出ClusterIP type的service，分別如下：<br>ithomelab-api-svc.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">ithomelab-api</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-api-deployment</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">7777</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">ithomelab-api</span></span><br><span class="line">  <span class="attr">sessionAffinity:</span> <span class="string">None</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">ClusterIP</span></span><br></pre></td></tr></table></figure>
-<p>ithomelab-react-svc.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">ithomelab-react</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-react-deployment</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">ithomelab-react</span></span><br><span class="line">  <span class="attr">sessionAffinity:</span> <span class="string">None</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">ClusterIP</span></span><br></pre></td></tr></table></figure>
-<p>檢查一下service&amp;endpoint的關係<br><img src="https://i.imgur.com/F7F5720.png"></p>
-<p>最後總結一下今天佈署的內容<br><img src="https://i.imgur.com/fdRgLxF.png"></p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>突然想到提一下，因為這邊都是從public registry去pull image所以沒有權限的問題，如果要從<strong>private registry</strong>去pull的話就需要<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod">imagePullSecrets</a>，而在gitlab上我習慣使用deploy tokens來做為帳密使用。</p>
-
+          <h1 id="Day12，YAML-Engineer-初登板"><a href="#Day12，YAML-Engineer-初登板" class="headerlink" title="Day12，YAML Engineer 初登板"></a>Day12，YAML Engineer 初登板</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天準備來將Day04、Day06的東西佈署上來。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/12/ithome-13th-day12/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1056,11 +882,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1082,7 +908,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:01:39" itemprop="dateModified" datetime="2021-11-16T12:01:39+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:09" itemprop="dateModified" datetime="2021-11-16T19:29:09+08:00">2021-11-16</time>
       </span>
 
   
@@ -1095,40 +921,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day11，看法講完後該安裝了"><a href="#Day11，看法講完後該安裝了" class="headerlink" title="Day11，看法講完後該安裝了"></a>Day11，看法講完後該安裝了</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>目前Kubernetes的安裝方式有很多種可以參考CNCF Landscape中的certified installer<br><img src="https://i.imgur.com/BWvQcj2.png"></p>
-<p>也可以參考高塔(kelseyhightower)大神的<a target="_blank" rel="noopener" href="https://github.com/kelseyhightower/kubernetes-the-hard-way">kubernetes the hardway</a>，透過binary安裝有助於熟悉各個元件。</p>
-<p>也可以用官方文件教學所使用的kubeadm，kubeadm早在1.13版本時就已經GA了，現下很多installer也都是基於kubeadm做延伸佈署。</p>
-<p>我自己是認為沒有誰優誰劣、只有適與不適的評估。</p>
-<p>我這次的lab則是選用kubespray安裝</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/kubernetes-sigs/kubespray/archive/refs/tags/v2.16.0.tar.gz</span><br><span class="line">tar -xvf v2.16.0.tar.gz</span><br><span class="line">cd kubespray-2.16.0/</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 根據步驟</span></span></span><br><span class="line"></span><br><span class="line">sudo pip3 install -r requirements.txt</span><br><span class="line"></span><br><span class="line">cp -rfp inventory/sample inventory/ithomelab</span><br><span class="line"></span><br><span class="line">declare -a IPS=(192.168.1.231 192.168.1.232 192.168.1.233 192.168.1.234 192.168.1.235)</span><br><span class="line"></span><br><span class="line">CONFIG_FILE=inventory/ithomelab/hosts.yml python3 contrib/inventory_builder/inventory.py $&#123;IPS[@]&#125;</span><br></pre></td></tr></table></figure>
-
-<p>修改下列的檔案:</p>
-<ul>
-<li><code>inventory\ithomelab\hosts.yml</code> </li>
-<li><code>inventory\ithomelab\group_vars\etcd.yml</code></li>
-<li><code>inventory\ithomelab\group_vars\k8s_cluster\k8s_cluster.yml</code></li>
-<li><code>inventory\ithomelab\group_vars\k8s_cluster\addons.yml</code></li>
-<li><code>inventory\ithomelab\group_vars\k8s_cluster\k8s-net-calico.yml</code></li>
-</ul>
-<p>調整的內容就不細講了，大家思考自己想做啥就好</p>
-<p>先用我的筆電對每台機器設定non-password login</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#user皆相同（包含筆電）</span></span></span><br><span class="line">ssh-copy-id 192.168.1.231</span><br><span class="line">ssh-copy-id 192.168.1.232</span><br><span class="line">ssh-copy-id 192.168.1.233</span><br><span class="line">ssh-copy-id 192.168.1.234</span><br><span class="line">ssh-copy-id 192.168.1.235</span><br></pre></td></tr></table></figure>
-<p>執行playbook</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook -i inventory/ithomelab/hosts.yml  --become --become-user=root cluster.yml -K</span><br></pre></td></tr></table></figure>
-<p>執行完成的畫面(如果順的話應該不會太久，但我的過程中家裡網路不太穩定花了比較多的時間再拉取外部的image上甚至fail需要retry)<br><img src="https://i.imgur.com/ULHmRm1.png"></p>
-<p>佈署的過程與完成後可以看到使用VMWare的機器記憶體使用的如預期一般。(VM分別是4Gx4+8Gx1)<br><img src="https://i.imgur.com/U16pSkl.png"></p>
-<p>佈署完成後需要去安裝Kubectl，並從master上複製admin.conf放置於要使用kubectl的機器上，<code>/home/user/.kube/config</code>，然後記得修改Master的IP。(後續也可以改用service account token的方式產出kubeconfig)</p>
-<p>之後先設定一下kubectl於bash的auto completed</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source &lt;(kubectl completion bash) </span><br><span class="line">echo &quot;source &lt;(kubectl completion bash)&quot; &gt;&gt; ~/.bashrc </span><br></pre></td></tr></table></figure>
-
-<p>最後檢查一下節點<br><img src="https://i.imgur.com/7MHUcWG.png"></p>
-<p>看一下佈署完的所有Pod<br><img src="https://i.imgur.com/ibDmMLI.png"></p>
-<p>檢查一下metrics server addons是否正常<br><img src="https://i.imgur.com/F9r1emz.png"></p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>原本想試看看在社群中呼聲很高的CRI-O，但遇到了些問題一直失敗，然後網路又一直斷很不開心，只好先放著了。今天是打完疫苗的隔天，雖然沒有像被車撞過這麼誇張，不過仍處在無力的狀態。</p>
-<p>然後聽說晚上颱風有可能會停電，趕緊上來PO文，結束這一天。</p>
-
+          <h1 id="Day11，看法講完後該安裝了"><a href="#Day11，看法講完後該安裝了" class="headerlink" title="Day11，看法講完後該安裝了"></a>Day11，看法講完後該安裝了</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/11/ithome-13th-day11/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

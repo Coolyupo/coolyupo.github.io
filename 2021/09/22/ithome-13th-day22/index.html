@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,13 +21,13 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day22，Cert-Manager正文既上次 Day 16 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出.well-knownpath在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。 首先為這次的實驗，我先從godadd">
+<meta name="description" content="Day22，Cert-Manager正文既上次 Day 16 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出.well-knownpath在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager">
 <meta property="og:url" content="http://example.com/2021/09/22/ithome-13th-day22/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:description" content="Day22，Cert-Manager正文既上次 Day 16 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出.well-knownpath在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。 首先為這次的實驗，我先從godadd">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Day22，Cert-Manager正文既上次 Day 16 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出.well-knownpath在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/qfC34yV.png">
 <meta property="og:image" content="https://i.imgur.com/wDcQTjg.png">
 <meta property="og:image" content="https://i.imgur.com/4Hu1IMG.png">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://i.imgur.com/Tg8TcFM.png">
 <meta property="og:image" content="https://i.imgur.com/yQkWU3W.png">
 <meta property="article:published_time" content="2021-09-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:37:29.082Z">
+<meta property="article:modified_time" content="2021-11-16T11:28:07.217Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -48,10 +48,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/22/ithome-13th-day22/","path":"2021/09/22/ithome-13th-day22/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/22/ithome-13th-day22/","path":"2021/09/22/ithome-13th-day22/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager | 阿熊的日常筆記</title>
   
 
 
@@ -80,9 +80,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -136,7 +137,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -186,17 +187,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/22/ithome-13th-day22/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -218,7 +219,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:37:29" itemprop="dateModified" datetime="2021-11-16T12:37:29+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:07" itemprop="dateModified" datetime="2021-11-16T19:28:07+08:00">2021-11-16</time>
       </span>
 
   
@@ -232,6 +233,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="Day22，Cert-Manager"><a href="#Day22，Cert-Manager" class="headerlink" title="Day22，Cert-Manager"></a>Day22，Cert-Manager</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>既上次 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10265212">Day 16</a> 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出<code>.well-known</code>path在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。</p>
+<span id="more"></span>
 <p>首先為這次的實驗，我先從godaddy租了一個(首年)99元的憑證，因為預計是要透過cloudflare託管的，需要去注意一下domain的level是要能夠被cloudflare支援的。而domain託管的意思就是修改原domain供應商的dns server，將其修改設定為透過cloudflare的dns。<br><img src="https://i.imgur.com/qfC34yV.png"></p>
 <blockquote>
 <p>如果明年沒打算要續用，記得都要去取消自動續約喔。</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,13 +21,13 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day15，設定一下Ingress正文在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。 而Ingress controller 則是在Kubernet">
+<meta name="description" content="Day15，設定一下Ingress正文在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day15，設定一下Ingress">
 <meta property="og:url" content="http://example.com/2021/09/15/ithome-13th-day15/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:description" content="Day15，設定一下Ingress正文在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。 而Ingress controller 則是在Kubernet">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Day15，設定一下Ingress正文在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/L2KSrUH.png">
 <meta property="og:image" content="https://i.imgur.com/tdSEgz8.png">
 <meta property="og:image" content="https://i.imgur.com/ZX3ZBHC.png">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://i.imgur.com/BamGncy.png">
 <meta property="og:image" content="https://i.imgur.com/6UmuC1r.png">
 <meta property="article:published_time" content="2021-09-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T04:03:51.518Z">
+<meta property="article:modified_time" content="2021-11-16T11:28:40.279Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -48,10 +48,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/15/ithome-13th-day15/","path":"2021/09/15/ithome-13th-day15/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day15，設定一下Ingress"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/15/ithome-13th-day15/","path":"2021/09/15/ithome-13th-day15/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day15，設定一下Ingress"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day15，設定一下Ingress | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day15，設定一下Ingress | 阿熊的日常筆記</title>
   
 
 
@@ -80,9 +80,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -136,7 +137,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -186,17 +187,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/ithome-13th-day15/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -218,7 +219,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 12:03:51" itemprop="dateModified" datetime="2021-11-16T12:03:51+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:28:40" itemprop="dateModified" datetime="2021-11-16T19:28:40+08:00">2021-11-16</time>
       </span>
 
   
@@ -232,6 +233,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="Day15，設定一下Ingress"><a href="#Day15，設定一下Ingress" class="headerlink" title="Day15，設定一下Ingress"></a>Day15，設定一下Ingress</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。</p>
+<span id="more"></span>
+
 <p>而Ingress controller 則是在Kubernetes中被提出的一種solution，以api yaml的方式撰寫規則，背後透過controller進行轉譯，從而達到想要的reverse proxy效果。</p>
 <p>目前檯面上的Ingress class 也有許多種選擇如nginx、haproxy、traefik、kong等等……<br>我這邊選擇的是我常用ingress-nginx，選擇的考量其實也很單純，在還未導入Kubernetes的前，nginx &amp; kong 算是一直以來就比較常接觸的工具，其中Kong的定義為Api Gateway，雖說與nginx也頗有淵源，也能夠達到類似效果，但與nginx不同的是更著重在<strong>API控管</strong>這一塊，如身份驗證、流量控制，等等眾多plugin……</p>
 <blockquote>

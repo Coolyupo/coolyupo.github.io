@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -21,17 +21,17 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day03，Model摸象正文我預計做的是一個很簡易的post&#x2F;get application，而目前只預計會有4隻極度簡陋的API。  HttpGet-文章清單 HttpGet-文章內容 HttpPost-新增文章 HttpPost-新增使用者  其中HttpPost，將只會限縮在內網(預計使用postman&#x2F;swagger，前端實在有點障礙)，所以對外只會有兩個公開的GET API，權限的部分">
+<meta name="description" content="Day03，Model摸象正文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象">
 <meta property="og:url" content="http://example.com/2021/09/03/ithome-13th-day03/index.html">
-<meta property="og:site_name" content="阿熊的空間">
-<meta property="og:description" content="Day03，Model摸象正文我預計做的是一個很簡易的post&#x2F;get application，而目前只預計會有4隻極度簡陋的API。  HttpGet-文章清單 HttpGet-文章內容 HttpPost-新增文章 HttpPost-新增使用者  其中HttpPost，將只會限縮在內網(預計使用postman&#x2F;swagger，前端實在有點障礙)，所以對外只會有兩個公開的GET API，權限的部分">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Day03，Model摸象正文">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/RFW0Ezx.png">
 <meta property="og:image" content="https://i.imgur.com/93CYQoO.png">
 <meta property="article:published_time" content="2021-09-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T03:58:38.738Z">
+<meta property="article:modified_time" content="2021-11-16T11:29:46.021Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
@@ -42,10 +42,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/09/03/ithome-13th-day03/","path":"2021/09/03/ithome-13th-day03/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/03/ithome-13th-day03/","path":"2021/09/03/ithome-13th-day03/","title":"HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象 | 阿熊的空間</title>
+<title>HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象 | 阿熊的日常筆記</title>
   
 
 
@@ -74,9 +74,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">阿熊的空間</h1>
+      <h1 class="site-title">阿熊的日常筆記</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
   </div>
 
   <div class="site-nav-right">
@@ -130,7 +131,7 @@
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">GuruBear</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
@@ -180,17 +181,17 @@
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/03/ithome-13th-day03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的空間">
+      <meta itemprop="name" content="阿熊的日常筆記">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -212,7 +213,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 11:58:38" itemprop="dateModified" datetime="2021-11-16T11:58:38+08:00">2021-11-16</time>
+        <time title="Modified: 2021-11-16 19:29:46" itemprop="dateModified" datetime="2021-11-16T19:29:46+08:00">2021-11-16</time>
       </span>
 
   
@@ -225,7 +226,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day03，Model摸象"><a href="#Day03，Model摸象" class="headerlink" title="Day03，Model摸象"></a>Day03，Model摸象</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>我預計做的是一個很簡易的post/get application，而目前只預計會有<strong>4隻極度簡陋的API</strong>。</p>
+        <h1 id="Day03，Model摸象"><a href="#Day03，Model摸象" class="headerlink" title="Day03，Model摸象"></a>Day03，Model摸象</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><span id="more"></span>
+<p>我預計做的是一個很簡易的post/get application，而目前只預計會有<strong>4隻極度簡陋的API</strong>。</p>
 <ul>
 <li>HttpGet-文章清單</li>
 <li>HttpGet-文章內容</li>
