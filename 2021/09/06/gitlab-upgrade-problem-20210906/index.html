@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="原因將Gitlab從13.X版更新至14.X，部分專案路徑於資料庫內未被修正為Hashed storage位置(實體檔案卻有修正成功)，該類型專案因查無路徑檔案而被設定為readonly。 解決方式將該ruby檔案置放於container內&#x2F;tmp目錄可參考&#x2F;tmp&#x2F;fix-legacy-hashed-storage-migration.rb 123456789101112131415161718">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitlab upgrade problem(solved_20210906)">
+<meta property="og:url" content="http://example.com/2021/09/06/gitlab-upgrade-problem-20210906/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="原因將Gitlab從13.X版更新至14.X，部分專案路徑於資料庫內未被修正為Hashed storage位置(實體檔案卻有修正成功)，該類型專案因查無路徑檔案而被設定為readonly。 解決方式將該ruby檔案置放於container內&#x2F;tmp目錄可參考&#x2F;tmp&#x2F;fix-legacy-hashed-storage-migration.rb 123456789101112131415161718">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/v0Mb5yl.jpg">
+<meta property="og:image" content="https://i.imgur.com/fuZpsLl.png">
+<meta property="og:image" content="https://i.imgur.com/PMIO57d.png">
+<meta property="og:image" content="https://i.imgur.com/PQSdxPo.png">
+<meta property="article:published_time" content="2021-09-06T03:43:04.000Z">
+<meta property="article:modified_time" content="2021-11-17T03:54:55.717Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="gitlab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/v0Mb5yl.jpg">
+
+
+<link rel="canonical" href="http://example.com/2021/09/06/gitlab-upgrade-problem-20210906/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/09/06/gitlab-upgrade-problem-20210906/","path":"2021/09/06/gitlab-upgrade-problem-20210906/","title":"gitlab upgrade problem(solved_20210906)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>gitlab upgrade problem(solved_20210906) | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%B1%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">解決方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90%E6%AD%A4%E6%AC%A1%E5%95%8F%E9%A1%8C%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">總結此次問題：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%86%E8%A8%98"><span class="nav-number">4.</span> <span class="nav-text">筆記</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/06/gitlab-upgrade-problem-20210906/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          gitlab upgrade problem(solved_20210906)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-06 11:43:04" itemprop="dateCreated datePublished" datetime="2021-09-06T11:43:04+08:00">2021-09-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-17 11:54:55" itemprop="dateModified" datetime="2021-11-17T11:54:55+08:00">2021-11-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>將Gitlab從13.X版更新至14.X，部分專案路徑於資料庫內未被修正為Hashed storage位置(實體檔案卻有修正成功)，該類型專案因查無路徑檔案而被設定為readonly。</p>
+<h2 id="解決方式"><a href="#解決方式" class="headerlink" title="解決方式"></a>解決方式</h2><p>將該ruby檔案置放於container內/tmp目錄<br><a target="_blank" rel="noopener" href="https://gitlab.com/-/snippets/2039252">可參考</a><br>/tmp/fix-legacy-hashed-storage-migration.rb</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Find all projects that GitLab thinks is in legacy storage</span></span><br><span class="line">Project.without_storage_feature(<span class="symbol">:repository</span>).find_each(<span class="symbol">batch_size:</span> <span class="number">10</span>) <span class="keyword">do</span> <span class="params">|p|</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Generate the hashed path</span></span><br><span class="line">    hash_path = Storage::Hashed.new(p).disk_path</span><br><span class="line">    storage = Gitlab.config.repositories.storages[p.repository.shard]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Enable access</span></span><br><span class="line">    Gitlab::GitalyClient::StorageSettings.allow_disk_access <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Put a wildcard on the end so we find .git, .wiki.git and .design.git</span></span><br><span class="line">        full_hashed_path = File.expand_path(File.join(storage.legacy_disk_path, hash_path + <span class="string">&#x27;*&#x27;</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># If any repos already exist in hashed storage, complete the migration</span></span><br><span class="line">        <span class="keyword">if</span>(!Dir.glob(full_hashed_path).empty?)</span><br><span class="line">            puts <span class="string">&quot;Fixing ID:<span class="subst">#&#123;p.id&#125;</span> <span class="subst">#&#123;p.full_name&#125;</span> - <span class="subst">#&#123;full_hashed_path&#125;</span>&quot;</span></span><br><span class="line">        </span><br><span class="line">            <span class="comment"># Set the repo to read only if it isn&#x27;t already</span></span><br><span class="line">            <span class="keyword">if</span>(!p.repository_read_only)</span><br><span class="line">                p.set_repository_read_only!</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">            p.storage_version = <span class="symbol">:</span><span class="symbol">:Project</span><span class="symbol">:</span><span class="symbol">:HASHED_STORAGE_FEATURES</span>[<span class="symbol">:repository</span>]</span><br><span class="line"></span><br><span class="line">            p.reload_repository!</span><br><span class="line">            p.write_repository_config</span><br><span class="line">            p.track_project_repository</span><br><span class="line"></span><br><span class="line">            p.repository_read_only = <span class="literal">false</span></span><br><span class="line">            p.save!(<span class="symbol">validate:</span> <span class="literal">false</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>從外面執行<br><code>docker exec -it 266860395d41 bin/rails runner /tmp/fix-legacy-hashed-storage-migration.rb</code></p>
+<p><img src="https://i.imgur.com/v0Mb5yl.jpg"></p>
+<p><strong>修復完畢，配合下列方式檢查</strong>：</p>
+<ol>
+<li>使用 gitlab rake 做檢查，先進入container內<br><code>docker exec -it 266860395d41 sh</code><br>執行<br><code>bin/bundle exec rake gitlab:storage:list_legacy_projects</code><br><img src="https://i.imgur.com/fuZpsLl.png"><br>執行<br><code>bin/bundle exec rake gitlab:storage:list_legacy_attachments</code><br><img src="https://i.imgur.com/PMIO57d.png"></li>
+</ol>
+<ol start="2">
+<li>使用gitlab-rails console 檢查 project readonly狀態，從外部執行<br><code>docker exec -it 266860395d41 bin/rails console</code><br>找個異常project確認其狀態非readonly(值為false)，循序輸入 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p = Project.find_by_full_path(<span class="string">&quot;xxxxxx/xxxxxx&quot;</span>)</span><br><span class="line">p.repository_read_only</span><br></pre></td></tr></table></figure>
+ <img src="https://i.imgur.com/PQSdxPo.png"></li>
+</ol>
+<h2 id="總結此次問題："><a href="#總結此次問題：" class="headerlink" title="總結此次問題："></a>總結此次問題：</h2><p>自Gitlab 12開始將Git的存放路徑方式預設改為hashed storage，早期Gitlab為legacy storage，直至Gitlab 13時兩種storage type仍皆support，但Gitlab 14時便刪除對legacy storage的支援，再Omnibus GitLab升級的過程中，其實是有執行legacy轉hashed的migration，但migration的過程遺漏部分project的database的update(目錄是有轉移的)，才有今天的問題。</p>
+<h2 id="筆記"><a href="#筆記" class="headerlink" title="筆記"></a>筆記</h2><p>sameersbn gitlab(Omnibus GitLab)的rails console 進入方式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 266860395d41 bin/rails console</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/administration/operations/rails_console.html">Rails Console內可用的語法</a></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">p = Project.find_by_name(<span class="string">&quot;AAAAAAAAA&quot;</span>) /<span class="regexp">/從名字找(容易找錯)</span></span><br><span class="line"><span class="regexp">p.repository_read_only</span></span><br><span class="line"><span class="regexp">p.disk_path</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">p = Project.find_by_full_path(&quot;BBBBBBBBBBB/</span>AAAAAAAAA<span class="string">&quot;)  //從Full Path找</span></span><br><span class="line"><span class="string">p.repository_read_only</span></span><br><span class="line"><span class="string">p.disk_path</span></span><br><span class="line"><span class="string">p.update!(repository_read_only:false)</span></span><br></pre></td></tr></table></figure>
+
+<p>sameersbn gitlab rake online使用方式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 266860395d41 sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># list legacy project</span></span></span><br><span class="line">bin/bundle exec rake gitlab:storage:list_legacy_projects</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># list legacy attachments</span></span></span><br><span class="line">bin/bundle exec rake gitlab:storage:list_legacy_attachments</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Migrate legacy to hashed</span></span></span><br><span class="line"></span><br><span class="line">bin/bundle exec rake gitlab:storage:migrate_to_hashed</span><br><span class="line"></span><br><span class="line">bin/bundle exec rake gitlab:storage:migrate_to_hashed ID_FROM=28 ID_TO=28</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>hashed stroage的規則是sha256(project.id)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sha256(123)=</span><br><span class="line">a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># project.disk_path</span></span></span><br><span class="line">@hashed/a6/65/a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3</span><br></pre></td></tr></table></figure>
+
+<p>Admin =&gt; Monitoring =&gt; Background job =&gt; 可找到 migrate_to_hashed 細節。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/gitlab/" rel="tag"># gitlab</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/06/ithome-13th-day06/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day06，將昨日的靜態頁面打包">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day06，將昨日的靜態頁面打包
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/07/ithome-13th-day07/" rel="next" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day07，搭配gitlab-ci執行image auto build">
+                  HomeLab 30天，胡搞瞎搞亂弄一通，Day07，搭配gitlab-ci執行image auto build <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"ae3a3b403035ec65763f0f369a181f2f"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

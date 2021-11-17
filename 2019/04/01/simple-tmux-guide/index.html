@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="simple tmux guide新增Pannel ctrl + b    shift + &quot;    切換Pannel ctrl + b  pgup or ctrl + b  pgdn   刪除當前Pannel ctrl + b x   設定Pannel同步 ctrl + b shift + :  set synchronize-panes on  取消Pannel同步 ctrl + b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="simple tmux guide">
+<meta property="og:url" content="http://example.com/2019/04/01/simple-tmux-guide/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="simple tmux guide新增Pannel ctrl + b    shift + &quot;    切換Pannel ctrl + b  pgup or ctrl + b  pgdn   刪除當前Pannel ctrl + b x   設定Pannel同步 ctrl + b shift + :  set synchronize-panes on  取消Pannel同步 ctrl + b">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/jbNCEz1.png">
+<meta property="og:image" content="https://i.imgur.com/QjFu72S.png">
+<meta property="og:image" content="https://i.imgur.com/FUEyrol.png">
+<meta property="og:image" content="https://i.imgur.com/jfXnUgL.png">
+<meta property="og:image" content="https://i.imgur.com/6UTypFw.png">
+<meta property="og:image" content="https://i.imgur.com/RUCFAfa.png">
+<meta property="og:image" content="https://i.imgur.com/VHZzsYw.png">
+<meta property="og:image" content="https://i.imgur.com/shfjQ0V.png">
+<meta property="article:published_time" content="2019-04-01T04:13:05.000Z">
+<meta property="article:modified_time" content="2021-11-17T04:17:43.459Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="tmux">
+<meta property="article:tag" content="wsl1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/jbNCEz1.png">
+
+
+<link rel="canonical" href="http://example.com/2019/04/01/simple-tmux-guide/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2019/04/01/simple-tmux-guide/","path":"2019/04/01/simple-tmux-guide/","title":"simple tmux guide"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>simple tmux guide | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#simple-tmux-guide"><span class="nav-number">1.</span> <span class="nav-text">simple tmux guide</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9EPannel"><span class="nav-number">1.1.</span> <span class="nav-text">新增Pannel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8F%9BPannel"><span class="nav-number">1.2.</span> <span class="nav-text">切換Pannel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%AA%E9%99%A4%E7%95%B6%E5%89%8DPannel"><span class="nav-number">1.3.</span> <span class="nav-text">刪除當前Pannel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9APannel%E5%90%8C%E6%AD%A5"><span class="nav-number">1.4.</span> <span class="nav-text">設定Pannel同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E6%B6%88Pannel%E5%90%8C%E6%AD%A5"><span class="nav-number">1.5.</span> <span class="nav-text">取消Pannel同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%A9%E7%95%B6%E5%9C%B0%E8%AA%BF%E6%95%B4Panel%E7%95%AB%E9%9D%A2"><span class="nav-number">1.6.</span> <span class="nav-text">適當地調整Panel畫面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%9B%B4%E5%A4%9A%E6%8C%87%E4%BB%A4"><span class="nav-number">1.7.</span> <span class="nav-text">其他更多指令</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/01/simple-tmux-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          simple tmux guide
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-04-01 12:13:05" itemprop="dateCreated datePublished" datetime="2019-04-01T12:13:05+08:00">2019-04-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-17 12:17:43" itemprop="dateModified" datetime="2021-11-17T12:17:43+08:00">2021-11-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="simple-tmux-guide"><a href="#simple-tmux-guide" class="headerlink" title="simple tmux guide"></a>simple <em>tmux</em> guide</h1><h2 id="新增Pannel"><a href="#新增Pannel" class="headerlink" title="新增Pannel"></a>新增Pannel</h2><ol>
+<li><code>ctrl + b</code>    <code>shift + &quot;</code> </li>
+</ol>
+<p><img src="https://i.imgur.com/jbNCEz1.png"></p>
+<h2 id="切換Pannel"><a href="#切換Pannel" class="headerlink" title="切換Pannel"></a>切換Pannel</h2><ol>
+<li><code>ctrl + b</code>  <code>pgup</code> or <code>ctrl + b</code>  <code>pgdn</code> </li>
+</ol>
+<h2 id="刪除當前Pannel"><a href="#刪除當前Pannel" class="headerlink" title="刪除當前Pannel"></a>刪除當前Pannel</h2><ol>
+<li><code>ctrl + b</code> <code>x</code></li>
+</ol>
+<p><img src="https://i.imgur.com/QjFu72S.png"></p>
+<h2 id="設定Pannel同步"><a href="#設定Pannel同步" class="headerlink" title="設定Pannel同步"></a>設定Pannel同步</h2><ol>
+<li><code>ctrl + b</code> <code>shift + :</code> </li>
+<li><code>set synchronize-panes on</code></li>
+</ol>
+<h2 id="取消Pannel同步"><a href="#取消Pannel同步" class="headerlink" title="取消Pannel同步"></a>取消Pannel同步</h2><ol>
+<li><code>ctrl + b</code> <code>shift + :</code></li>
+<li><code>set synchronize-panes off</code></li>
+</ol>
+<p><img src="https://i.imgur.com/FUEyrol.png"></p>
+<h2 id="適當地調整Panel畫面"><a href="#適當地調整Panel畫面" class="headerlink" title="適當地調整Panel畫面"></a>適當地調整Panel畫面</h2><p>有5個常用的預設指令可以使用，首先使用tmux產出5個Pannel，接著使用下列指令。</p>
+<ol>
+<li><code>ctrl + b</code> <code>alt + 1</code></li>
+</ol>
+<p><img src="https://i.imgur.com/jfXnUgL.png"></p>
+<ol start="2">
+<li><code>ctrl + b</code> <code>alt + 2</code></li>
+</ol>
+<p><img src="https://i.imgur.com/6UTypFw.png"></p>
+<ol start="3">
+<li><code>ctrl + b</code> <code>alt + 3</code></li>
+</ol>
+<p><img src="https://i.imgur.com/RUCFAfa.png"></p>
+<ol start="4">
+<li><code>ctrl + b</code> <code>alt + 4</code></li>
+</ol>
+<p><img src="https://i.imgur.com/VHZzsYw.png"></p>
+<ol start="5">
+<li><code>ctrl + b</code> <code>alt + 5</code> (平均分割)</li>
+</ol>
+<p><img src="https://i.imgur.com/shfjQ0V.png"></p>
+<h2 id="其他更多指令"><a href="#其他更多指令" class="headerlink" title="其他更多指令"></a>其他更多指令</h2><p><a target="_blank" rel="noopener" href="https://gist.github.com/ryerh/14b7c24dfd623ef8edc7">網友分享</a><br><a target="_blank" rel="noopener" href="https://larrylu.blog/tmux-33a24e595fbc">tmux 介紹</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tmux/" rel="tag"># tmux</a>
+              <a href="/tags/wsl1/" rel="tag"># wsl1</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/09/oop-note/" rel="prev" title="SOLID筆記">
+                  <i class="fa fa-chevron-left"></i> SOLID筆記
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/01/keepalived-story/" rel="next" title="keepalived的小故事">
+                  keepalived的小故事 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"f9c2fc91d2570ab8bc09aa99637f49f1"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
