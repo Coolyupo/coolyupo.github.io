@@ -21,18 +21,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Keepalived的編譯小故事前情提要 在Ubuntu 18.04 透過apt-get install下來的keepalived 預設搭載的是v1.3.9，可是這個版本在18.04上VIP failover會有bug(被systemd-networkd干擾)。可以在有VIP的機器上面，透過幾個指令檢查。   檢查keepalived狀態 1systemctl status keepalived">
+<meta name="description" content="Keepalived的編譯小故事前情提要 在Ubuntu 18.04 透過apt-get install下來的keepalived 預設搭載的是v1.3.9，可是這個版本在18.04上VIP failover會有bug(被systemd-networkd干擾)。可以在有VIP的機器上面，透過幾個指令檢查。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="keepalived的小故事">
 <meta property="og:url" content="http://example.com/2019/12/01/keepalived-story/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Keepalived的編譯小故事前情提要 在Ubuntu 18.04 透過apt-get install下來的keepalived 預設搭載的是v1.3.9，可是這個版本在18.04上VIP failover會有bug(被systemd-networkd干擾)。可以在有VIP的機器上面，透過幾個指令檢查。   檢查keepalived狀態 1systemctl status keepalived">
+<meta property="og:description" content="Keepalived的編譯小故事前情提要 在Ubuntu 18.04 透過apt-get install下來的keepalived 預設搭載的是v1.3.9，可是這個版本在18.04上VIP failover會有bug(被systemd-networkd干擾)。可以在有VIP的機器上面，透過幾個指令檢查。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/EkjoFds.png">
 <meta property="og:image" content="https://i.imgur.com/eLUizkG.png">
 <meta property="og:image" content="https://i.imgur.com/QaEj2VH.png">
 <meta property="article:published_time" content="2019-12-01T04:06:04.000Z">
-<meta property="article:modified_time" content="2021-11-17T04:09:37.039Z">
+<meta property="article:modified_time" content="2021-11-17T04:22:47.642Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="keepalived">
 <meta property="article:tag" content="ubuntu18.04">
@@ -215,7 +215,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-17 12:09:37" itemprop="dateModified" datetime="2021-11-17T12:09:37+08:00">2021-11-17</time>
+        <time title="Modified: 2021-11-17 12:22:47" itemprop="dateModified" datetime="2021-11-17T12:22:47+08:00">2021-11-17</time>
       </span>
 
   
@@ -229,7 +229,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="Keepalived的編譯小故事"><a href="#Keepalived的編譯小故事" class="headerlink" title="Keepalived的編譯小故事"></a>Keepalived的編譯小故事</h1><h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><blockquote>
-<p>在Ubuntu 18.04 透過apt-get install下來的keepalived 預設搭載的是v1.3.9，可是這個版本在18.04上VIP failover會有bug(被systemd-networkd干擾)。<br>可以在有VIP的機器上面，透過幾個指令檢查。</p>
+<p>在Ubuntu 18.04 透過apt-get install下來的keepalived 預設搭載的是v1.3.9，可是這個版本在18.04上VIP failover會有bug(被systemd-networkd干擾)。<br>可以在有VIP的機器上面，透過幾個指令檢查。<br> <span id="more"></span></p>
 </blockquote>
 <ol>
 <li>檢查keepalived狀態 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status keepalived</span><br></pre></td></tr></table></figure>
