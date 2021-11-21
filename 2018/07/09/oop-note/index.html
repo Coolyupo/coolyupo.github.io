@@ -21,15 +21,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="過去聽過保哥講座時紀錄下的筆記 抽象：需求-&gt;Class 封裝： public&#x2F;private&#x2F;protected 繼承：重複使用既定class 多型：polymorphism 多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。 Virtual -&gt; 允許被override C# Module &#x3D;&gt; class、method…… 高內聚 Cohesio">
+<meta name="description" content="過去聽過保哥講座時紀錄下的筆記   抽象：需求-&gt;Class 封裝： public&#x2F;private&#x2F;protected 繼承：重複使用既定class 多型：polymorphism 多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。 Virtual -&gt; 允許被override C# Module &#x3D;&gt; class、method…… 高">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SOLID筆記">
 <meta property="og:url" content="http://example.com/2018/07/09/oop-note/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="過去聽過保哥講座時紀錄下的筆記 抽象：需求-&gt;Class 封裝： public&#x2F;private&#x2F;protected 繼承：重複使用既定class 多型：polymorphism 多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。 Virtual -&gt; 允許被override C# Module &#x3D;&gt; class、method…… 高內聚 Cohesio">
+<meta property="og:description" content="過去聽過保哥講座時紀錄下的筆記   抽象：需求-&gt;Class 封裝： public&#x2F;private&#x2F;protected 繼承：重複使用既定class 多型：polymorphism 多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。 Virtual -&gt; 允許被override C# Module &#x3D;&gt; class、method…… 高">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2018-07-09T11:15:21.000Z">
-<meta property="article:modified_time" content="2021-11-17T04:22:53.281Z">
+<meta property="article:modified_time" content="2021-11-21T06:54:45.623Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="SOLID">
 <meta property="article:tag" content="OOP">
@@ -113,7 +113,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -126,6 +126,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#solid"><span class="nav-number">1.</span> <span class="nav-text">SOLID</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -214,7 +215,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-17 12:22:53" itemprop="dateModified" datetime="2021-11-17T12:22:53+08:00">2021-11-17</time>
+        <time title="Modified: 2021-11-21 14:54:45" itemprop="dateModified" datetime="2021-11-21T14:54:45+08:00">2021-11-21</time>
       </span>
 
   
@@ -227,9 +228,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <blockquote>
-<p>過去聽過保哥講座時紀錄下的筆記 抽象：需求-&gt;Class 封裝： public/private/protected 繼承：重複使用既定class 多型：polymorphism 多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。 Virtual -&gt; 允許被override C# Module =&gt; class、method…… <strong>高內聚 Cohesion 一次做一件事情 -&gt; 可獨立運作 低耦合 Coupling 模組與模組之間相依性低，不會互相影響 低耦合 -&gt; 帶來低內聚問題。</strong> <span id="more"></span> ## SOLID</p>
+        <p>過去聽過保哥講座時紀錄下的筆記</p>
+<blockquote>
+<ul>
+<li>抽象：需求-&gt;Class</li>
+<li>封裝： public/private/protected</li>
+<li>繼承：重複使用既定class</li>
+<li>多型：polymorphism</li>
+<li>多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。</li>
+<li>Virtual -&gt; 允許被override</li>
+<li>C# Module =&gt; class、method……</li>
+<li>高內聚 Cohesion 一次做一件事情 -&gt; 可獨立運作</li>
+<li>低耦合 Coupling 模組與模組之間相依性低，不會互相影響</li>
+<li>低耦合 -&gt; 帶來低內聚問題。 <span id="more"></span></li>
+</ul>
 </blockquote>
+<h2 id="solid">SOLID</h2>
 <ul>
 <li><p>原則 可以寫出比較好的程式碼 能夠判斷程式碼的好壞</p>
 <ul>
