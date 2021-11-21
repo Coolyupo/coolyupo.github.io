@@ -21,15 +21,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Ch12 有效故障排除技巧 理論  假設 - 排除手法 從書本上抄寫的理想流程圖(用markdown flowchart.js重新寫了一遍樣式不同、順序一致) 12345678910111213st&#x3D;&gt;start: 故障報告e&#x3D;&gt;end: 修復完成op&#x3D;&gt;operation: 定位op2&#x3D;&gt;operation: 檢查op3&#x3D;&gt;operation: 診斷cond">
+<meta name="description" content="Ch12 有效故障排除技巧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="網站可靠性工程 - Part 2 (O&#39;REILLY ISBN 978-986-476-625-3)">
 <meta property="og:url" content="http://example.com/2021/11/21/study-sre-2/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Ch12 有效故障排除技巧 理論  假設 - 排除手法 從書本上抄寫的理想流程圖(用markdown flowchart.js重新寫了一遍樣式不同、順序一致) 12345678910111213st&#x3D;&gt;start: 故障報告e&#x3D;&gt;end: 修復完成op&#x3D;&gt;operation: 定位op2&#x3D;&gt;operation: 檢查op3&#x3D;&gt;operation: 診斷cond">
+<meta property="og:description" content="Ch12 有效故障排除技巧">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-11-21T04:54:44.000Z">
-<meta property="article:modified_time" content="2021-11-21T05:18:16.195Z">
+<meta property="article:modified_time" content="2021-11-21T06:37:50.314Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="讀書心得">
 <meta name="twitter:card" content="summary">
@@ -125,7 +125,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch12-%E6%9C%89%E6%95%88%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4%E6%8A%80%E5%B7%A7"><span class="nav-number">1.</span> <span class="nav-text">Ch12 有效故障排除技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%AB%96"><span class="nav-number">1.1.</span> <span class="nav-text">理論</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4%E6%9B%B4%E5%AE%B9%E6%98%93"><span class="nav-number">1.2.</span> <span class="nav-text">使故障排除更容易</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch15-%E4%BA%8B%E5%BE%8C%E6%AA%A2%E7%B5%B1%E5%BE%9E%E5%A4%B1%E6%95%97%E4%B8%AD%E5%AD%B8%E7%BF%92"><span class="nav-number">2.</span> <span class="nav-text">Ch15 事後檢統:從失敗中學習</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch16-%E4%BA%8B%E4%BB%B6%E8%BF%BD%E8%B9%A4"><span class="nav-number">3.</span> <span class="nav-text">ch16 事件追蹤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch17-%E6%B8%AC%E8%A9%A6%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">ch17 測試可靠性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%B3%E7%B5%B1%E6%B8%AC%E8%A9%A6"><span class="nav-number">4.1.</span> <span class="nav-text">傳統測試</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch19-%E5%89%8D%E7%AB%AF%E4%BC%BA%E6%9C%8D%E5%99%A8%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1"><span class="nav-number">5.</span> <span class="nav-text">ch19 前端伺服器負載平衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch20-%E8%B3%87%E6%96%99%E4%B8%AD%E5%BF%83%E5%85%A7%E9%83%A8%E7%9A%84%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%E7%B3%BB%E7%B5%B1"><span class="nav-number">6.</span> <span class="nav-text">ch20 資料中心內部的負載平衡系統</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%E5%8E%9F%E5%89%87"><span class="nav-number">6.1.</span> <span class="nav-text">負載平衡原則</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch21-%E8%99%95%E7%90%86%E7%B3%BB%E7%B5%B1%E8%B6%85%E8%BC%89"><span class="nav-number">7.</span> <span class="nav-text">ch21 處理系統超載</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#qps%E9%99%B7%E9%98%B1"><span class="nav-number">7.1.</span> <span class="nav-text">QPS陷阱</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch12-%E6%9C%89%E6%95%88%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4%E6%8A%80%E5%B7%A7"><span class="nav-number">1.</span> <span class="nav-text">Ch12 有效故障排除技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%AB%96"><span class="nav-number">1.1.</span> <span class="nav-text">理論</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4%E6%9B%B4%E5%AE%B9%E6%98%93"><span class="nav-number">1.2.</span> <span class="nav-text">使故障排除更容易</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch15-%E4%BA%8B%E5%BE%8C%E6%AA%A2%E7%B5%B1%E5%BE%9E%E5%A4%B1%E6%95%97%E4%B8%AD%E5%AD%B8%E7%BF%92"><span class="nav-number">2.</span> <span class="nav-text">Ch15 事後檢統:從失敗中學習</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch16-%E4%BA%8B%E4%BB%B6%E8%BF%BD%E8%B9%A4"><span class="nav-number">3.</span> <span class="nav-text">ch16 事件追蹤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch17-%E6%B8%AC%E8%A9%A6%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">ch17 測試可靠性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%B3%E7%B5%B1%E6%B8%AC%E8%A9%A6"><span class="nav-number">4.1.</span> <span class="nav-text">傳統測試</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch19-%E5%89%8D%E7%AB%AF%E4%BC%BA%E6%9C%8D%E5%99%A8%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1"><span class="nav-number">5.</span> <span class="nav-text">ch19 前端伺服器負載平衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch20-%E8%B3%87%E6%96%99%E4%B8%AD%E5%BF%83%E5%85%A7%E9%83%A8%E7%9A%84%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%E7%B3%BB%E7%B5%B1"><span class="nav-number">6.</span> <span class="nav-text">ch20 資料中心內部的負載平衡系統</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E6%83%B3%E6%83%85%E6%B3%81"><span class="nav-number">6.1.</span> <span class="nav-text">理想情況</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AD%98%E5%88%A5%E7%95%B0%E5%B8%B8%E4%BB%BB%E5%8B%99"><span class="nav-number">6.2.</span> <span class="nav-text">識別異常任務</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E9%9B%86%E5%8A%83%E5%88%86%E9%81%B8%E6%93%87%E5%90%88%E9%81%A9%E7%9A%84%E5%AD%90%E9%9B%86"><span class="nav-number">6.3.</span> <span class="nav-text">子集劃分，選擇合適的子集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%E5%8E%9F%E5%89%87"><span class="nav-number">6.4.</span> <span class="nav-text">負載平衡原則</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch21-%E8%99%95%E7%90%86%E7%B3%BB%E7%B5%B1%E8%B6%85%E8%BC%89"><span class="nav-number">7.</span> <span class="nav-text">ch21 處理系統超載</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#qps%E9%99%B7%E9%98%B1"><span class="nav-number">7.1.</span> <span class="nav-text">QPS陷阱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA%E6%AF%8F%E5%80%8B%E4%BD%BF%E7%94%A8%E8%80%85%E8%A8%AD%E5%AE%9A%E9%99%90%E9%A1%8D"><span class="nav-number">7.2.</span> <span class="nav-text">為每個使用者設定限額</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B6%E7%AB%AF%E6%B8%AC%E7%9A%84%E7%AF%80%E6%B5%81%E6%A9%9F%E5%88%B6"><span class="nav-number">7.3.</span> <span class="nav-text">用戶端測的節流機制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%80%A7%E8%AB%8B%E6%B1%82%E9%87%8D%E8%A6%81%E6%80%A7%E6%87%89%E8%A9%B2%E8%A2%AB%E6%A8%99%E8%A8%98"><span class="nav-number">7.4.</span> <span class="nav-text">重要性(請求重要性應該被標記)</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -208,7 +208,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-11-21 12:54:44 / Modified: 13:18:16" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:44+08:00">2021-11-21</time>
+      <time title="Created: 2021-11-21 12:54:44 / Modified: 14:37:50" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:44+08:00">2021-11-21</time>
     </span>
 
   
@@ -222,10 +222,14 @@
     
     <div class="post-body" itemprop="articleBody">
         <h2 id="ch12-有效故障排除技巧">Ch12 有效故障排除技巧</h2>
+<span id="more"></span>
 <h3 id="理論">理論</h3>
 <ul>
 <li>假設 - 排除手法</li>
-<li>從書本上抄寫的理想流程圖(用markdown flowchart.js重新寫了一遍樣式不同、順序一致) <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: 故障報告</span><br><span class="line">e=&gt;end: 修復完成</span><br><span class="line">op=&gt;operation: 定位</span><br><span class="line">op2=&gt;operation: 檢查</span><br><span class="line">op3=&gt;operation: 診斷</span><br><span class="line">cond=&gt;condition: 測試/修復</span><br><span class="line">cond2=&gt;condition: 情況是否改變</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;op2-&gt;op3-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;cond2</span><br><span class="line">cond2(yes)-&gt;op</span><br><span class="line">cond2(no)-&gt;op2</span><br></pre></td></tr></table></figure></li>
+<li>從書本上抄寫的理想流程圖(用markdown flowchart.js重新寫了一遍樣式不同、順序一致)
+<div id="flowchart-0" class="flow-chart">
+
+</div></li>
 <li>常見陷阱
 <ul>
 <li>誤解(不當理解)系統故障的現象，浪費錯誤預算</li>
@@ -353,12 +357,41 @@
 </ul>
 <h2 id="ch19-前端伺服器負載平衡">ch19 前端伺服器負載平衡</h2>
 <blockquote>
-<p>GSLB(by ip)、traffic load balancer、可能會根據RTT(封包往返時間)?、資源使用率、TCP/HTTP stateless - 使用DNS進行負載平衡 - A/AAAA Record (Round Robin) - 簡單但問題多 - GSLB (Global Server Load-Balance) - 使用者 =&gt; 遞迴解析伺服器(recursive nameserver) =&gt; 權威伺服器(authoritative nameserver) - 目的是回傳最近的IP(TTL、解析器背後GEO IP、離使用者最近的位置) - 會有一些問題 - DNS伺服器額外快取的問題 - 要解決從遞迴解析伺服器傳送到權威伺服器上時，能夠帶上真正使用者終端的IP(我們常講的Client IP保存問題) - 虛擬IP負載平衡(network load balancer) - 指的就是像keepalived+nginx這種東西</p>
+<p>GSLB(by ip)、traffic load balancer、可能會根據RTT(封包往返時間)?、資源使用率、TCP/HTTP stateless</p>
 </blockquote>
+<ul>
+<li>使用DNS進行負載平衡
+<ul>
+<li>A/AAAA Record (Round Robin)
+<ul>
+<li>簡單但問題多</li>
+</ul></li>
+<li>GSLB (Global Server Load-Balance)
+<ul>
+<li>使用者 =&gt; 遞迴解析伺服器(recursive nameserver) =&gt; 權威伺服器(authoritative nameserver)</li>
+<li>目的是回傳最近的IP(TTL、解析器背後GEO IP、離使用者最近的位置)</li>
+<li>會有一些問題
+<ul>
+<li>DNS伺服器額外快取的問題</li>
+<li>要解決從遞迴解析伺服器傳送到權威伺服器上時，能夠帶上真正使用者終端的IP(我們常講的Client IP保存問題)</li>
+</ul></li>
+<li>虛擬IP負載平衡(network load balancer)
+<ul>
+<li>指的就是像keepalived+nginx這種東西</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
 <h2 id="ch20-資料中心內部的負載平衡系統">ch20 資料中心內部的負載平衡系統</h2>
 <ul>
-<li>HTTP Requeset/Client tasks/Resource Manager(CPU.......) ### 理想情況</li>
-<li>任一時間點，最忙OR最不忙永遠消耗同樣<strong>數量</strong>CPU(這代表工作能夠有效的被多工處理，不會有單一CPU占用過高的問題)，服務的負載均勻發送給後端作業。 ### 識別異常任務</li>
+<li>HTTP Requeset/Client tasks/Resource Manager(CPU.......)</li>
+</ul>
+<h3 id="理想情況">理想情況</h3>
+<ul>
+<li>任一時間點，最忙OR最不忙永遠消耗同樣<strong>數量</strong>CPU(這代表工作能夠有效的被多工處理，不會有單一CPU占用過高的問題)，服務的負載均勻發送給後端作業。</li>
+</ul>
+<h3 id="識別異常任務">識別異常任務</h3>
+<ul>
 <li>流量控制
 <ul>
 <li>ratelimit的做法</li>
@@ -388,9 +421,12 @@
 <li>作業進入跛腳鴨狀態，請求用戶端改送其他端點</li>
 <li>進入跛腳鴨狀態前已發送得請求會繼續處理</li>
 <li>隨著工作完成，逐漸釋放資源、活躍請求降低為0</li>
-<li>在設定的時間內未完成所有工作，再由作業調度系統進行強制關閉的動作 &gt; 這一塊指的應該就是常見的graceful shutdown的概念 ### 子集劃分，選擇合適的子集</li>
+<li>在設定的時間內未完成所有工作，再由作業調度系統進行強制關閉的動作 &gt; 這一塊指的應該就是常見的graceful shutdown的概念</li>
 </ul></li>
 </ul></li>
+</ul>
+<h3 id="子集劃分選擇合適的子集">子集劃分，選擇合適的子集</h3>
+<ul>
 <li>隨機子集
 <ul>
 <li>直覺、但容易負載不均衡</li>
@@ -437,14 +473,20 @@
 <li>絕大部分情況下使用CPU數量作為資源分配主要依據即可(題外話，kubernetes的基本HPA也是這樣)
 <ul>
 <li>在有GC(Garbage Collector)的環境裡，記憶體的壓力自然而然會變成cpu壓力，因為記憶體不足意味著要持續處理資源回收的問題。</li>
-<li>相較cpu，其餘的資源較容易透過設定而減少資源短缺的情況 ### 為每個使用者設定限額</li>
+<li>相較cpu，其餘的資源較容易透過設定而減少資源短缺的情況</li>
 </ul></li>
+</ul>
+<h3 id="為每個使用者設定限額">為每個使用者設定限額</h3>
+<ul>
 <li>為每一個服務設定上限的cpu limit、使用者限額。</li>
 <li>以google的情境，可能設定的總cpu limit會大於總共的limit(超賣的問題)
 <ul>
 <li>原因在於根本很少情境下能夠用滿cpu limit.......</li>
-<li>用在現今雲端提供商應該也有許多相似的情境(尤其Network超賣) ### 用戶端測的節流機制</li>
+<li>用在現今雲端提供商應該也有許多相似的情境(尤其Network超賣)</li>
 </ul></li>
+</ul>
+<h3 id="用戶端測的節流機制">用戶端測的節流機制</h3>
+<ul>
 <li>額度達到時(超載時)，迅速拒絕請求，返回額度不足的訊息
 <ul>
 <li>單純回傳額度不足，可以減少一部分服務資源使用量，但即便如此在發送拒絕的過程也會造成資源的消耗，仍然有可能進入超載狀態</li>
@@ -454,16 +496,34 @@
 <li>requests: 應用程式發廚的所有請求總數和</li>
 <li>accepts: 後端作業接受的請求數量</li>
 <li>requests &amp; accepts 一開始的總和應相同，隨著時間與負載上升，accepts將低於requests，當requests大於K倍的accepts，則代表開始機率性拒絕。</li>
-<li>K可修改，降低使演算法激進，提升則緩和，一般情況推薦K=2 ### 重要性(請求重要性應該被標記)</li>
+<li>K可修改，降低使演算法激進，提升則緩和，一般情況推薦K=2</li>
 </ul></li>
 </ul></li>
+</ul>
+<h3 id="重要性請求重要性應該被標記">重要性(請求重要性應該被標記)</h3>
+<ul>
 <li>CRITICAL_PLUS：非常重要，拒絕的話會產生嚴重可見問題。</li>
 <li>CRITICAL： 拒絕會產生可見問題，但不到最重要的情況。</li>
 <li>SHEDDABLE_PLUS：可容忍的錯誤、可等待(重試)的請求。</li>
 <li>SHEDDABLE: 不太重要，偶爾完全不用的情況。</li>
 </ul>
 <blockquote>
-<p>連線造成的負載 - 應透過調整參數、降低頻率、動態建立、銷毀連線等進行最佳化 批次處理作業的短暫連線超載，強制使用批次處理代理(batch proxy)，將超載需求轉發負載，用以保護現行系統真正的後端作業正常。</p>
+連線造成的負載 - 應透過調整參數、降低頻率、動態建立、銷毀連線等進行最佳化 批次處理作業的短暫連線超載，強制使用批次處理代理(batch proxy)，將超載需求轉發負載，用以保護現行系統真正的後端作業正常。
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script>
+<textarea id="flowchart-0-code" style="display: none">st=>start: 故障報告
+e=>end: 修復完成
+op=>operation: 定位
+op2=>operation: 檢查
+op3=>operation: 診斷
+cond=>condition: 測試/修復
+cond2=>condition: 情況是否改變
+
+st->op->op2->op3->cond
+cond(yes)->e
+cond(no)->cond2
+cond2(yes)->op
+cond2(no)->op2</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script>
 </blockquote>
 
     </div>
@@ -539,7 +599,7 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 

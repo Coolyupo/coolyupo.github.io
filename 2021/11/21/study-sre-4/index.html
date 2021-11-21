@@ -21,15 +21,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="ch27 可靠地進行大規模發行  上線協調工程師(LCE，Launch Coordination Engineer)  審核新產品與服務，確保可靠性標準與實踐一致 發行過程中做為多個團隊間的聯絡人 追蹤發行任務進度，負責發行過程相關技術 發行過程守門員  好的發行流程特徵  輕盈(Lightweight)  占用很少開發時間  穩健(Robust)  很少bug">
+<meta name="description" content="ch27 可靠地進行大規模發行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="網站可靠性工程 - Part 4 (O&#39;REILLY ISBN 978-986-476-625-3)">
 <meta property="og:url" content="http://example.com/2021/11/21/study-sre-4/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="ch27 可靠地進行大規模發行  上線協調工程師(LCE，Launch Coordination Engineer)  審核新產品與服務，確保可靠性標準與實踐一致 發行過程中做為多個團隊間的聯絡人 追蹤發行任務進度，負責發行過程相關技術 發行過程守門員  好的發行流程特徵  輕盈(Lightweight)  占用很少開發時間  穩健(Robust)  很少bug">
+<meta property="og:description" content="ch27 可靠地進行大規模發行">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-11-21T04:54:50.000Z">
-<meta property="article:modified_time" content="2021-11-21T05:28:36.376Z">
+<meta property="article:modified_time" content="2021-11-21T06:37:46.150Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="讀書心得">
 <meta name="twitter:card" content="summary">
@@ -125,7 +125,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch27-%E5%8F%AF%E9%9D%A0%E5%9C%B0%E9%80%B2%E8%A1%8C%E5%A4%A7%E8%A6%8F%E6%A8%A1%E7%99%BC%E8%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">ch27 可靠地進行大規模發行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch29-%E8%99%95%E7%90%86%E6%8F%92%E6%96%B7%E6%80%A7%E4%BB%BB%E5%8B%99"><span class="nav-number">2.</span> <span class="nav-text">ch29 處理插斷性任務</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B6%AD%E9%81%8B%E8%B2%A0%E8%8D%B7"><span class="nav-number">2.1.</span> <span class="nav-text">維運負荷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch30-%E9%80%8F%E9%81%8E%E5%B5%8C%E5%85%A5sre%E7%9A%84%E6%96%B9%E5%BC%8F%E5%B9%AB%E5%8A%A9%E5%9C%98%E9%9A%8A%E5%BE%9E%E7%B6%AD%E9%81%8B%E8%B6%85%E8%BC%89%E4%B8%AD%E6%81%A2%E5%BE%A9"><span class="nav-number">3.</span> <span class="nav-text">ch30 透過嵌入SRE的方式幫助團隊從維運超載中恢復</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%9A%8E%E6%AE%B5%E4%BA%86%E8%A7%A3%E6%9C%8D%E5%8B%99%E4%BA%86%E8%A7%A3%E7%92%B0%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text">第一階段：了解服務，了解環境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%8C%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">後略</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch27-%E5%8F%AF%E9%9D%A0%E5%9C%B0%E9%80%B2%E8%A1%8C%E5%A4%A7%E8%A6%8F%E6%A8%A1%E7%99%BC%E8%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">ch27 可靠地進行大規模發行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch29-%E8%99%95%E7%90%86%E6%8F%92%E6%96%B7%E6%80%A7%E4%BB%BB%E5%8B%99"><span class="nav-number">2.</span> <span class="nav-text">ch29 處理插斷性任務</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B6%AD%E9%81%8B%E8%B2%A0%E8%8D%B7"><span class="nav-number">2.1.</span> <span class="nav-text">維運負荷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B1%BA%E5%AE%9A%E6%8F%92%E6%96%B7%E6%80%A7%E4%BB%BB%E5%8B%99%E8%99%95%E7%90%86%E7%AD%96%E7%95%A5"><span class="nav-number">2.2.</span> <span class="nav-text">如何決定插斷性任務處理策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%9B%E5%B0%91%E6%8F%92%E6%96%B7"><span class="nav-number">2.3.</span> <span class="nav-text">減少插斷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch30-%E9%80%8F%E9%81%8E%E5%B5%8C%E5%85%A5sre%E7%9A%84%E6%96%B9%E5%BC%8F%E5%B9%AB%E5%8A%A9%E5%9C%98%E9%9A%8A%E5%BE%9E%E7%B6%AD%E9%81%8B%E8%B6%85%E8%BC%89%E4%B8%AD%E6%81%A2%E5%BE%A9"><span class="nav-number">3.</span> <span class="nav-text">ch30 透過嵌入SRE的方式幫助團隊從維運超載中恢復</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%9A%8E%E6%AE%B5%E4%BA%86%E8%A7%A3%E6%9C%8D%E5%8B%99%E4%BA%86%E8%A7%A3%E7%92%B0%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text">第一階段：了解服務，了解環境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%9A%8E%E6%AE%B5%E5%88%86%E4%BA%AB%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AD%98"><span class="nav-number">3.2.</span> <span class="nav-text">第二階段：分享背景知識</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%9A%8E%E6%AE%B5%E4%B8%BB%E5%B0%8E%E6%94%B9%E8%AE%8A"><span class="nav-number">3.3.</span> <span class="nav-text">第三階段：主導改變</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%8C%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">後略</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -208,7 +208,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-11-21 12:54:50 / Modified: 13:28:36" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:50+08:00">2021-11-21</time>
+      <time title="Created: 2021-11-21 12:54:50 / Modified: 14:37:46" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:50+08:00">2021-11-21</time>
     </span>
 
   
@@ -222,6 +222,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <h2 id="ch27-可靠地進行大規模發行">ch27 可靠地進行大規模發行</h2>
+<span id="more"></span>
 <ul>
 <li>上線協調工程師(LCE，Launch Coordination Engineer)
 <ul>
@@ -274,13 +275,22 @@
 </ul></li>
 <li>日常維運
 <ul>
-<li>又稱瑣事XD ### 如何決定插斷性任務處理策略</li>
+<li>又稱瑣事XD</li>
 </ul></li>
+</ul>
+<h3 id="如何決定插斷性任務處理策略">如何決定插斷性任務處理策略</h3>
+<ul>
 <li>插斷性任務預期的回應時間(SLO)</li>
 <li>任務數量</li>
 <li>嚴重程度</li>
 <li>發生頻率</li>
-<li>可投入的人力 ### 減少插斷 &gt; 提到工作狀態THE Zone XDD</li>
+<li>可投入的人力</li>
+</ul>
+<h3 id="減少插斷">減少插斷</h3>
+<blockquote>
+<p>提到工作狀態THE Zone XDD</p>
+</blockquote>
+<ul>
 <li>實際分析工單
 <ul>
 <li>避免干擾非根源問題的人事物</li>
@@ -307,25 +317,21 @@
 <li>(永遠的錯誤都是增加XXXXXXX</li>
 </ul></li>
 <li>事後檢討只有RollBack?</li>
-<li>現有的SRE以「我們什麼也不知道，只有開發者才明白」來處理關鍵元件。<br />
-### 第二階段：分享背景知識</li>
+<li>現有的SRE以「我們什麼也不知道，只有開發者才明白」來處理關鍵元件。</li>
 </ul></li>
+</ul>
+<h3 id="第二階段分享背景知識">第二階段：分享背景知識</h3>
+<ul>
 <li>良好的事後檢討範例</li>
-<li>緊急事件按類型排序 ### 第三階段：主導改變</li>
+<li>緊急事件按類型排序</li>
+</ul>
+<h3 id="第三階段主導改變">第三階段：主導改變</h3>
+<ul>
 <li>從基礎開始</li>
 <li>獲得團隊成員的幫助</li>
 <li>邏輯推理過程與引導性問題</li>
 </ul>
 <h2 id="後略">後略</h2>
-<p><span class="math display">\[\begin{equation}
-\left\{
-\begin{array}{lr}
-x=\dfrac{3\pi}{2}(1+2t)\cos(\dfrac{3\pi}{2}(1+2t)), &amp; \\
-y=s, &amp; 0 \leq s \leq L,|t| \leq1. \\
-z=\dfrac{3\pi}{2}(1+2t)\sin(\dfrac{3\pi}{2}(1+2t)), &amp;  
-\end{array}
-\right.
-\end{equation}\]</span></p>
 
     </div>
 
