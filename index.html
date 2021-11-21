@@ -49,7 +49,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -131,13 +135,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +170,1149 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/study-sre-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/21/study-sre-4/" class="post-title-link" itemprop="url">網站可靠性工程 - Part 4 (O'REILLY ISBN 978-986-476-625-3)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-21 12:54:50 / Modified: 13:28:36" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:50+08:00">2021-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="ch27-可靠地進行大規模發行">ch27 可靠地進行大規模發行</h2>
+<ul>
+<li>上線協調工程師(LCE，Launch Coordination Engineer)
+<ul>
+<li>審核新產品與服務，確保可靠性標準與實踐一致</li>
+<li>發行過程中做為多個團隊間的聯絡人</li>
+<li>追蹤發行任務進度，負責發行過程相關技術</li>
+<li>發行過程守門員</li>
+</ul></li>
+<li>好的發行流程特徵
+<ul>
+<li>輕盈(Lightweight)
+<ul>
+<li>占用很少開發時間</li>
+</ul></li>
+<li>穩健(Robust)
+<ul>
+<li>很少bug</li>
+</ul></li>
+<li>周全(Through)
+<ul>
+<li>完整、一致、易於追蹤</li>
+</ul></li>
+<li>可擴展(Scalable)
+<ul>
+<li>可用於簡單任務亦可用於複雜任務</li>
+</ul></li>
+<li>適應性(Adaptable)
+<ul>
+<li>適用於多數常見發行</li>
+</ul></li>
+</ul></li>
+<li>需求與特徵之間會存在衝突，Google的選擇策略
+<ul>
+<li>簡化</li>
+<li>高度客製化</li>
+<li>快速的共通模式(maybe 模組化)</li>
+</ul></li>
+</ul>
+<h2 id="ch29-處理插斷性任務">ch29 處理插斷性任務</h2>
+<h3 id="維運負荷">維運負荷</h3>
+<ul>
+<li>緊急警報
+<ul>
+<li>透過正式環境警報的問題任務</li>
+<li>通常會與SLO有關</li>
+</ul></li>
+<li>工單
+<ul>
+<li>因應客戶需求的某種<strong>操作</strong></li>
+</ul></li>
+<li>日常維運
+<ul>
+<li>又稱瑣事XD ### 如何決定插斷性任務處理策略</li>
+</ul></li>
+<li>插斷性任務預期的回應時間(SLO)</li>
+<li>任務數量</li>
+<li>嚴重程度</li>
+<li>發生頻率</li>
+<li>可投入的人力 ### 減少插斷 &gt; 提到工作狀態THE Zone XDD</li>
+<li>實際分析工單
+<ul>
+<li>避免干擾非根源問題的人事物</li>
+</ul></li>
+<li>尊重自己也尊重使用者
+<ul>
+<li><strong>定義合理的服務水平</strong></li>
+<li><strong>某些事物是可以推回給客戶自行解決的</strong></li>
+</ul></li>
+</ul>
+<h2 id="ch30-透過嵌入sre的方式幫助團隊從維運超載中恢復">ch30 透過嵌入SRE的方式幫助團隊從維運超載中恢復</h2>
+<h3 id="第一階段了解服務了解環境">第一階段：了解服務，了解環境</h3>
+<ul>
+<li>確認最大壓力來源</li>
+<li>找出癥結點(來源)
+<ul>
+<li>知識代溝</li>
+<li>SRE直接餐與開發的功能變得越來越重要</li>
+<li>對「未來一件大事」過度依賴</li>
+<li>開發團隊和SRE都視而不見的警報</li>
+<li>被投訴的服務又缺乏SLI/SLO/SLA</li>
+<li>任何的容量規劃都是<strong>增加</strong>
+<ul>
+<li>(永遠的錯誤都是增加XXXXXXX</li>
+</ul></li>
+<li>事後檢討只有RollBack?</li>
+<li>現有的SRE以「我們什麼也不知道，只有開發者才明白」來處理關鍵元件。<br />
+### 第二階段：分享背景知識</li>
+</ul></li>
+<li>良好的事後檢討範例</li>
+<li>緊急事件按類型排序 ### 第三階段：主導改變</li>
+<li>從基礎開始</li>
+<li>獲得團隊成員的幫助</li>
+<li>邏輯推理過程與引導性問題</li>
+</ul>
+<h2 id="後略">後略</h2>
+<p><span class="math display">\[\begin{equation}
+\left\{
+\begin{array}{lr}
+x=\dfrac{3\pi}{2}(1+2t)\cos(\dfrac{3\pi}{2}(1+2t)), &amp; \\
+y=s, &amp; 0 \leq s \leq L,|t| \leq1. \\
+z=\dfrac{3\pi}{2}(1+2t)\sin(\dfrac{3\pi}{2}(1+2t)), &amp;  
+\end{array}
+\right.
+\end{equation}\]</span></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/study-sre-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/21/study-sre-3/" class="post-title-link" itemprop="url">網站可靠性工程 - Part 3 (O'REILLY ISBN 978-986-476-625-3)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-21 12:54:47 / Modified: 13:18:37" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:47+08:00">2021-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="ch22-處理連鎖故障">ch22 處理連鎖故障</h2>
+<h3 id="連鎖故障舉例">連鎖故障舉例</h3>
+<ul>
+<li>伺服器超載
+<ul>
+<li>負載平衡端點存在(A&amp;B)，單B端點故障時，導致A端點的QPS上升，進而導致A端點超載產生拒絕效應，連原先能乘載的QPS都無法達到。</li>
+</ul></li>
+<li>資源耗盡(在多個系統、程式共用硬體資源的情境下，部分服務的超載都可能會透過硬體資源直接影響到其他服務)
+<ul>
+<li>CPU
+<ul>
+<li>請求上升</li>
+<li>佇列過長</li>
+<li>執行緒卡死</li>
+<li>CPU死鎖</li>
+<li>RPC Timeout</li>
+<li>CPU 快取效率下降</li>
+</ul></li>
+<li>記憶體
+<ul>
+<li>當機</li>
+<li>導致CPU使用率上升(GC的關係)</li>
+<li>快取命中率下降</li>
+</ul></li>
+<li>執行緒
+<ul>
+<li>執行緒不足可能會影響到許多服務(以前遇過server上被zombie thread佔滿導致部分服務無法正常運作32767?)</li>
+</ul></li>
+<li>資源之間相依問題
+<ul>
+<li>資源的耗盡有可能是其他資源出現問題所導致的(以前有遇過，CPU處理速度太慢導致Worker queue不斷堆疊，反而產生oom的情境)</li>
+</ul></li>
+</ul></li>
+<li>防止軟體伺服器超載
+<ul>
+<li>進行負載壓力測試了解系統極限，測試超載失效模式</li>
+<li>提供降級的結果
+<ul>
+<li>問題發生時，由個別服務決定提供品質較低(資源消耗量較少)的結果</li>
+</ul></li>
+<li>超載情況下主動拒絕請求
+<ul>
+<li>軟體伺服器應該主動拒絕請求，與前面提到的adaptive throttling類似</li>
+</ul></li>
+<li>上層系統應主動拒絕請求，由上而下
+<ul>
+<li>反向代理層拒絕</li>
+<li>負載平衡層拒絕</li>
+<li>個別作業拒絕</li>
+<li>個別服務(元件)容量規劃</li>
+</ul></li>
+</ul></li>
+<li>佇列管理
+<ul>
+<li>cpu使用，執行耗時</li>
+<li>佇列越長導致記憶體使用量越高</li>
+<li>當處理無法跟上佇列時應提早拒絕、進行轉移負載。</li>
+</ul></li>
+<li>丟棄負載 load shedding
+<ul>
+<li>系統臨近超載時，主動丟棄一定量的負載
+<ul>
+<li>HTTP 503(Service unavailable)</li>
+<li>FIFO 先入先出</li>
+<li>LIFO 後入先出</li>
+<li>CoDel 可控制延遲</li>
+</ul></li>
+</ul></li>
+<li>優雅降級 graceful degradation
+<ul>
+<li>當系統開始丟棄負載時，服務可自行降低回應品質，減少運算量、運算時間。</li>
+<li>需要設計降級的決策指標(CPU、延遲、佇列長度、執行緒......)</li>
+<li>降級不該被經常觸發，平常也不會使用這個模式
+<ul>
+<li>更顯示測試的重要性，確保該模式在真正發生的情況下能夠正常運作。<br />
+</li>
+</ul></li>
+</ul></li>
+<li>重試
+<ul>
+<li>遇到錯誤時進行重試</li>
+<li>過度的重試反而會造成連鎖故障
+<ul>
+<li>被累加到後續QPS，造成伺服器過載，後端真正執行的工作反而很少</li>
+</ul></li>
+<li>設計重試應考量
+<ul>
+<li>前面提到防止軟體伺服器重載</li>
+<li>隨機化、指數型遞增重試週期</li>
+<li>限制重試、避免無限重試</li>
+<li>試著將重試納入全域的預算分配(指定同一時間內系統可允許的重試次數)</li>
+<li>多角度檢視服務(ex:前端、後端、資料庫)，避免放大效應</li>
+<li>明確的錯誤返回代碼，能夠劃分不需要重試的永久性錯誤，與可重試的錯誤。</li>
+</ul></li>
+</ul></li>
+<li>解決連鎖故障的立即步驟
+<ul>
+<li>增加資源</li>
+<li>停止健康檢查導致的作業當機(前面一值提到的sampling的副作用)</li>
+<li>重啟軟體伺服器(restart service or reboot? XD)</li>
+<li>丟棄流量
+<ul>
+<li>這邊就類似Kubernetes readness probe，服務一起動湧入大量流量便馬上當機，永遠都修不好<br />
+</li>
+</ul></li>
+<li>降級模式</li>
+<li>移除非關鍵Batch Job</li>
+<li>消除有害流量(會造成攻擊性或系統漏洞請求)
+<ul>
+<li>比較多應該是無特別限制的大範圍搜尋(應該從程式設計就考量)</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="ch23-管理關鍵狀態利用分散式一致化來提高可靠性">Ch23 管理關鍵狀態：利用分散式一致化來提高可靠性</h2>
+<ul>
+<li><p>CAP理論</p>
+<ul>
+<li>Consistency — A read is guaranteed to return the most recent write for a given client</li>
+<li>Availability — A non-failing node will return a reasonable response within a reasonable amount of time (no error or timeout).</li>
+<li>Partition Tolerance — The system will continue to function when network partitions occur. &gt; 當分散式系統發生問題時，往往無法滿足這三個要求。如Partition Tolerance(當網路分區發生問題時，至少一個或多個節點會被迫中斷，將不會是所有的節點都能夠被存取，資料當然也不會一致)</li>
+</ul></li>
+<li><p>領導者選舉與分散系統中的最終一致化(eventual consistency)</p>
+<ul>
+<li>這邊指就是像etcd，會經過定期的選舉來決定領頭者(主要的處理者)，透過傳遞使資料一致化</li>
+<li>資料庫的replication模式(master-slave架構)也是這種資料一致化的概念，只是沒有選舉的動作(沒有Availability)。</li>
+<li>如果不是一致化的架構，代表可能是用分散式的shard架構，則當叢集腦裂、損壞時可能會無法恢復，需要以另外的方式去做保險(就我所知很多使用shard機制的服務都會針對shard片段再做replication避免資料丟失無法還原)</li>
+<li>分散式一致化演算法
+<ul>
+<li>當機不可恢復 crash-fail</li>
+<li>當機可恢復 crash-recover
+<ul>
+<li>比較有用，很多時候可能會因為不知名外在因素(網路緩慢)導致重啟</li>
+</ul></li>
+<li>拜占庭式問題
+<ul>
+<li>簡單來說就是有節點惡意發送不正確訊息時。</li>
+</ul></li>
+<li>Paxos
+<ul>
+<li>proposer(提案者)</li>
+<li>acceptor(接受者)<br />
+</li>
+<li>當提案者收到總數一半+1人同意時(<span class="math inline">\(\frac{n}{2}\)</span>+1)，提交提案並記錄</li>
+<li>不成熟，但是後續分散式演算法的啟蒙(raft.......)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>分散式一致化系統效能問題 &gt; 普遍認為分散式一致化系統演算法速度太慢、資源要求過高、不適合搭建高處理能力且低延遲系統，未必正確，透過設計和系統優化、佈署策略都能夠有所改善。</p></li>
+<li><p>Multi-Paxos</p>
+<ul>
+<li>strong leader：在沒有發生錯誤、存在領頭者的情況下，提案者只需要對滿足法定人數的處理程序發送一次訊息，就可以保障系統達成一致化。</li>
+<li>原本的Paxos非strong leader，在Leader不常異動的情況下，原先Paxos階段一Prepare/Promise(提案者發送序號給接收者，接收者只能接收最高序號的提案)這件事情會變得單純，Leader持續提案、Acceptor持續接收(不會有發送舊的序號要驗證這件事情?)</li>
+</ul></li>
+<li><p>Fast Paxos</p>
+<ul>
+<li>Client直接向acceptor發送propose而非透過leader(傳統為Client透過Proposer、再由Proposer發送propose給acceptor)</li>
+<li>兩條訊息變成一條</li>
+<li>直覺上比較快，但還是得考慮網路延遲問題(若Client速度很慢，會由1個慢速網路(往proposer)變成N個慢速網路(往acceptors)反而拖垮效能)</li>
+</ul></li>
+<li><p>複本的數量</p>
+<ul>
+<li>採多數法定
+<ul>
+<li>2f+1，f:失敗</li>
+<li><strong>非拜占庭容忍</strong></li>
+<li>ex:3個節點，可允許1個失敗</li>
+</ul></li>
+<li>拜占庭容忍
+<ul>
+<li>3f+1，f:間諜數量(有節點在惡搞)</li>
+<li>這邊好像在Block chain上應用比較多(公有鏈?)，需要積極去考量防偽</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="ch24-分散式任務排程系統">ch24 分散式任務排程系統</h2>
+<h3 id="cron">Cron</h3>
+<ul>
+<li>最常見的排成格式(crontab)</li>
+<li>由單一元件組成crond，是一隻系統服務程式(daemon)，管理載入任務清單。</li>
+<li>從可靠性探討Cron
+<ul>
+<li>任何的故障都可能會影響服務可靠性(單伺服器運作)</li>
+<li>crond重啟需保留的只有組態檔(crontab)，啟動任務後不再追蹤狀態</li>
+<li>anacron是特例
+<ul>
+<li>會執行當機期間的任務</li>
+<li>但其實只對短周期任務有作用，每天只執行一次之類的</li>
+<li>對電腦OR工作站維護紀錄有幫助，做法就是將Cron執行的紀錄再做一次紀錄XD ### 大型系統的Cron</li>
+</ul></li>
+</ul></li>
+<li>這邊在講的其實就是Kubernetes中的Cronjob XD</li>
+<li>將實際處理序與實體機器分開，故障發生時能自動移轉(增加可靠性)</li>
+<li>追蹤兩個選項
+<ul>
+<li>將資料儲存在可用度很高的外部分散式儲存裝置上</li>
+<li>系統內部自行儲存一些(很小量的)狀態資料，(Kubernetes之於etcd的作法)</li>
+</ul></li>
+<li>大型Cron系統的驚群效應(thundering herd)
+<ul>
+<li>在大量Crontab任務的情況下，要小心處理將任務時間平均設置，避免大家都在同個時間點執行大量作業(也許是午夜)，反而造成系統超載問題。</li>
+<li>即便如此，Google的排成任務負載仍是尖銳。</li>
+</ul></li>
+</ul>
+<h2 id="ch26-資料完整性-讀寫一致">ch26 資料完整性 : 讀寫一致</h2>
+<h3 id="超高資料完整性的策略考量本身有矛盾與些許互斥">超高資料完整性的策略考量(本身有矛盾與些許互斥)</h3>
+<ul>
+<li>線上時間
+<ul>
+<li>通常以可用率(availability)，代表服務可被使用者使用的時間</li>
+</ul></li>
+<li>延遲
+<ul>
+<li>服務對使用者回應時間</li>
+</ul></li>
+<li>規模
+<ul>
+<li>服務的使用數量、維持服務水平最高負載</li>
+</ul></li>
+<li>創新速度
+<ul>
+<li>合理成本下的服務創新跌代</li>
+</ul></li>
+<li>隱私
+<ul>
+<li>這邊只探討刪除，使用者刪除資料後(軟刪除)，資料必須在合理時間內<strong>真正摧毀</strong> &gt;ACID &gt;原子性（Atomicity） &gt;一致性（Consistency） &gt;隔離性（Isolation） &gt;持久性（Durability） &gt;BASE &gt;Basically Available(基本可用） &gt;Soft state(軟狀態） &gt;Eventually consistent(最终一致性）</li>
+</ul></li>
+</ul>
+<h3 id="備份與封存">備份與封存</h3>
+<ul>
+<li>封存(archives)
+<ul>
+<li>將資料長時間安全儲存，滿足稽核、鑑識與法律遵循要求。(交易日誌、財務資料?......現實生活的話可能就是所得稅申報?)</li>
+</ul></li>
+<li>雲端環境下備份難點與需求
+<ul>
+<li>難點
+<ul>
+<li>使用混合交易與非交易(non-trasaction)型備份與復原，恢復的資料不一定是正確的</li>
+<li>不停機的情況下，有同時操作不同版本風險(Rolling Update?)</li>
+</ul></li>
+<li>雲端服務API需求
+<ul>
+<li>資料區域性與快取</li>
+<li>區域合全域資料分布</li>
+<li>強一致性、最終一致性</li>
+<li>資料持久性、備份與災害復原</li>
+</ul></li>
+</ul></li>
+<li>備份就像納稅一樣
+<ul>
+<li>需要持久付出的代價</li>
+<li>交付一套<strong>復原系統而非備份系統</strong><br />
+</li>
+<li>複製機制與冗餘不代表可恢復性</li>
+</ul></li>
+<li>保留期限
+<ul>
+<li>資料備份的儲存時間也許要考量</li>
+<li>長期下來也是花空間跟花$，需要設計如何Rotate</li>
+</ul></li>
+<li>保障資料完整性手段
+<ul>
+<li>軟刪除(似資料庫修改Delete欄位的方式，不在第一時間做刪除，用以處理誤刪或一定時間內快速復原)
+<ul>
+<li>由API等應用操作的誤刪(非一般軟刪除)可能會再增加一層<strong>懶刪除(lazy deletion)</strong>，刪除當下服務馬上不可使用，但由雲端供應商多保留幾周再徹底銷毀。(之前在Azure Blob上好像有看到相關的內容)</li>
+</ul></li>
+<li>備份和相關的復原方法
+<ul>
+<li>備份與還原的方法</li>
+<li>完整or增量備份的復原點頻率</li>
+<li>備份儲存位置</li>
+<li>備份保留時間</li>
+</ul></li>
+<li>複製機制
+<ul>
+<li>儲存設備或服務架構具備複製的機制，Hardware RAID、MDADM、DB Replication......</li>
+<li>在資料存放到越大時難度將越來越難</li>
+</ul></li>
+<li>早期預警
+<ul>
+<li>資料檢查與校驗動作</li>
+<li>監控<br />
+</li>
+<li>確保恢復策略正常工作(演練?)</li>
+</ul></li>
+</ul></li>
+<li>心態
+<ul>
+<li>保持初學者心態
+<ul>
+<li>永遠會有自己不了解的BUG</li>
+</ul></li>
+<li>信任但還是要驗證
+<ul>
+<li>即便在完美都是需要驗證!</li>
+</ul></li>
+<li>不要一廂情願
+<ul>
+<li>系統總有一天會出錯</li>
+<li>人類天生不適合持續性，自動化很重要</li>
+<li>資料復原很重要、需時常演練<br />
+</li>
+</ul></li>
+<li>縱深防禦
+<ul>
+<li>任何完美的系統都有存在BUG的可能</li>
+<li>在允許的情況下多加幾層防禦能夠加速檢測問題的存在</li>
+<li>(如同起司理論的意思XD)</li>
+</ul></li>
+</ul></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/study-sre-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/21/study-sre-2/" class="post-title-link" itemprop="url">網站可靠性工程 - Part 2 (O'REILLY ISBN 978-986-476-625-3)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-21 12:54:44 / Modified: 13:18:16" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:44+08:00">2021-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="ch12-有效故障排除技巧">Ch12 有效故障排除技巧</h2>
+<h3 id="理論">理論</h3>
+<ul>
+<li>假設 - 排除手法</li>
+<li>從書本上抄寫的理想流程圖(用markdown flowchart.js重新寫了一遍樣式不同、順序一致) <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: 故障報告</span><br><span class="line">e=&gt;end: 修復完成</span><br><span class="line">op=&gt;operation: 定位</span><br><span class="line">op2=&gt;operation: 檢查</span><br><span class="line">op3=&gt;operation: 診斷</span><br><span class="line">cond=&gt;condition: 測試/修復</span><br><span class="line">cond2=&gt;condition: 情況是否改變</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;op2-&gt;op3-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;cond2</span><br><span class="line">cond2(yes)-&gt;op</span><br><span class="line">cond2(no)-&gt;op2</span><br></pre></td></tr></table></figure></li>
+<li>常見陷阱
+<ul>
+<li>誤解(不當理解)系統故障的現象，浪費錯誤預算</li>
+<li>太快將問題歸納為極端因素</li>
+<li>試圖將問題解決歸納至與當前系統故障相關的一些問題，未意識到只是巧合
+<ul>
+<li>ex，程式故障同時系統資源指標微幅上升，試圖解決微幅上升指標而非程式故障問題 ### 實務</li>
+</ul></li>
+</ul></li>
+<li>故障報告
+<ul>
+<li>實際現象</li>
+<li>預期原因</li>
+<li>如何重現</li>
+</ul></li>
+<li>問題分類
+<ul>
+<li>盡可能讓系統恢復服務(需要捨棄一些東西)</li>
+<li>與尋找問題根源有互斥的感覺</li>
+</ul></li>
+<li>檢查與診斷
+<ul>
+<li>這邊描述的就是像kubernetes中liveness probe功能類似</li>
+<li>簡化縮小問題範圍
+<ul>
+<li>問題分解/Divide&amp;Conquer</li>
+<li>what(目前執行什麼)/why(系統為何如此操作)/where(資源被用在哪裡)</li>
+</ul></li>
+</ul></li>
+<li>LOG</li>
+<li>測試與修復</li>
+</ul>
+<h3 id="使故障排除更容易">使故障排除更容易</h3>
+<ul>
+<li>增加可觀測性，結構化日誌</li>
+<li>好的系統設計帶你上天堂......</li>
+<li>在除錯的時候減少運氣與經驗的成分，讓新手也能有效解決問題，有助於縮短MTTR(平均修復時間)</li>
+</ul>
+<h2 id="ch15-事後檢統從失敗中學習">Ch15 事後檢統:從失敗中學習</h2>
+<ul>
+<li>基本檢討的條件
+<ul>
+<li>使用者可見的當機時間、服務水準降至一定標準</li>
+<li>任何類型的資料損失</li>
+<li>問題解決耗時超過一定限制</li>
+<li>監控問題(人為觀測非警報)</li>
+</ul></li>
+<li>協同合作與知識共享
+<ul>
+<li>即時協同合作(Hackmd很好用XD)</li>
+<li>開放評論</li>
+<li>郵件通知</li>
+<li>評估
+<ul>
+<li>資料收集</li>
+<li>影響層面</li>
+<li>根源問題與紀錄</li>
+<li>是否分享</li>
+</ul></li>
+</ul></li>
+<li>建立事後檢討文化
+<ul>
+<li>主動很重要!</li>
+</ul></li>
+</ul>
+<h2 id="ch16-事件追蹤">ch16 事件追蹤</h2>
+<ul>
+<li>Escalator/Outlator
+<ul>
+<li>google內部使用的事件追蹤系統(用現今的角度來看應該是就是強化版自動化Issue平台)</li>
+</ul></li>
+<li>聚合
+<ul>
+<li>這邊就是monitoring與常說的aggregate概念雷同，當系統發生一件問題時可能會觸發多個警報(儘管造成的事件是同一個)。</li>
+<li>但過度的過濾也許會反而遺漏掉一些危險性警報(需注意)</li>
+</ul></li>
+<li>標籤化
+<ul>
+<li>與現今的issue管理概念一樣，團隊訂製有意義的標籤，進行更明確、有效率的的區分，也有助於後續分析。<br />
+</li>
+</ul></li>
+<li>分析
+<ul>
+<li>透過事件追蹤與分析便能夠彙整與統計，進而做出一些結論或預測。</li>
+</ul></li>
+</ul>
+<h2 id="ch17-測試可靠性">ch17 測試可靠性</h2>
+<h3 id="傳統測試">傳統測試</h3>
+<ul>
+<li>單元測試 unit test
+<ul>
+<li>最小單位執行(通常軟體部分)</li>
+</ul></li>
+<li>整合測試 integration test
+<ul>
+<li>將單元測試元件組合成較大的系統元件，透過執行<strong>整合測試</strong>驗證系統元件正確性</li>
+<li>DI mock 取代真實資料庫進行測試</li>
+</ul></li>
+<li>系統測試 system test
+<ul>
+<li>冒煙測試(smoke test) : 檢測<strong>非常簡單</strong>但<strong>非常重要</strong>的系統行為，又被稱<strong>健全測試</strong>，若無法通過代表不需繼續向下測試</li>
+<li>效能測試(performance test) : 通過smoke test代表正確性已受到確認，透過效能測試確認系統負載可接受的範圍(用在Resource Manager 設定cpu/memory request、limit這一塊應該很有用)</li>
+<li>回歸測試(regression test) ： 用以保證之前的Bug不會重現，將過去的bug修復測試整合進來，確實降低重蹈覆轍的風險。</li>
+</ul></li>
+<li>量產測試，又稱黑箱測試(Black-box testing)
+<ul>
+<li>系統已上線，透過正式環境直接互動進行測試，用來評估可靠性。<br />
+</li>
+</ul></li>
+<li>組態測試
+<ul>
+<li>應該是類似於yamllint、dry-run這一類，針對設定檔案進行驗證，確保在自動化執行的過程不會發生意外</li>
+<li>也有可能是語意判斷類似現今Open Policy Agent這種模式</li>
+</ul></li>
+<li>壓力測試
+<ul>
+<li>確認系統效能邊界，ex. 最大QPS、最大連線數量</li>
+</ul></li>
+<li>金絲雀測試
+<ul>
+<li>逐漸讓使用者體驗新的版本或設定</li>
+<li>可以從階段性的錯誤發現定義問題等級</li>
+<li>(我自己覺得這是一種UAT的展現，同時也適用在測試量能不足的情況下，但設計這個規則本身就蠻複雜的) &gt;任何時候繞過測試的軟體功能，皆有可能造成嚴重後果，<strong>測試很重要</strong> &gt;MTBF：平均故障間隔 Mean Time Between Failure &gt;MTTR: 平均故障修復 Mean Time To Repair &gt;MTTF: 平均失效時間 Mean Time TO Failure</li>
+</ul></li>
+</ul>
+<h2 id="ch19-前端伺服器負載平衡">ch19 前端伺服器負載平衡</h2>
+<blockquote>
+<p>GSLB(by ip)、traffic load balancer、可能會根據RTT(封包往返時間)?、資源使用率、TCP/HTTP stateless - 使用DNS進行負載平衡 - A/AAAA Record (Round Robin) - 簡單但問題多 - GSLB (Global Server Load-Balance) - 使用者 =&gt; 遞迴解析伺服器(recursive nameserver) =&gt; 權威伺服器(authoritative nameserver) - 目的是回傳最近的IP(TTL、解析器背後GEO IP、離使用者最近的位置) - 會有一些問題 - DNS伺服器額外快取的問題 - 要解決從遞迴解析伺服器傳送到權威伺服器上時，能夠帶上真正使用者終端的IP(我們常講的Client IP保存問題) - 虛擬IP負載平衡(network load balancer) - 指的就是像keepalived+nginx這種東西</p>
+</blockquote>
+<h2 id="ch20-資料中心內部的負載平衡系統">ch20 資料中心內部的負載平衡系統</h2>
+<ul>
+<li>HTTP Requeset/Client tasks/Resource Manager(CPU.......) ### 理想情況</li>
+<li>任一時間點，最忙OR最不忙永遠消耗同樣<strong>數量</strong>CPU(這代表工作能夠有效的被多工處理，不會有單一CPU占用過高的問題)，服務的負載均勻發送給後端作業。 ### 識別異常任務</li>
+<li>流量控制
+<ul>
+<li>ratelimit的做法</li>
+<li>通常僅能保護在極端超載的情況下，現實系統可能因各種因素提前就會超載了</li>
+<li>可透過調整參數限制，但終究還是有侷限性。</li>
+</ul></li>
+<li>跛腳鴨任務
+<ul>
+<li>後端作業的狀態可能為
+<ul>
+<li>健康
+<ul>
+<li>初始化成功，正在處理請求</li>
+</ul></li>
+<li>拒絕連接
+<ul>
+<li>無回應狀態(啟動或停止或異常中)</li>
+</ul></li>
+<li>跛腳鴨狀態
+<ul>
+<li>可以接受服務請求，但明確要求用戶端停止方送請求</li>
+</ul></li>
+</ul></li>
+<li>停止程序通常為
+<ul>
+<li>作業調度系統發送SIGTERM信號給作業</li>
+<li>作業進入跛腳鴨狀態，請求用戶端改送其他端點</li>
+<li>進入跛腳鴨狀態前已發送得請求會繼續處理</li>
+<li>隨著工作完成，逐漸釋放資源、活躍請求降低為0</li>
+<li>在設定的時間內未完成所有工作，再由作業調度系統進行強制關閉的動作 &gt; 這一塊指的應該就是常見的graceful shutdown的概念 ### 子集劃分，選擇合適的子集</li>
+</ul></li>
+</ul></li>
+<li>隨機子集
+<ul>
+<li>直覺、但容易負載不均衡</li>
+</ul></li>
+<li>確定性演算法
+<ul>
+<li>簡單來說就是透過計算目前用戶端、子集數量，進而決定每一輪分配給各子集的用戶(連線)數量，確保再用戶量多的情控下該輪每個子集負載能夠落實均衡。</li>
+</ul></li>
+</ul>
+<h3 id="負載平衡原則">負載平衡原則</h3>
+<ul>
+<li>簡單輪詢
+<ul>
+<li>俗稱的Round Robin(輪流)</li>
+<li>容易有問題=&gt;最高負載作業比最低負載作業都2被CPU
+<ul>
+<li><strong>子集過小時，單一子集負載量上升</strong></li>
+<li><strong>請求處理成本不同，但卻依舊是輪流分配</strong></li>
+<li>伺服器本身具備差異</li>
+<li>其他因素</li>
+</ul></li>
+</ul></li>
+<li>最少負載輪詢
+<ul>
+<li>兩個很重要的限制
+<ul>
+<li>有效請求的數量不代表後端容量(可能請求數很低但Workload很重或是本身機器資源偏少)</li>
+<li>每個用戶端的有效請求不包括其他用戶端
+<ul>
+<li>這邊指的可能有很多人(連線)因為該後端連線數較低而同時湧入，反而造成壅塞。</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>加權輪詢
+<ul>
+<li>簡易與最少負載輪詢的改進</li>
+<li>透過後端指標加總，進行能力值區分，進行輪詢的分配調整。</li>
+</ul></li>
+</ul>
+<h2 id="ch21-處理系統超載">ch21 處理系統超載</h2>
+<h3 id="qps陷阱">QPS陷阱</h3>
+<ul>
+<li>不同請求可能需要不同的資源來處理，若只按照QPS無法正確衡量。</li>
+<li>絕大部分情況下使用CPU數量作為資源分配主要依據即可(題外話，kubernetes的基本HPA也是這樣)
+<ul>
+<li>在有GC(Garbage Collector)的環境裡，記憶體的壓力自然而然會變成cpu壓力，因為記憶體不足意味著要持續處理資源回收的問題。</li>
+<li>相較cpu，其餘的資源較容易透過設定而減少資源短缺的情況 ### 為每個使用者設定限額</li>
+</ul></li>
+<li>為每一個服務設定上限的cpu limit、使用者限額。</li>
+<li>以google的情境，可能設定的總cpu limit會大於總共的limit(超賣的問題)
+<ul>
+<li>原因在於根本很少情境下能夠用滿cpu limit.......</li>
+<li>用在現今雲端提供商應該也有許多相似的情境(尤其Network超賣) ### 用戶端測的節流機制</li>
+</ul></li>
+<li>額度達到時(超載時)，迅速拒絕請求，返回額度不足的訊息
+<ul>
+<li>單純回傳額度不足，可以減少一部分服務資源使用量，但即便如此在發送拒絕的過程也會造成資源的消耗，仍然有可能進入超載狀態</li>
+<li>採用流量調控技術(adaptive throttling)技術實現用戶端流量控制，當達到配額不足時，由用戶發起端自行限制速度，並由本機直接回應失敗，而不會發到網路層(我猜這邊應該是用到快取的方式)</li>
+<li>用戶端拒絕請求的機率： <span class="math display">\[max(0,\frac{requests-K \times accepts}{requests+1})\]</span>
+<ul>
+<li>requests: 應用程式發廚的所有請求總數和</li>
+<li>accepts: 後端作業接受的請求數量</li>
+<li>requests &amp; accepts 一開始的總和應相同，隨著時間與負載上升，accepts將低於requests，當requests大於K倍的accepts，則代表開始機率性拒絕。</li>
+<li>K可修改，降低使演算法激進，提升則緩和，一般情況推薦K=2 ### 重要性(請求重要性應該被標記)</li>
+</ul></li>
+</ul></li>
+<li>CRITICAL_PLUS：非常重要，拒絕的話會產生嚴重可見問題。</li>
+<li>CRITICAL： 拒絕會產生可見問題，但不到最重要的情況。</li>
+<li>SHEDDABLE_PLUS：可容忍的錯誤、可等待(重試)的請求。</li>
+<li>SHEDDABLE: 不太重要，偶爾完全不用的情況。</li>
+</ul>
+<blockquote>
+<p>連線造成的負載 - 應透過調整參數、降低頻率、動態建立、銷毀連線等進行最佳化 批次處理作業的短暫連線超載，強制使用批次處理代理(batch proxy)，將超載需求轉發負載，用以保護現行系統真正的後端作業正常。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/study-sre-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/21/study-sre-1/" class="post-title-link" itemprop="url">網站可靠性工程 - Part 1 (O'REILLY ISBN 978-986-476-625-3)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-21 12:53:34 / Modified: 12:54:33" itemprop="dateCreated datePublished" datetime="2021-11-21T12:53:34+08:00">2021-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="ch03-擁抱風險">Ch03 擁抱風險</h2>
+<h3 id="可用性公式">可用性公式:</h3>
+<ul>
+<li><span class="math inline">\((基於時間)可用性=\frac{系統正常執行時間}{系統正常執行時間+停機時間}\)</span></li>
+<li><span class="math inline">\((整體)可用性=\frac{成功請求數}{請求總數}\)</span></li>
+</ul>
+<h3 id="客戶對服務的風險錯誤容忍度">客戶對服務的風險(錯誤)容忍度</h3>
+<ul>
+<li>需求可用性水平
+<ul>
+<li>使用者預期的結果&amp;服務內容</li>
+<li>是否為商業服務(與收入直接關聯)</li>
+<li>競爭對手</li>
+<li>主要客戶族群</li>
+</ul></li>
+<li>錯誤的影響層面
+<ul>
+<li>故障類型分類與影響層面、解決方法</li>
+</ul></li>
+<li>成本
+<ul>
+<li>以google SRE為例，可用性的計算是以小數點後幾個9為依據</li>
+<li>考量如將可用性提升99.9%-&gt;99.99%時所需花費的成本與其改進後的預期收益是否取得平衡 ### 使用錯誤預算的動機</li>
+</ul></li>
+<li>錯誤的發生可能來自於下列
+<ul>
+<li>Software Fault Tolerance，軟體容錯程度脆弱(exception or error)</li>
+<li>Test 不夠充足、完善的測試</li>
+<li>Deploy Frequency 發布頻率過快，與上述兩點息息相關</li>
+<li>Canary Deploy 金絲雀佈署與其規模，一種UAT的測試手法</li>
+</ul></li>
+<li>匡列錯誤處理預算
+<ul>
+<li>定義自身系統產品SLO，確認服務預計正常執行的總時間</li>
+<li>第三方公正系統決定正常運行時間(uptime robot?)</li>
+<li>透過上方的時間可用性公式可計算出系統不可靠性預算</li>
+<li>目前運行的時間高於SLO也就代表還能更發布新的版本(還有錯誤容忍的預算在)</li>
+</ul></li>
+<li>當頻繁違反SLO時可考慮
+<ul>
+<li>版本Roll Back</li>
+<li>降低發布頻率 &gt; 100%可靠度基本上不切實際，有效面對風險與管理比較重要。</li>
+</ul></li>
+</ul>
+<h2 id="ch04-服務水準目標">Ch04 服務水準目標</h2>
+<h3 id="sli-service-level-indicator-服務水準指標">SLI (Service Level Indicator) 服務水準指標</h3>
+<p>為某套系統服務定義的定量指標，例如: - 請求延遲(request time) - 錯誤率(如 http 200 or 非200) - 系統處理能力(ex. QPS) - 可用性(服務可用時間百分比)，或稱<strong>服務產出(yield)</strong> - 「格式正確的請求處理成功比例」 - 持久性(資料能夠完整儲存的時間) 透過測量將數據收集計算，統計平均、百分比等等 ### SLO (Service Level Objective) 服務水準目標 為某套系統達成SLI目標值或目標範圍，ex: - <span class="math inline">\(SLI \leq 目標值\)</span><br />
+- <span class="math inline">\(範圍下限\leq SLI \leq 範圍上限\)</span> - Average Requeset Latency &lt; 100ms (100ms為SLI，意思為小於SLI即達成SLO) ### SLA (Service Level Agreement) 服務水準協議 服務與使用者之間明示或暗示性協議，未達到SLO產生的後果(退款或罰款或訴訟之類的) &gt; 大多數討論「SLA」時，其實是在講SLO~</p>
+<h3 id="指標的實務運用">指標的實務運用</h3>
+<ul>
+<li>Application(user參與):
+<ul>
+<li>系統效能、可用性、延遲</li>
+</ul></li>
+<li>儲存系統
+<ul>
+<li>延遲、可用性、持久性</li>
+</ul></li>
+<li>大數據系統
+<ul>
+<li>系統效能、資料輸入至轉出的時間</li>
+</ul></li>
+<li>正確性 &gt; 收集指標(metrics)的方式 Borgmono or Prometheus，也需要定義好所謂的sampling rate(我想這邊跟open tracing概念相去不遠)</li>
+</ul>
+<h3 id="定義目標">定義目標</h3>
+<ul>
+<li>以系統全面性考量，而非以當前狀態</li>
+<li>保持簡單SLI彙整，可簡化整個過程</li>
+<li>SLO越少越好
+<ul>
+<li>選擇足夠象徵(涵蓋)系統的SLO，確保每一項SLO都是必要</li>
+</ul></li>
+<li>不要追求完美
+<ul>
+<li>先透過鬆散的目標，再隨著時間驗證逐漸收斂標準 &gt; SLI與SLO是進行維運決策時的重要元素(透過定量指標與違反與否決定相對應的處理行為) ### SLO會建議使用者預期</li>
+</ul></li>
+<li>保留安全區
+<ul>
+<li>對內使用較高SLO、對外使用較低SLO，可做為問題緩衝處理</li>
+</ul></li>
+<li>實際的SLO不要過高
+<ul>
+<li>實際的SLO比告知消費者的SLO還高，會導致使用者產生依賴
+<ul>
+<li>應採取ratelimit、限速等策略，也能讓系統處在相對低負載，而非有多少給多少</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="ch06-監控分散式系統">ch06 監控分散式系統</h2>
+<ul>
+<li>監控
+<ul>
+<li>收集、處理、彙總、並即時呈現之量化資料。(prometheus &amp; metrics &amp; grafana)</li>
+</ul></li>
+<li>白箱監控(white-box monitoring)
+<ul>
+<li>透過系統內部供應的效能指標進行監控(包含日誌分析、prometheus、metrics &amp; grafana dashboard......)</li>
+</ul></li>
+<li>黑箱監控(black-box monitoring)
+<ul>
+<li>測試以外部使用者角度方式針對系統行為進行監控</li>
+</ul></li>
+<li>dashboard
+<ul>
+<li>監控儀錶板<br />
+</li>
+</ul></li>
+<li>alert (ex. alertmanager)
+<ul>
+<li>根據指標觸發通知(maybe email、slack、line、webhook.......)</li>
+</ul></li>
+<li>root cause(問題根源)
+<ul>
+<li>一個問題可能有多個問題根源</li>
+<li>當問題根源被修復後在相同的情境下將不會再度造成相同的問題</li>
+</ul></li>
+<li>node
+<ul>
+<li>相互關聯的服務(AP+Redis+DB，這邊感覺就跟open tracing有關)</li>
+<li>不相關的服務but share hardware resource(共用機器CPU or networking or memory......) ### why monitoring</li>
+</ul></li>
+<li>分析趨勢</li>
+<li>告警</li>
+<li>線上除錯(根據量化指標)</li>
+<li>儀錶板
+<ul>
+<li>我自己認為透過量化介面，能在一定的學習下降低技術門檻，也有助於洞悉系統異常 ### 四個黃金訊號</li>
+</ul></li>
+<li>延遲
+<ul>
+<li>成功請求延遲</li>
+<li>失敗請求延遲
+<ul>
+<li>透過監控錯誤回復的延遲也許能夠進一步區分問題難易度</li>
+</ul></li>
+</ul></li>
+<li>流量
+<ul>
+<li>HTTP/TCP 連線數量、Network I/O、</li>
+</ul></li>
+<li>錯誤
+<ul>
+<li>HTTP 500</li>
+<li>HTTP 200(錯誤內容)，這需要透過額外的驗證系統</li>
+</ul></li>
+<li>飽和度
+<ul>
+<li>I/O，(netowrk、disk、cpu飽和度計算與預期) ### 設計監控系統應追求簡化</li>
+</ul></li>
+<li>反映真實故障、規則越簡單越好、預測性越強越好、可靠性高。</li>
+<li>不常用的資料收集、彙總警報設定應定時刪除。</li>
+<li>只收集訊息，但沒有在任何dashboard或告警規則內使用的應定時刪除 &gt; 告警能夠對應到問題，避免過度的狼來了效應</li>
+</ul>
+<h2 id="ch07-google-自動化系統的演進">ch07 Google 自動化系統的演進</h2>
+<h3 id="自動化的價值">自動化的價值</h3>
+<ul>
+<li>一致性
+<ul>
+<li>使造成結果相同</li>
+</ul></li>
+<li>平台性
+<ul>
+<li>使錯誤集中化、統一Patch修復(一致性)</li>
+</ul></li>
+<li>更快修復
+<ul>
+<li>因為一致性，可假設自動化的結果為成功執行，可相對降地常見的故障瑣事(我想是手殘錯誤配置等等問題......)。</li>
+</ul></li>
+<li>快速反應
+<ul>
+<li>指Failover or AutoScaling哪一類的，這也是一種自動化的展現</li>
+</ul></li>
+<li>節省時間
+<ul>
+<li>規模越大越有感 ### 自動化程式的三個面向</li>
+</ul></li>
+<li>能力
+<ul>
+<li>準確性</li>
+</ul></li>
+<li>延遲
+<ul>
+<li>指執行完畢時間</li>
+</ul></li>
+<li>相關性
+<ul>
+<li>自動化所涵蓋的流程比例(應該是像coverage report?) ## ch08 發行工程(Release Engineering)</li>
+</ul></li>
+</ul>
+<h3 id="組態管理">組態管理</h3>
+<ul>
+<li>使用master branch組態檔
+<ul>
+<li>這是早期的方式(現在應該不太可能這樣用)，開發者與SRE皆可修改Master上的組態檔。</li>
+<li>容易混亂、提交與實際運行的不一致導致重工。</li>
+</ul></li>
+<li>將config與binary封裝為一起
+<ul>
+<li>這邊指的就是像把應用程式的設定檔(config)調整完畢後與應用程式一起封裝成container的概念</li>
+<li>每當修改設定檔時便需要重新封裝，但簡化了佈署(只需要針對應用程式去更新佈署)</li>
+</ul></li>
+<li>將config獨立封裝並設定為可抽換的方式
+<ul>
+<li>能夠容易去重建某一時刻的組態檔，更新時也能只更新組態檔</li>
+<li>要佈署與管理的東西變多了，可能會變得較複雜一些。</li>
+</ul></li>
+</ul>
+<h3 id="ch09-簡單化心靈雞湯">ch09 簡單化(心靈雞湯?)</h3>
+<p>簡單來說就是...... - 把code寫好 - 不要放棄重構的念頭，持續優化程式碼，將刪減行數作為指標之一。 - (可允許情況下)最小化API - 模組化 - (可允許情況下)簡化發行程序</p>
+<h2 id="ch10-基於時間序列資料進行有效警報">ch10 基於時間序列資料進行有效警報</h2>
+<ul>
+<li>Borgmon
+<ul>
+<li>/varz (類似於現今/metrics的東西)</li>
+<li>Borgmon與Prometheus十分類似</li>
+<li>時間序列的儲存，(timestamp,value)</li>
+<li>一般情況下至少會存放12小時</li>
+</ul></li>
+<li>警報
+<ul>
+<li>警報有可能時常變動(flap)，所以會設定當觸發警報的持續時間到達某個設定值時才會發送警報(與現今的prometheus+alertmanager做法一致)</li>
+</ul></li>
+<li>分段機制
+<ul>
+<li>這邊指的就是像multi-prometheus/federation的概念，各自負責區域中的監控，再交換彼此獲取的metrics，達到分流再聚合進而達到高可靠性避免單點故障問題發生(自己補充: 這邊應該會遇到很多問題，sampling rate、timestamp產生一些不可避免的細微差距)</li>
+</ul></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -219,7 +1366,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day30，旅途的終點"><a href="#Day30，旅途的終點" class="headerlink" title="Day30，旅途的終點"></a>Day30，旅途的終點</h1><h2 id="總結與感想"><a href="#總結與感想" class="headerlink" title="總結與感想"></a>總結與感想</h2><p>今天是Day30，就來總結與呼應一下Day1預計的3個階段</p>
+          <h1 id="day30旅途的終點">Day30，旅途的終點</h1>
+<h2 id="總結與感想">總結與感想</h2>
+<p>今天是Day30，就來總結與呼應一下Day1預計的3個階段
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/30/ithome-13th-day30/#more" rel="contents">
@@ -297,10 +1446,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day29，使用Dex、OIDC為你的Kubernetes再上一道鎖-2-2"><a href="#Day29，使用Dex、OIDC為你的Kubernetes再上一道鎖-2-2" class="headerlink" title="Day29，使用Dex、OIDC為你的Kubernetes再上一道鎖 (2/2)"></a>Day29，使用Dex、OIDC為你的Kubernetes再上一道鎖 (2/2)</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><blockquote>
+          <h1 id="day29使用dexoidc為你的kubernetes再上一道鎖-22">Day29，使用Dex、OIDC為你的Kubernetes再上一道鎖 (2/2)</h1>
+<h2 id="正文">正文</h2>
+<blockquote>
 <p>如果還沒有看<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10273763">Day28</a>的話，建議可以先回去看，不然接下來可能搞不清楚狀況。</p>
 </blockquote>
-<p>延續昨天的內容，我們需要去驗證我們設定的OIDC/Dex server能夠正常運作。</p>
+<p>延續昨天的內容，我們需要去驗證我們設定的OIDC/Dex server能夠正常運作。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/29/ithome-13th-day29/#more" rel="contents">
@@ -378,7 +1529,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖-1-2"><a href="#Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖-1-2" class="headerlink" title="Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2)"></a>Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2)</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>過去我們在使用Kubernetes的權限，往往可能就是用admin.conf，或是serviceaccount搭配clusterrole、clusterrolebinding、role、rolebinding，再配合token產出kubeconfig，而這樣子的配置對於安全性來說可能有些不洽當(例如保留在本機的token也許不會過期之類的)，而且當想要直接kubectl access cluster的人一多起來，管理也會變得相對混亂。這次要來介紹使用Dex與Gitlab OIDC並搭配kubelogin進行身分控管。</p>
+          <h1 id="day28使用dexoidc為你的kubernetes再上一道鎖-12">Day28，使用Dex、OIDC為你的Kubernetes再上一道鎖 (1/2)</h1>
+<h2 id="正文">正文</h2>
+<p>過去我們在使用Kubernetes的權限，往往可能就是用admin.conf，或是serviceaccount搭配clusterrole、clusterrolebinding、role、rolebinding，再配合token產出kubeconfig，而這樣子的配置對於安全性來說可能有些不洽當(例如保留在本機的token也許不會過期之類的)，而且當想要直接kubectl access cluster的人一多起來，管理也會變得相對混亂。這次要來介紹使用Dex與Gitlab OIDC並搭配kubelogin進行身分控管。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/28/ithome-13th-day28/#more" rel="contents">
@@ -456,7 +1609,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day27，Kubesphere-體驗"><a href="#Day27，Kubesphere-體驗" class="headerlink" title="Day27，Kubesphere 體驗"></a>Day27，Kubesphere 體驗</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2>
+          <h1 id="day27kubesphere-體驗">Day27，Kubesphere 體驗</h1>
+<h2 id="正文">正文</h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/27/ithome-13th-day27/#more" rel="contents">
@@ -534,7 +1688,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day26，Kubecost-體驗，算錢好難……"><a href="#Day26，Kubecost-體驗，算錢好難……" class="headerlink" title="Day26，Kubecost 體驗，算錢好難……"></a>Day26，Kubecost 體驗，算錢好難……</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2>
+          <h1 id="day26kubecost-體驗算錢好難......">Day26，Kubecost 體驗，算錢好難......</h1>
+<h2 id="正文">正文</h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/26/ithome-13th-day26/#more" rel="contents">
@@ -612,8 +1767,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day25，Kubeapps-體驗"><a href="#Day25，Kubeapps-體驗" class="headerlink" title="Day25，Kubeapps 體驗"></a>Day25，Kubeapps 體驗</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>kubeapps是一個由vmware/bitnami主導的開元項目，主旨為在kubernetes中讓你透過網頁UI去佈署與管理許多應用程式。</p>
-<p>那我們就根據 getting start 引導來使用helm進行安裝</p>
+          <h1 id="day25kubeapps-體驗">Day25，Kubeapps 體驗</h1>
+<h2 id="正文">正文</h2>
+<p>kubeapps是一個由vmware/bitnami主導的開元項目，主旨為在kubernetes中讓你透過網頁UI去佈署與管理許多應用程式。</p>
+<p>那我們就根據 getting start 引導來使用helm進行安裝
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/25/ithome-13th-day25/#more" rel="contents">
@@ -639,322 +1796,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/24/ithome-13th-day24/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="紀錄一些我的學習筆記">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的日常筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/24/ithome-13th-day24/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day24，試著用Rancher交差Dashboard</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-24 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-24T00:00:00+08:00">2021-09-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:27:48" itemprop="dateModified" datetime="2021-11-16T19:27:48+08:00">2021-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Day24，試著用Rancher交差Dashboard"><a href="#Day24，試著用Rancher交差Dashboard" class="headerlink" title="Day24，試著用Rancher交差Dashboard"></a>Day24，試著用Rancher交差Dashboard</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來一日體驗rancher server上的dashboard功能<br>使用racher2.6.1-rc1版本搭配docker-compose檔，做single docker host。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/24/ithome-13th-day24/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/23/ithome-13th-day23/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="紀錄一些我的學習筆記">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的日常筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/23/ithome-13th-day23/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day23，替你的Gitlab pipeline 添加點搞事</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-23 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-23T00:00:00+08:00">2021-09-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:27:58" itemprop="dateModified" datetime="2021-11-16T19:27:58+08:00">2021-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Day23，替你的Gitlab-pipeline-添加點搞事"><a href="#Day23，替你的Gitlab-pipeline-添加點搞事" class="headerlink" title="Day23，替你的Gitlab pipeline 添加點搞事"></a>Day23，替你的Gitlab pipeline 添加點搞事</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在前面介紹gitlab-ci的pipeline中我僅僅只用到了build stage作為container image build的動作。</p>
-<p>然而在實務上，我們可能還會有許多需要整合的stages單元測試、整合測試、各種佈署細節、各種通報細節以及與gitlab issue、dashboard整合的動作。</p>
-<p>這邊我就準備來搞三個官方有在主導的安全項目，不過不是完全以官方的方式去進行，因為部分的功能在介面上需要enterpirse版本才能夠支援，<strong>但不代表無法使用他</strong>，只是說我們無法在官方的介面上看到對應的功能畫面。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/23/ithome-13th-day23/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/22/ithome-13th-day22/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="紀錄一些我的學習筆記">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的日常筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/22/ithome-13th-day22/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day22，Cert-Manager</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-22 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-22T00:00:00+08:00">2021-09-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:28:07" itemprop="dateModified" datetime="2021-11-16T19:28:07+08:00">2021-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Day22，Cert-Manager"><a href="#Day22，Cert-Manager" class="headerlink" title="Day22，Cert-Manager"></a>Day22，Cert-Manager</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>既上次 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10265212">Day 16</a> 使用自簽憑證的過程，其實原本是打算使用cert-manager來簽署憑證的，但因為http01 solver發生一些問題，無法正確create出<code>.well-known</code>path在ingress上，那這次就改用dns01來挑戰去簽出一個可信賴於internet的網站憑證，透過Let’s encrypt。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/22/ithome-13th-day22/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/21/ithome-13th-day21/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="紀錄一些我的學習筆記">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的日常筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/21/ithome-13th-day21/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day21，Prometheus Operator</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-21 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-21T00:00:00+08:00">2021-09-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:28:09" itemprop="dateModified" datetime="2021-11-16T19:28:09+08:00">2021-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Day21，Prometheus-Operator"><a href="#Day21，Prometheus-Operator" class="headerlink" title="Day21，Prometheus Operator"></a>Day21，Prometheus Operator</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要使用helm來安裝 Prometheus Operator，原先的prometheus operator chart已經被棄用，目前轉為新的prometheus-community/kube-prometheus-stack，而kube-prometheus就是基於prometheus + prometheus operator上的設定與佈署並整合在kubernetes上。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/21/ithome-13th-day21/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 </div>
@@ -991,6 +1834,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

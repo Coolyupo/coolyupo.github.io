@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day09，我也好想用用看Terraform正文今天要來開機器，先去下載server版的Ubuntu 20.04 iso，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。">
+<meta name="description" content="Day09，我也好想用用看Terraform 正文 今天要來開機器，先去下載server版的Ubuntu 20.04 iso，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day09，我也好想用用看Terraform">
 <meta property="og:url" content="http://example.com/2021/09/09/ithome-13th-day09/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day09，我也好想用用看Terraform正文今天要來開機器，先去下載server版的Ubuntu 20.04 iso，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。">
+<meta property="og:description" content="Day09，我也好想用用看Terraform 正文 今天要來開機器，先去下載server版的Ubuntu 20.04 iso，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/ABqvrsU.png">
 <meta property="og:image" content="https://i.imgur.com/HSvqKsh.png">
@@ -57,7 +57,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -127,7 +131,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day09%EF%BC%8C%E6%88%91%E4%B9%9F%E5%A5%BD%E6%83%B3%E7%94%A8%E7%94%A8%E7%9C%8BTerraform"><span class="nav-number">1.</span> <span class="nav-text">Day09，我也好想用用看Terraform</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day09%E6%88%91%E4%B9%9F%E5%A5%BD%E6%83%B3%E7%94%A8%E7%94%A8%E7%9C%8Bterraform"><span class="nav-number">1.</span> <span class="nav-text">Day09，我也好想用用看Terraform</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -140,13 +144,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -229,29 +233,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day09，我也好想用用看Terraform"><a href="#Day09，我也好想用用看Terraform" class="headerlink" title="Day09，我也好想用用看Terraform"></a>Day09，我也好想用用看Terraform</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來開機器，先去下載server版的<a target="_blank" rel="noopener" href="https://releases.ubuntu.com/20.04/">Ubuntu 20.04 iso</a>，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。</p>
-<span id="more"></span>
-<ul>
-<li>這次LAB預計使用的兩張網卡<br><img src="https://i.imgur.com/ABqvrsU.png"></li>
-</ul>
+        <h1 id="day09我也好想用用看terraform">Day09，我也好想用用看Terraform</h1>
+<h2 id="正文">正文</h2>
+<p>今天要來開機器，先去下載server版的<a target="_blank" rel="noopener" href="https://releases.ubuntu.com/20.04/">Ubuntu 20.04 iso</a>，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。 <span id="more"></span> - 這次LAB預計使用的兩張網卡 <img src="https://i.imgur.com/ABqvrsU.png" /></p>
 <p>先建立第一台VM，執行一下更新、調整一些設定(如Chrony時間同步)，然後關機，就能夠將此VM作為範本。</p>
-<p><em><strong>接下來想做一些不一樣的奇怪的事情(需要有授權)……</strong></em></p>
+<p><strong><em>接下來想做一些不一樣的奇怪的事情(需要有授權)......</em></strong></p>
 <p>在VMware安裝的目錄打開CMD，輸入<code>vmrest.exe -C</code>，設定帳號密碼。</p>
 <p>再於目錄執行 <code>vmrest</code> 將會啟動VMWare的REST API服務，預設listen 127.0.0.1:8697，打開瀏覽器可以看到他的Swagger UI。</p>
-<p><img src="https://i.imgur.com/HSvqKsh.png"></p>
-<p>由於要綁定非localhost的ip需要以https啟動服務，所以透過openssl產出self-signed憑證</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -newkey rsa:4096 -keyout workstationapi-key.pem -out workstationapi-cert.pem -days 365 -nodes</span><br></pre></td></tr></table></figure>
-<p>以https啟動並綁IP</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmrest.exe -c certs\workstationapi-cert.pem -k certs\workstationapi-key.pem -i 192.168.1.45</span><br></pre></td></tr></table></figure>
-
+<p><img src="https://i.imgur.com/HSvqKsh.png" /></p>
+<p>由於要綁定非localhost的ip需要以https啟動服務，所以透過openssl產出self-signed憑證 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -newkey rsa:4096 -keyout workstationapi-key.pem -out workstationapi-cert.pem -days 365 -nodes</span><br></pre></td></tr></table></figure> 以https啟動並綁IP <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmrest.exe -c certs\workstationapi-cert.pem -k certs\workstationapi-key.pem -i 192.168.1.45</span><br></pre></td></tr></table></figure></p>
 <p>打開我的Ubuntu 20.04筆電，雀躍著試著使用看剛剛google到的<a target="_blank" rel="noopener" href="https://registry.terraform.io/providers/elsudano/vmworkstation/latest">vmware workstation terraform provider</a>，發現問題還真的是不少，最新版本的plugin使用到<strong>glibc2.32</strong>這個東西我無法安裝在ubuntu20.04上，除非我將它升級成20.10(但我不想這樣做)。</p>
-<p>後續我就將provider降版成0.17，終於可以clone VM的時候卻發現plugin無法正確接收repsond message（Clone的動作還是有執行目錄與檔案也有生成）…… </p>
+<p>後續我就將provider降版成0.17，終於可以clone VM的時候卻發現plugin無法正確接收repsond message（Clone的動作還是有執行目錄與檔案也有生成）......</p>
 <p>原以為是terraform版本太新導致，就順手降成對應的版本測試，但還是沒有改善，我也還不知道為什麼。也因為這樣我沒辦法直接順順的create 5台 VM出來，最終只好硬著頭皮一台一台create出來了。</p>
-<p><img src="https://i.imgur.com/RK81aSL.png"><br><img src="https://i.imgur.com/Tvzg8MT.png"></p>
+<p><img src="https://i.imgur.com/RK81aSL.png" /> <img src="https://i.imgur.com/Tvzg8MT.png" /></p>
 <p>因為我的Workstation 15的REST API，clone完成後好像不會自動register至UI上，所以還是透過介面將他Scan回來了。</p>
-<p><img src="https://i.imgur.com/B8bq66X.png"></p>
+<p><img src="https://i.imgur.com/B8bq66X.png" /></p>
 <p>之後我就進去補設定了一下IP，就決定先這樣了，力氣不夠我再搞其他事了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>好心人士開源的玩具，就這樣花了我一個下午的時間XD，真是感慨光陰似箭呀~</p>
+<h2 id="閒聊">閒聊</h2>
+<p>好心人士開源的玩具，就這樣花了我一個下午的時間XD，真是感慨光陰似箭呀~</p>
 
     </div>
 
@@ -322,6 +321,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

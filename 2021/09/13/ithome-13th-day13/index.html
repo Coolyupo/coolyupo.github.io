@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day13，先讓我設定一下terminal(插曲)正文前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。">
+<meta name="description" content="Day13，先讓我設定一下terminal(插曲) 正文 前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day13，先讓我設定一下terminal(插曲)">
 <meta property="og:url" content="http://example.com/2021/09/13/ithome-13th-day13/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day13，先讓我設定一下terminal(插曲)正文前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。">
+<meta property="og:description" content="Day13，先讓我設定一下terminal(插曲) 正文 前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/C15nEi2.png">
 <meta property="og:image" content="https://i.imgur.com/Y9Y1W14.png">
@@ -58,7 +58,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -128,7 +132,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day13%EF%BC%8C%E5%85%88%E8%AE%93%E6%88%91%E8%A8%AD%E5%AE%9A%E4%B8%80%E4%B8%8Bterminal-%E6%8F%92%E6%9B%B2"><span class="nav-number">1.</span> <span class="nav-text">Day13，先讓我設定一下terminal(插曲)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day13%E5%85%88%E8%AE%93%E6%88%91%E8%A8%AD%E5%AE%9A%E4%B8%80%E4%B8%8Bterminal%E6%8F%92%E6%9B%B2"><span class="nav-number">1.</span> <span class="nav-text">Day13，先讓我設定一下terminal(插曲)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -141,13 +145,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -230,38 +234,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day13，先讓我設定一下terminal-插曲"><a href="#Day13，先讓我設定一下terminal-插曲" class="headerlink" title="Day13，先讓我設定一下terminal(插曲)"></a>Day13，先讓我設定一下terminal(插曲)</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。</p>
-<span id="more"></span>
-<p>安裝一下zsh跟oh-my-zsh</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install zsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#安裝oh-my-zsh</span></span></span><br><span class="line">sh -c &quot;$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#指定zsh為default shell</span></span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#重開機</span></span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-
-<p>下載bullet-train themes，並設定</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $ZSH_CUSTOM/themes</span><br><span class="line">wget https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme</span><br></pre></td></tr></table></figure>
-
-<p>編輯.zshrc檔案，設定ZSH_THEME</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/C15nEi2.png"></p>
-<p>部分符號會亂碼，需要特別安裝字形(這邊使用MesloLGS NF Regular)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf</span><br></pre></td></tr></table></figure>
-
-<p>設定ubuntu的terminal字形與顏色<br><img src="https://i.imgur.com/Y9Y1W14.png"></p>
-<p><img src="https://i.imgur.com/QYFbgcl.png"></p>
-<p>將kubectl auto complete設定於.zshrc</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;source &lt;(kubectl completion zsh)&#x27; &gt;&gt; ~/.zshrc</span><br></pre></td></tr></table></figure>
-<p>安裝我常用的兩個工具kubectx(切換context)與kubens(切換namespace)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubens</span><br><span class="line">wget https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx</span><br><span class="line">chmod +x ./kubectx</span><br><span class="line">chmod +x ./kubens</span><br><span class="line">sudo mv ./kubectx kubens /usr/bin/</span><br></pre></td></tr></table></figure>
-<p>檢查一下結果<br><img src="https://i.imgur.com/GqH79I1.png"></p>
-<p>安裝Kubectl Krew(Kubectl plugin管理工具)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(</span><br><span class="line">  set -x; cd &quot;$(mktemp -d)&quot; &amp;&amp;</span><br><span class="line">  OS=&quot;$(uname | tr &#x27;[:upper:]&#x27; &#x27;[:lower:]&#x27;)&quot; &amp;&amp;</span><br><span class="line">  ARCH=&quot;$(uname -m | sed -e &#x27;s/x86_64/amd64/&#x27; -e &#x27;s/\(arm\)\(64\)\?.*/\1\2/&#x27; -e &#x27;s/aarch64$/arm64/&#x27;)&quot; &amp;&amp;</span><br><span class="line">  curl -fsSLO &quot;https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.tar.gz&quot; &amp;&amp;</span><br><span class="line">  tar zxvf krew.tar.gz &amp;&amp;</span><br><span class="line">  KREW=./krew-&quot;$&#123;OS&#125;_$&#123;ARCH&#125;&quot; &amp;&amp;</span><br><span class="line">  &quot;$KREW&quot; install krew</span><br><span class="line">)</span><br><span class="line">export PATH=&quot;$&#123;KREW_ROOT:-$HOME/.krew&#125;/bin:$PATH&quot;</span><br></pre></td></tr></table></figure>
-<p>檢查一下結果<br><img src="https://i.imgur.com/vjJjNtE.png"></p>
-<p>利用krew 安裝我比較常用的3個plugin</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl krew install status</span><br><span class="line">kubectl krew install sniff</span><br><span class="line">kubectl krew install view-allocations</span><br></pre></td></tr></table></figure>
-
-<p>下載helm3(kubenetes package manager)的binary</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz</span><br><span class="line">tar -xvf helm-v3.6.3-linux-amd64.tar.gz</span><br><span class="line">sudo mv linux_amd64/helm /usr/bin </span><br></pre></td></tr></table></figure>
-<p>檢查一下結果<br><img src="https://i.imgur.com/zYsVEhO.png"></p>
+        <h1 id="day13先讓我設定一下terminal插曲">Day13，先讓我設定一下terminal(插曲)</h1>
+<h2 id="正文">正文</h2>
+<p>前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。 <span id="more"></span> 安裝一下zsh跟oh-my-zsh <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install zsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#安裝oh-my-zsh</span></span></span><br><span class="line">sh -c &quot;$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#指定zsh為default shell</span></span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#重開機</span></span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure></p>
+<p>下載bullet-train themes，並設定 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $ZSH_CUSTOM/themes</span><br><span class="line">wget https://raw.githubusercontent.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme</span><br></pre></td></tr></table></figure></p>
+<p>編輯.zshrc檔案，設定ZSH_THEME <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/C15nEi2.png" /></p>
+<p>部分符號會亂碼，需要特別安裝字形(這邊使用MesloLGS NF Regular) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf</span><br></pre></td></tr></table></figure></p>
+<p>設定ubuntu的terminal字形與顏色 <img src="https://i.imgur.com/Y9Y1W14.png" /></p>
+<p><img src="https://i.imgur.com/QYFbgcl.png" /></p>
+<p>將kubectl auto complete設定於.zshrc <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;source &lt;(kubectl completion zsh)&#x27; &gt;&gt; ~/.zshrc</span><br></pre></td></tr></table></figure> 安裝我常用的兩個工具kubectx(切換context)與kubens(切換namespace) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubens</span><br><span class="line">wget https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx</span><br><span class="line">chmod +x ./kubectx</span><br><span class="line">chmod +x ./kubens</span><br><span class="line">sudo mv ./kubectx kubens /usr/bin/</span><br></pre></td></tr></table></figure> 檢查一下結果 <img src="https://i.imgur.com/GqH79I1.png" /></p>
+<p>安裝Kubectl Krew(Kubectl plugin管理工具) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(</span><br><span class="line">  set -x; cd &quot;$(mktemp -d)&quot; &amp;&amp;</span><br><span class="line">  OS=&quot;$(uname | tr &#x27;[:upper:]&#x27; &#x27;[:lower:]&#x27;)&quot; &amp;&amp;</span><br><span class="line">  ARCH=&quot;$(uname -m | sed -e &#x27;s/x86_64/amd64/&#x27; -e &#x27;s/\(arm\)\(64\)\?.*/\1\2/&#x27; -e &#x27;s/aarch64$/arm64/&#x27;)&quot; &amp;&amp;</span><br><span class="line">  curl -fsSLO &quot;https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.tar.gz&quot; &amp;&amp;</span><br><span class="line">  tar zxvf krew.tar.gz &amp;&amp;</span><br><span class="line">  KREW=./krew-&quot;$&#123;OS&#125;_$&#123;ARCH&#125;&quot; &amp;&amp;</span><br><span class="line">  &quot;$KREW&quot; install krew</span><br><span class="line">)</span><br><span class="line">export PATH=&quot;$&#123;KREW_ROOT:-$HOME/.krew&#125;/bin:$PATH&quot;</span><br></pre></td></tr></table></figure> 檢查一下結果 <img src="https://i.imgur.com/vjJjNtE.png" /></p>
+<p>利用krew 安裝我比較常用的3個plugin <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl krew install status</span><br><span class="line">kubectl krew install sniff</span><br><span class="line">kubectl krew install view-allocations</span><br></pre></td></tr></table></figure></p>
+<p>下載helm3(kubenetes package manager)的binary <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz</span><br><span class="line">tar -xvf helm-v3.6.3-linux-amd64.tar.gz</span><br><span class="line">sudo mv linux_amd64/helm /usr/bin </span><br></pre></td></tr></table></figure> 檢查一下結果 <img src="https://i.imgur.com/zYsVEhO.png" /></p>
 <p>到這邊設定完，就接近我平常使用的環境囉~接下來應該對我來說應該可以順一點，明天再接著佈署的動作。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>原本想說只是做做lab而已，這些都可以偷懶反正這台筆電也不常用……試了幾天馬上就後悔了，只好補上這個插曲。</p>
+<h2 id="閒聊">閒聊</h2>
+<p>原本想說只是做做lab而已，這些都可以偷懶反正這台筆電也不常用......試了幾天馬上就後悔了，只好補上這個插曲。</p>
 
     </div>
 
@@ -332,6 +319,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

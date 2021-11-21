@@ -56,7 +56,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -126,7 +130,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Backup"><span class="nav-number">1.</span> <span class="nav-text">Backup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Restore"><span class="nav-number">2.</span> <span class="nav-text">Restore</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#restore"><span class="nav-number">1.</span> <span class="nav-text">Restore</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -139,13 +143,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -231,12 +235,11 @@
         <ul>
 <li>postgres (PostgreSQL) 10.11</li>
 </ul>
-<p><img src="https://i.imgur.com/EjsRn9o.png"></p>
-<p><img src="https://i.imgur.com/AwoeEd0.png"></p>
-<span id="more"></span>
-<h2 id="Backup"><a href="#Backup" class="headerlink" title="Backup"></a>Backup</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pg_dump -h $db_host -U $POSTGRES_USER -C -c -Fc -f /mnt/$(date +\&quot;%Y-%m-%d\&quot;).dump $database</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/EjsRn9o.png" /></p>
+<p><img src="https://i.imgur.com/AwoeEd0.png" /> <span id="more"></span> ## Backup <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pg_dump -h $db_host -U $POSTGRES_USER -C -c -Fc -f /mnt/$(date +\&quot;%Y-%m-%d\&quot;).dump $database</span><br></pre></td></tr></table></figure></p>
+<h2 id="restore">Restore</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># create database</span></span> </span><br><span class="line">psql -U postgres</span><br><span class="line">create database $database;</span><br><span class="line">create user $database_user;</span><br><span class="line">alter role $database_user with password &#x27;$database_userpassword&#x27;</span><br><span class="line">grant all privileges on database $database to $database_user;</span><br><span class="line">alter database $database owner to $database_user;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># create extensions which you need</span></span></span><br><span class="line">\c $database</span><br><span class="line">CREATE EXTENSION postgis;</span><br><span class="line">CREATE EXTENSION postgis_topology;</span><br><span class="line">CREATE EXTENSION fuzzystrmatch;</span><br><span class="line">CREATE EXTENSION postgis_tiger_geocoder;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># pg_restore</span></span></span><br><span class="line">pg_restore -h $db_host -U $POSTGRES_USER -d $database $(date +\&quot;%Y-%m-%d\&quot;).dump</span><br></pre></td></tr></table></figure>
 
-<h2 id="Restore"><a href="#Restore" class="headerlink" title="Restore"></a>Restore</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># create database</span></span> </span><br><span class="line">psql -U postgres</span><br><span class="line">create database $database;</span><br><span class="line">create user $database_user;</span><br><span class="line">alter role $database_user with password &#x27;$database_userpassword&#x27;</span><br><span class="line">grant all privileges on database $database to $database_user;</span><br><span class="line">alter database $database owner to $database_user;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># create extensions which you need</span></span></span><br><span class="line">\c $database</span><br><span class="line">CREATE EXTENSION postgis;</span><br><span class="line">CREATE EXTENSION postgis_topology;</span><br><span class="line">CREATE EXTENSION fuzzystrmatch;</span><br><span class="line">CREATE EXTENSION postgis_tiger_geocoder;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># pg_restore</span></span></span><br><span class="line">pg_restore -h $db_host -U $POSTGRES_USER -d $database $(date +\&quot;%Y-%m-%d\&quot;).dump</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -308,6 +311,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

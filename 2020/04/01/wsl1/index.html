@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="wsl1 這邊沒有選擇使用wsl2，因為這邊的主工作環境還是windows居多，若使用wsl2 hyper-v會需要開啟，且virtualbox等會需要安裝相依版本在wsl2內(尚未確定是否會產生其他問題)">
+<meta name="description" content="wsl1  這邊沒有選擇使用wsl2，因為這邊的主工作環境還是windows居多，若使用wsl2 hyper-v會需要開啟，且virtualbox等會需要安裝相依版本在wsl2內(尚未確定是否會產生其他問題)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="wsl1&amp;virtualbox+vagrant">
 <meta property="og:url" content="http://example.com/2020/04/01/wsl1/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="wsl1 這邊沒有選擇使用wsl2，因為這邊的主工作環境還是windows居多，若使用wsl2 hyper-v會需要開啟，且virtualbox等會需要安裝相依版本在wsl2內(尚未確定是否會產生其他問題)">
+<meta property="og:description" content="wsl1  這邊沒有選擇使用wsl2，因為這邊的主工作環境還是windows居多，若使用wsl2 hyper-v會需要開啟，且virtualbox等會需要安裝相依版本在wsl2內(尚未確定是否會產生其他問題)">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/kMSDLFN.png">
 <meta property="og:image" content="https://i.imgur.com/aqoxrPp.png">
@@ -63,7 +63,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -133,7 +137,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#wsl1"><span class="nav-number">1.</span> <span class="nav-text">wsl1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-VirtualBox-5-2"><span class="nav-number">2.</span> <span class="nav-text">安裝 VirtualBox 5.2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vagrant"><span class="nav-number">3.</span> <span class="nav-text">vagrant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#others"><span class="nav-number">4.</span> <span class="nav-text">others</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REF"><span class="nav-number">5.</span> <span class="nav-text">REF</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#wsl1"><span class="nav-number">1.</span> <span class="nav-text">wsl1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-virtualbox-5.2"><span class="nav-number">2.</span> <span class="nav-text">安裝 VirtualBox 5.2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vagrant"><span class="nav-number">3.</span> <span class="nav-text">vagrant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#others"><span class="nav-number">4.</span> <span class="nav-text">others</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-number">5.</span> <span class="nav-text">REF</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -146,13 +150,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -235,37 +239,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="wsl1"><a href="#wsl1" class="headerlink" title="wsl1"></a>wsl1</h2><blockquote>
-<p>這邊沒有選擇使用wsl2，因為這邊的主工作環境還是windows居多，若使用wsl2 hyper-v會需要開啟，且virtualbox等會需要安裝相依版本在wsl2內(尚未確定是否會產生其他問題)</p>
-</blockquote>
-<span id="more"></span>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</span><br></pre></td></tr></table></figure>
-<p>重開機 -&gt; Microsoft Store -&gt; 選擇作業系統</p>
-<p><img src="https://i.imgur.com/kMSDLFN.png"></p>
-<h2 id="安裝-VirtualBox-5-2"><a href="#安裝-VirtualBox-5-2" class="headerlink" title="安裝 VirtualBox 5.2"></a>安裝 VirtualBox 5.2</h2><p><a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/Download_Old_Builds_5_2">Donwload Link</a></p>
-<p><img src="https://i.imgur.com/aqoxrPp.png"></p>
-<p><img src="https://i.imgur.com/nEJanFd.png"></p>
-<p>可能會需要關掉hyper-v</p>
+        <h2 id="wsl1">wsl1</h2>
 <blockquote>
-<p>若要使用docker-for-windows 要自行切換<br>這邊要使用vagrant+virtualbox需關閉</p>
+<p>這邊沒有選擇使用wsl2，因為這邊的主工作環境還是windows居多，若使用wsl2 hyper-v會需要開啟，且virtualbox等會需要安裝相依版本在wsl2內(尚未確定是否會產生其他問題) <span id="more"></span> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</span><br></pre></td></tr></table></figure> 重開機 -&gt; Microsoft Store -&gt; 選擇作業系統</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line"></span><br><span class="line">dism.exe /Online /Disable-Feature:Microsoft-Hyper-V</span><br><span class="line"></span><br><span class="line">bcdedit /set hypervisorlaunchtype off</span><br></pre></td></tr></table></figure>
-<p>要給wsl的vagrant使用，所以設定環境變數在系統中(根據安裝路徑)<br><img src="https://i.imgur.com/gtsXQwI.png"></p>
-<h2 id="vagrant"><a href="#vagrant" class="headerlink" title="vagrant"></a>vagrant</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># wsl</span></span></span><br><span class="line">sudo apt install vagrant</span><br></pre></td></tr></table></figure>
-
+<p><img src="https://i.imgur.com/kMSDLFN.png" /></p>
+<h2 id="安裝-virtualbox-5.2">安裝 VirtualBox 5.2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/Download_Old_Builds_5_2">Donwload Link</a></p>
+<p><img src="https://i.imgur.com/aqoxrPp.png" /></p>
+<p><img src="https://i.imgur.com/nEJanFd.png" /></p>
+<p>可能會需要關掉hyper-v &gt; 若要使用docker-for-windows 要自行切換 &gt; 這邊要使用vagrant+virtualbox需關閉 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line"></span><br><span class="line">dism.exe /Online /Disable-Feature:Microsoft-Hyper-V</span><br><span class="line"></span><br><span class="line">bcdedit /set hypervisorlaunchtype off</span><br></pre></td></tr></table></figure> 要給wsl的vagrant使用，所以設定環境變數在系統中(根據安裝路徑) <img src="https://i.imgur.com/gtsXQwI.png" /></p>
+<h2 id="vagrant">vagrant</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># wsl</span></span></span><br><span class="line">sudo apt install vagrant</span><br></pre></td></tr></table></figure>
 <p>本篇的vagrant組合目錄需要位於windows的目錄下</p>
-<p><img src="https://i.imgur.com/wFJwIGz.png"></p>
-<p><img src="https://i.imgur.com/ienqd48.png"></p>
+<p><img src="https://i.imgur.com/wFJwIGz.png" /></p>
+<p><img src="https://i.imgur.com/ienqd48.png" /></p>
 <p>使用vagrant指令時要添加vagrant的wsl變數</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># wsl</span></span></span><br><span class="line">export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS=&quot;1&quot;</span><br><span class="line">vagrant up</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/K3sh7Pj.png"></p>
-<p><img src="https://i.imgur.com/2gatuVg.png"></p>
-<p><img src="https://i.imgur.com/OxnFlAN.png"></p>
-<h2 id="others"><a href="#others" class="headerlink" title="others"></a>others</h2><p>開回hyper-v</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line">dism.exe /Online /Enable-Feature:Microsoft-Hyper-V-All</span><br><span class="line">bcdedit /set hypervisorlaunchtype auto</span><br></pre></td></tr></table></figure>
-
-<h2 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h2><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/windows/wsl/install-win10">https://docs.microsoft.com/zh-tw/windows/wsl/install-win10</a><br><a target="_blank" rel="noopener" href="https://william-yeh.net/post/2019/04/wsl-ansible-vagrant/">https://william-yeh.net/post/2019/04/wsl-ansible-vagrant/</a><br><a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
+<p><img src="https://i.imgur.com/K3sh7Pj.png" /></p>
+<p><img src="https://i.imgur.com/2gatuVg.png" /></p>
+<p><img src="https://i.imgur.com/OxnFlAN.png" /></p>
+<h2 id="others">others</h2>
+<p>開回hyper-v <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line">dism.exe /Online /Enable-Feature:Microsoft-Hyper-V-All</span><br><span class="line">bcdedit /set hypervisorlaunchtype auto</span><br></pre></td></tr></table></figure></p>
+<h2 id="ref">REF</h2>
+<p>https://docs.microsoft.com/zh-tw/windows/wsl/install-win10 https://william-yeh.net/post/2019/04/wsl-ansible-vagrant/ https://www.virtualbox.org/wiki/Downloads</p>
 
     </div>
 
@@ -338,6 +335,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

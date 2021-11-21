@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="過去聽過保哥講座時紀錄下的筆記抽象：需求-&gt;Class封裝： public&#x2F;private&#x2F;protected繼承：重複使用既定class多型：polymorphism多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。Virtual -&gt; 允許被overrideC# Module &#x3D;&gt; class、method……高內聚 Cohesion 一次做一件事情">
+<meta name="description" content="過去聽過保哥講座時紀錄下的筆記 抽象：需求-&gt;Class 封裝： public&#x2F;private&#x2F;protected 繼承：重複使用既定class 多型：polymorphism 多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。 Virtual -&gt; 允許被override C# Module &#x3D;&gt; class、method…… 高內聚 Cohesio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SOLID筆記">
 <meta property="og:url" content="http://example.com/2018/07/09/oop-note/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="過去聽過保哥講座時紀錄下的筆記抽象：需求-&gt;Class封裝： public&#x2F;private&#x2F;protected繼承：重複使用既定class多型：polymorphism多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。Virtual -&gt; 允許被overrideC# Module &#x3D;&gt; class、method……高內聚 Cohesion 一次做一件事情">
+<meta property="og:description" content="過去聽過保哥講座時紀錄下的筆記 抽象：需求-&gt;Class 封裝： public&#x2F;private&#x2F;protected 繼承：重複使用既定class 多型：polymorphism 多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。 Virtual -&gt; 允許被override C# Module &#x3D;&gt; class、method…… 高內聚 Cohesio">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2018-07-09T11:15:21.000Z">
 <meta property="article:modified_time" content="2021-11-17T04:22:53.281Z">
@@ -52,7 +52,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -109,7 +113,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -122,7 +126,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SOLID"><span class="nav-number">1.</span> <span class="nav-text">SOLID</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -135,13 +138,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -225,67 +228,65 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p>過去聽過保哥講座時紀錄下的筆記<br>抽象：需求-&gt;Class<br>封裝： public/private/protected<br>繼承：重複使用既定class<br>多型：polymorphism<br>多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。<br>Virtual -&gt; 允許被override<br>C# Module =&gt; class、method……<br><strong>高內聚 Cohesion 一次做一件事情 -&gt; 可獨立運作<br>低耦合 Coupling 模組與模組之間相依性低，不會互相影響<br>低耦合 -&gt; 帶來低內聚問題。</strong></p>
+<p>過去聽過保哥講座時紀錄下的筆記 抽象：需求-&gt;Class 封裝： public/private/protected 繼承：重複使用既定class 多型：polymorphism 多載 : -&gt; 相同名字function可傳不同參數，執行不同功能。 Virtual -&gt; 允許被override C# Module =&gt; class、method…… <strong>高內聚 Cohesion 一次做一件事情 -&gt; 可獨立運作 低耦合 Coupling 模組與模組之間相依性低，不會互相影響 低耦合 -&gt; 帶來低內聚問題。</strong> <span id="more"></span> ## SOLID</p>
 </blockquote>
-<span id="more"></span>
-<h2 id="SOLID"><a href="#SOLID" class="headerlink" title="SOLID"></a>SOLID</h2><ul>
-<li><p>原則<br>  可以寫出比較好的程式碼<br>  能夠判斷程式碼的好壞</p>
 <ul>
-<li>單一責任原則 SRP(single Responsibility Principle)<ul>
+<li><p>原則 可以寫出比較好的程式碼 能夠判斷程式碼的好壞</p>
+<ul>
+<li>單一責任原則 SRP(single Responsibility Principle)
+<ul>
 <li>理論一個類別只有一個責任</li>
 <li>當責任太多，意味者應該可以被切割-&gt;定義新class</li>
 <li>提升高內聚</li>
 <li>原則的背後需要根據需求(有重複利用需求、未來需求)</li>
-<li>如何確認類別被賦予過多責任？<ul>
+<li>如何確認類別被賦予過多責任？
+<ul>
 <li>副作用：導致高耦合</li>
 <li>不瞭解需求不要用SRP</li>
 <li>SRP Solid 最簡單但最難做到</li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/visualstudio/modeling/create-layer-diagrams-from-your-code">https://docs.microsoft.com/en-us/visualstudio/modeling/create-layer-diagrams-from-your-code</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>開放封閉原則OCP (Open Closed Principle)<ul>
-<li>開放擴充、封閉修改<ul>
+<li>https://docs.microsoft.com/en-us/visualstudio/modeling/create-layer-diagrams-from-your-code</li>
+</ul></li>
+</ul></li>
+<li>開放封閉原則OCP (Open Closed Principle)
+<ul>
+<li>開放擴充、封閉修改
+<ul>
 <li>擴充(繼承、擴充方法)</li>
 <li>抽象型別轉為基底新別=&gt; Base = new OOOBase();</li>
 <li>使用時機：類別被清楚定義、強調穩定</li>
 <li>擔心修改程式碼破壞現有code-&gt;Interface 實作</li>
 <li>抽象類別可包含部分實作、Interface不可code=&gt;低耦合</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>里氏替換原則LSP(Liskov Substitution Principle)<ul>
-<li>衍生類別可替換為基底類別、且不發生異常=&gt;子型別可轉換基底型別<ul>
+</ul></li>
+</ul></li>
+<li>里氏替換原則LSP(Liskov Substitution Principle)
+<ul>
+<li>衍生類別可替換為基底類別、且不發生異常=&gt;子型別可轉換基底型別
+<ul>
 <li>使用Virtual &amp; Override</li>
 <li>繼承 or Interface（=&gt;定義基底型別、耦合低）</li>
 <li>Warning 很重要</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>介面隔離原則ISP(Interface Segregation Principle)<ul>
+</ul></li>
+</ul></li>
+<li>介面隔離原則ISP(Interface Segregation Principle)
+<ul>
 <li>不同需求的屬性與方法放至不同介面</li>
 <li>不讓介面包山包海、特定需求另外建一個</li>
 <li>介面會變來越多=&gt;多到多少才會剛好?</li>
-</ul>
-</li>
-<li>相依反轉原則Dependency Inversion Principle<ul>
+</ul></li>
+<li>相依反轉原則Dependency Inversion Principle
+<ul>
 <li>高階不應該依賴於低階、兩者都相依於抽象</li>
-<li>DIP =&gt;型別全部相依於抽象<ul>
-<li>緊密耦合=&gt;鬆散耦合<ul>
+<li>DIP =&gt;型別全部相依於抽象
+<ul>
+<li>緊密耦合=&gt;鬆散耦合
+<ul>
 <li>For: 降低耦合、類別相依於抽象、更有效率開發</li>
-<li>符合DIP 幾乎符合 OCP &amp; LSP </li>
+<li>符合DIP 幾乎符合 OCP &amp; LSP</li>
 <li>再多考量SRP &amp; ISP</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
 
     </div>
@@ -355,6 +356,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

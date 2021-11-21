@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day02，先來建個開發資料庫好了。正文預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。">
+<meta name="description" content="Day02，先來建個開發資料庫好了。 正文 預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day02，先來建個開發資料庫好了。">
 <meta property="og:url" content="http://example.com/2021/09/02/ithome-13th-day02/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day02，先來建個開發資料庫好了。正文預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。">
+<meta property="og:description" content="Day02，先來建個開發資料庫好了。 正文 預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/lHvXxe0.png">
 <meta property="og:image" content="https://i.imgur.com/SUJ48o3.png">
@@ -54,7 +54,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -124,7 +128,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day02%EF%BC%8C%E5%85%88%E4%BE%86%E5%BB%BA%E5%80%8B%E9%96%8B%E7%99%BC%E8%B3%87%E6%96%99%E5%BA%AB%E5%A5%BD%E4%BA%86%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">Day02，先來建個開發資料庫好了。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day02%E5%85%88%E4%BE%86%E5%BB%BA%E5%80%8B%E9%96%8B%E7%99%BC%E8%B3%87%E6%96%99%E5%BA%AB%E5%A5%BD%E4%BA%86"><span class="nav-number">1.</span> <span class="nav-text">Day02，先來建個開發資料庫好了。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -137,13 +141,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -226,21 +230,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day02，先來建個開發資料庫好了。"><a href="#Day02，先來建個開發資料庫好了。" class="headerlink" title="Day02，先來建個開發資料庫好了。"></a>Day02，先來建個開發資料庫好了。</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。</p>
-<span id="more"></span>
-<p>這邊是直接使用<a target="_blank" rel="noopener" href="https://github.com/bitnami/bitnami-docker-postgresql">bitnami</a>包好的image，沒有做什麼特別的調整，使用的docker-compose檔案配置如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">  postgresql:</span><br><span class="line">    image: docker.io/bitnami/postgresql:13</span><br><span class="line">    ports:</span><br><span class="line">      - &#x27;5555:5432&#x27;</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x27;/volume1/homes/pg_data:/bitnami/postgresql&#x27;</span><br><span class="line">    restart: always</span><br><span class="line">    user: &#x27;1026&#x27;</span><br><span class="line">    environment:</span><br><span class="line">      - POSTGRES_USERNAME=postgres</span><br><span class="line">      - POSTGRES_PASSWORD=**********</span><br><span class="line">      - POSTGRES_REPLICATION_MODE=master</span><br></pre></td></tr></table></figure>
-<p>bitnami範本的image，預設運行的使用者都是1001(rootless)，這邊切換成我的NAS上的使用者1026，目錄的部分也需要調整為相對應的權限。<br><img src="https://i.imgur.com/lHvXxe0.png"></p>
+        <h1 id="day02先來建個開發資料庫好了">Day02，先來建個開發資料庫好了。</h1>
+<h2 id="正文">正文</h2>
+<p>預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。 <span id="more"></span> 這邊是直接使用<a target="_blank" rel="noopener" href="https://github.com/bitnami/bitnami-docker-postgresql">bitnami</a>包好的image，沒有做什麼特別的調整，使用的docker-compose檔案配置如下： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">  postgresql:</span><br><span class="line">    image: docker.io/bitnami/postgresql:13</span><br><span class="line">    ports:</span><br><span class="line">      - &#x27;5555:5432&#x27;</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x27;/volume1/homes/pg_data:/bitnami/postgresql&#x27;</span><br><span class="line">    restart: always</span><br><span class="line">    user: &#x27;1026&#x27;</span><br><span class="line">    environment:</span><br><span class="line">      - POSTGRES_USERNAME=postgres</span><br><span class="line">      - POSTGRES_PASSWORD=**********</span><br><span class="line">      - POSTGRES_REPLICATION_MODE=master</span><br></pre></td></tr></table></figure> bitnami範本的image，預設運行的使用者都是1001(rootless)，這邊切換成我的NAS上的使用者1026，目錄的部分也需要調整為相對應的權限。 <img src="https://i.imgur.com/lHvXxe0.png" /></p>
 <p>再來進去container裡面做create database與指定database owner。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it --user root 2b6f sh</span><br><span class="line">psql -U postgres</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 輸入密碼</span></span></span><br><span class="line">create database homelab_blog ;</span><br><span class="line">create user homelab030;</span><br><span class="line">alter role homelab030 with password &#x27;********&#x27;;</span><br><span class="line">grant all privileges on database homelab_blog to homelab030;</span><br></pre></td></tr></table></figure>
-<p>喵一下目前database，退出。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\l</span><br><span class="line">\q</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/SUJ48o3.png"></p>
+<p>喵一下目前database，退出。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\l</span><br><span class="line">\q</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/SUJ48o3.png" /></p>
 <p>明天就可以來處理Model相關的事情了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>這幾年來docker/container的興起，在用自己的電腦測試或開發串接一些open source的服務，相對來說都變得輕鬆許多，而且電腦也不會像過去一樣因安裝而弄得亂七八糟。</p>
-<blockquote>
-<p>題外話聊一下最近docker的授權有所異動，其中影響比較大的會是在<a target="_blank" rel="noopener" href="https://www.docker.com/blog/updating-product-subscriptions/?fbclid=IwAR2y_QqM-Gz94VtrKdYgtc4uXK6flaZhDAZgifBgrEe_dCTC5liExYE7MbI">docker desktop</a>這個tool上，大家要記得去follow、了解一下規則避免侵權唷~</p>
-</blockquote>
+<h2 id="閒聊">閒聊</h2>
+<p>這幾年來docker/container的興起，在用自己的電腦測試或開發串接一些open source的服務，相對來說都變得輕鬆許多，而且電腦也不會像過去一樣因安裝而弄得亂七八糟。 &gt; 題外話聊一下最近docker的授權有所異動，其中影響比較大的會是在<a target="_blank" rel="noopener" href="https://www.docker.com/blog/updating-product-subscriptions/?fbclid=IwAR2y_QqM-Gz94VtrKdYgtc4uXK6flaZhDAZgifBgrEe_dCTC5liExYE7MbI">docker desktop</a>這個tool上，大家要記得去follow、了解一下規則避免侵權唷~</p>
 
     </div>
 
@@ -311,6 +309,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

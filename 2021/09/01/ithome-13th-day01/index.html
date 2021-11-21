@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day01，旅途的起點前言這次預計用這30天，來執行一輪亂七八糟的HomeLab，內容將會涵蓋許多不同領域的範疇但不會探究，而涵蓋的範圍有些是我所擅長的、有些是我不擅長、有些是已經在工作運行一陣子了的，也將有些是第一次接觸的。這一切的一切，僅僅作為我對於我自己自我成長的要求，當然如果你因為過於無聊，或其他緣故而看到這系列的文章，又產生想法的話，也歡迎指教與鞭策。  只求小力一點XD。">
+<meta name="description" content="Day01，旅途的起點 前言 這次預計用這30天，來執行一輪亂七八糟的HomeLab，內容將會涵蓋許多不同領域的範疇但不會探究，而涵蓋的範圍有些是我所擅長的、有些是我不擅長、有些是已經在工作運行一陣子了的，也將有些是第一次接觸的。這一切的一切，僅僅作為我對於我自己自我成長的要求，當然如果你因為過於無聊，或其他緣故而看到這系列的文章，又產生想法的話，也歡迎指教與鞭策。 &gt; 只求小力一點XD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day01，旅途的起點">
 <meta property="og:url" content="http://example.com/2021/09/01/ithome-13th-day01/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day01，旅途的起點前言這次預計用這30天，來執行一輪亂七八糟的HomeLab，內容將會涵蓋許多不同領域的範疇但不會探究，而涵蓋的範圍有些是我所擅長的、有些是我不擅長、有些是已經在工作運行一陣子了的，也將有些是第一次接觸的。這一切的一切，僅僅作為我對於我自己自我成長的要求，當然如果你因為過於無聊，或其他緣故而看到這系列的文章，又產生想法的話，也歡迎指教與鞭策。  只求小力一點XD。">
+<meta property="og:description" content="Day01，旅途的起點 前言 這次預計用這30天，來執行一輪亂七八糟的HomeLab，內容將會涵蓋許多不同領域的範疇但不會探究，而涵蓋的範圍有些是我所擅長的、有些是我不擅長、有些是已經在工作運行一陣子了的，也將有些是第一次接觸的。這一切的一切，僅僅作為我對於我自己自我成長的要求，當然如果你因為過於無聊，或其他緣故而看到這系列的文章，又產生想法的話，也歡迎指教與鞭策。 &gt; 只求小力一點XD">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-01T12:05:54.000Z">
 <meta property="article:modified_time" content="2021-11-16T11:29:57.942Z">
@@ -51,7 +51,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -121,7 +125,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day01%EF%BC%8C%E6%97%85%E9%80%94%E7%9A%84%E8%B5%B7%E9%BB%9E"><span class="nav-number">1.</span> <span class="nav-text">Day01，旅途的起點</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A6%8F%E5%8A%83"><span class="nav-number">1.2.</span> <span class="nav-text">規劃</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">1.3.</span> <span class="nav-text">總結</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day01%E6%97%85%E9%80%94%E7%9A%84%E8%B5%B7%E9%BB%9E"><span class="nav-number">1.</span> <span class="nav-text">Day01，旅途的起點</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">1.2.</span> <span class="nav-text">總結</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -134,13 +138,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -223,18 +227,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day01，旅途的起點"><a href="#Day01，旅途的起點" class="headerlink" title="Day01，旅途的起點"></a>Day01，旅途的起點</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這次預計用這30天，來執行一輪亂七八糟的HomeLab，內容將會涵蓋許多不同領域的範疇<strong>但不會探究</strong>，而涵蓋的範圍有些是我所擅長的、有些是我不擅長、有些是已經在工作運行一陣子了的，也將有些是第一次接觸的。這一切的一切，僅僅作為我對於我自己自我成長的要求，當然如果你因為過於無聊，或其他緣故而看到這系列的文章，又產生想法的話，也歡迎指教與鞭策。</p>
-<blockquote>
-<p>只求小力一點XD。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="規劃"><a href="#規劃" class="headerlink" title="規劃"></a>規劃</h2><p>本次預計分三個段落</p>
-<ol>
+        <h1 id="day01旅途的起點">Day01，旅途的起點</h1>
+<h2 id="前言">前言</h2>
+<p>這次預計用這30天，來執行一輪亂七八糟的HomeLab，內容將會涵蓋許多不同領域的範疇<strong>但不會探究</strong>，而涵蓋的範圍有些是我所擅長的、有些是我不擅長、有些是已經在工作運行一陣子了的，也將有些是第一次接觸的。這一切的一切，僅僅作為我對於我自己自我成長的要求，當然如果你因為過於無聊，或其他緣故而看到這系列的文章，又產生想法的話，也歡迎指教與鞭策。 &gt; 只求小力一點XD。 <span id="more"></span> ## 規劃</p>
+<p>本次預計分三個段落</p>
+<ol type="1">
 <li>一段非常簡易的Application開發過程，最終包含Containerize且搭配一些CI tools執行Auto Build等等的過程。 (預估佔比 1/4 )</li>
 <li>這段會預計先簡介一下目前打算使用的硬體環境，從VM的建立與簡易的設定到Kubernetes的選型與佈署集成，並搭配1的成果，將服務發行在Cluster上。 (預估佔比 2/4 )</li>
 <li>最後預計測試一些與服務發行運作沒有直接關聯，但也許能夠幫助<del>維運</del>的CNCF project(尚未決定要搞什麼)，反正大概就是一些over design的事情。 (預估佔比 1/4 )</li>
 </ol>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>因為這幾年工作多半著重在容器、系統環境處理以及CI/CD自動化工程的範疇當中，第一個段落可以預期的是會慘不忍睹了XD，雖然規劃了三段但最終還是將會依照我當下的心情做微幅的變動，反正是HomeLab，就讓我做主吧!</p>
+<h2 id="總結">總結</h2>
+<p>因為這幾年工作多半著重在容器、系統環境處理以及CI/CD自動化工程的範疇當中，第一個段落可以預期的是會慘不忍睹了XD，雖然規劃了三段但最終還是將會依照我當下的心情做微幅的變動，反正是HomeLab，就讓我做主吧!</p>
 
     </div>
 
@@ -305,6 +308,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

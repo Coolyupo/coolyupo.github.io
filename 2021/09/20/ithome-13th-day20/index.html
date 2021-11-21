@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day20，Grafana Loki 不一樣的log選擇正文今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK&#x2F;EFK)。">
+<meta name="description" content="Day20，Grafana Loki 不一樣的log選擇 正文 今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK&#x2F;EFK)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day20，Grafana Loki 不一樣的log選擇">
 <meta property="og:url" content="http://example.com/2021/09/20/ithome-13th-day20/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day20，Grafana Loki 不一樣的log選擇正文今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK&#x2F;EFK)。">
+<meta property="og:description" content="Day20，Grafana Loki 不一樣的log選擇 正文 今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK&#x2F;EFK)。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/X3uQjlV.png">
 <meta property="og:image" content="https://i.imgur.com/z93SgL3.png">
@@ -65,7 +65,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -135,7 +139,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day20%EF%BC%8CGrafana-Loki-%E4%B8%8D%E4%B8%80%E6%A8%A3%E7%9A%84log%E9%81%B8%E6%93%87"><span class="nav-number">1.</span> <span class="nav-text">Day20，Grafana Loki 不一樣的log選擇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day20grafana-loki-%E4%B8%8D%E4%B8%80%E6%A8%A3%E7%9A%84log%E9%81%B8%E6%93%87"><span class="nav-number">1.</span> <span class="nav-text">Day20，Grafana Loki 不一樣的log選擇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -148,13 +152,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -237,41 +241,26 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day20，Grafana-Loki-不一樣的log選擇"><a href="#Day20，Grafana-Loki-不一樣的log選擇" class="headerlink" title="Day20，Grafana Loki 不一樣的log選擇"></a>Day20，Grafana Loki 不一樣的log選擇</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK/EFK)。</p>
-<span id="more"></span>
-<p>簡單補充一下官方 loki 架構<br><img src="https://i.imgur.com/X3uQjlV.png"><br>其中agent的選擇有</p>
-<ul>
-<li>Promtail</li>
-<li>Docker Driver</li>
-<li>Fluentd</li>
-<li>Fluent Bit</li>
-<li>Logstash</li>
-<li>Lambda Promtail</li>
-</ul>
-<p>這邊一樣使用Helm安裝</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add grafana https://grafana.github.io/helm-charts</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
-<p>這邊要安裝的是loki-stack<br><img src="https://i.imgur.com/z93SgL3.png"></p>
-<p>loki-stack 是使用dependency chart的方式，所以可以選擇的agent很多種<br><img src="https://i.imgur.com/aT25P02.png"></p>
-<p>這邊選擇的angent是預設的promtail，一併安裝grafana&amp;prometheus</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">helm install homelab-loki grafana/loki-stack --version 2.4.1 \</span><br><span class="line">--set grafana.enabled=true \</span><br><span class="line">--set prometheus.enabled=true \</span><br><span class="line">--set prometheus.alertmanager.persistentVolume.enabled=false \</span><br><span class="line">--set prometheus.server.persistentVolume.enabled=false \</span><br><span class="line">--set loki.persistence.enabled=true \</span><br><span class="line">--set loki.persistence.storageClassName=nfs-client \</span><br><span class="line">--set loki.persistence.size=30Gi \</span><br><span class="line">--namespace loki</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/L0kP75f.png"></p>
-<blockquote>
-<p>安裝的過程跳出不少1.22將棄用的API XD</p>
-</blockquote>
-<p>安裝完後的長相<br><img src="https://i.imgur.com/KLyD3t3.png"></p>
+        <h1 id="day20grafana-loki-不一樣的log選擇">Day20，Grafana Loki 不一樣的log選擇</h1>
+<h2 id="正文">正文</h2>
+<p>今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK/EFK)。 <span id="more"></span> 簡單補充一下官方 loki 架構 <img src="https://i.imgur.com/X3uQjlV.png" /> 其中agent的選擇有 * Promtail * Docker Driver * Fluentd * Fluent Bit * Logstash * Lambda Promtail</p>
+<p>這邊一樣使用Helm安裝 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add grafana https://grafana.github.io/helm-charts</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure> 這邊要安裝的是loki-stack <img src="https://i.imgur.com/z93SgL3.png" /></p>
+<p>loki-stack 是使用dependency chart的方式，所以可以選擇的agent很多種 <img src="https://i.imgur.com/aT25P02.png" /></p>
+<p>這邊選擇的angent是預設的promtail，一併安裝grafana&amp;prometheus <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">helm install homelab-loki grafana/loki-stack --version 2.4.1 \</span><br><span class="line">--set grafana.enabled=true \</span><br><span class="line">--set prometheus.enabled=true \</span><br><span class="line">--set prometheus.alertmanager.persistentVolume.enabled=false \</span><br><span class="line">--set prometheus.server.persistentVolume.enabled=false \</span><br><span class="line">--set loki.persistence.enabled=true \</span><br><span class="line">--set loki.persistence.storageClassName=nfs-client \</span><br><span class="line">--set loki.persistence.size=30Gi \</span><br><span class="line">--namespace loki</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/L0kP75f.png" /> &gt; 安裝的過程跳出不少1.22將棄用的API XD</p>
+<p>安裝完後的長相 <img src="https://i.imgur.com/KLyD3t3.png" /></p>
 <p>來看一下promtail的config，這邊的scrape_config的設定方式基本就跟prometheus的設定相同，kubernetes_sd_configs指定來源為kubernetes pod</p>
-<p><img src="https://i.imgur.com/KZMLd1A.png"><br>貼在vs code上稍微折疊一下，可以看到一堆relabel的config<br><img src="https://i.imgur.com/95BZPg5.png"></p>
+<p><img src="https://i.imgur.com/KZMLd1A.png" /> 貼在vs code上稍微折疊一下，可以看到一堆relabel的config <img src="https://i.imgur.com/95BZPg5.png" /></p>
 <p>接著先取得garfana的admin密碼，並使用port-forward的方式導到本機</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get secret --namespace loki homelab-loki-grafana -o jsonpath=&quot;&#123;.data.admin-password&#125;&quot; | base64 --decode ; echo</span><br><span class="line"></span><br><span class="line">kubectl port-forward svc/homelab-loki-grafana 8080:80 -n loki </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/3WtpjaL.png"></p>
-<p>左邊explore的按鈕點一下，左上的下拉選擇為loki。可以看到這邊與kibana性質非常相像，這邊的查詢則是基於<a target="_blank" rel="noopener" href="https://grafana.com/docs/loki/latest/logql/">LogQL</a>的語法<br><img src="https://i.imgur.com/7eoxytq.png"></p>
-<p>點開Log browser 也有輔助label可以協助search<br><img src="https://i.imgur.com/brJ0k5h.png"></p>
-<p>點開help則是有些Cheat Sheet可供參考<br><img src="https://i.imgur.com/UlFZ5lP.png"></p>
-<p>也有query history，能夠再次執行過去的query<br><img src="https://i.imgur.com/jIn4Bch.png"></p>
-<p>當然也可以從DashBoard import個quick search dashboard做簡易快速查詢<br><img src="https://i.imgur.com/1xivZC3.png"></p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>如果你想把syslog收進loki當然也可以辦到的喔，透過job scrap config去蒐集<code>/var/log/*log</code>之類的，可以在官網上看到相關的設定指引喔。</p>
+<p><img src="https://i.imgur.com/3WtpjaL.png" /></p>
+<p>左邊explore的按鈕點一下，左上的下拉選擇為loki。可以看到這邊與kibana性質非常相像，這邊的查詢則是基於<a target="_blank" rel="noopener" href="https://grafana.com/docs/loki/latest/logql/">LogQL</a>的語法 <img src="https://i.imgur.com/7eoxytq.png" /></p>
+<p>點開Log browser 也有輔助label可以協助search <img src="https://i.imgur.com/brJ0k5h.png" /></p>
+<p>點開help則是有些Cheat Sheet可供參考 <img src="https://i.imgur.com/UlFZ5lP.png" /></p>
+<p>也有query history，能夠再次執行過去的query <img src="https://i.imgur.com/jIn4Bch.png" /></p>
+<p>當然也可以從DashBoard import個quick search dashboard做簡易快速查詢 <img src="https://i.imgur.com/1xivZC3.png" /></p>
+<h2 id="閒聊">閒聊</h2>
+<p>如果你想把syslog收進loki當然也可以辦到的喔，透過job scrap config去蒐集<code>/var/log/*log</code>之類的，可以在官網上看到相關的設定指引喔。</p>
 
     </div>
 
@@ -342,6 +331,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day05，滑水的一天正文今天要來產出一個簡單的畫面，目的是串接昨天的API，雖說預計是很簡單的畫面，但我對前端也不怎麼熟悉(何苦找洞給自己跳QQ)，只好趕快來抱佛腳一下。">
+<meta name="description" content="Day05，滑水的一天 正文 今天要來產出一個簡單的畫面，目的是串接昨天的API，雖說預計是很簡單的畫面，但我對前端也不怎麼熟悉(何苦找洞給自己跳QQ)，只好趕快來抱佛腳一下。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day05，滑水的一天">
 <meta property="og:url" content="http://example.com/2021/09/05/ithome-13th-day05/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day05，滑水的一天正文今天要來產出一個簡單的畫面，目的是串接昨天的API，雖說預計是很簡單的畫面，但我對前端也不怎麼熟悉(何苦找洞給自己跳QQ)，只好趕快來抱佛腳一下。">
+<meta property="og:description" content="Day05，滑水的一天 正文 今天要來產出一個簡單的畫面，目的是串接昨天的API，雖說預計是很簡單的畫面，但我對前端也不怎麼熟悉(何苦找洞給自己跳QQ)，只好趕快來抱佛腳一下。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/UbcfKPf.gif">
 <meta property="article:published_time" content="2021-09-04T16:00:00.000Z">
@@ -53,7 +53,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -123,7 +127,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day05%EF%BC%8C%E6%BB%91%E6%B0%B4%E7%9A%84%E4%B8%80%E5%A4%A9"><span class="nav-number">1.</span> <span class="nav-text">Day05，滑水的一天</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day05%E6%BB%91%E6%B0%B4%E7%9A%84%E4%B8%80%E5%A4%A9"><span class="nav-number">1.</span> <span class="nav-text">Day05，滑水的一天</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -136,13 +140,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -225,34 +229,37 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day05，滑水的一天"><a href="#Day05，滑水的一天" class="headerlink" title="Day05，滑水的一天"></a>Day05，滑水的一天</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來產出一個簡單的畫面，目的是串接昨天的API，雖說預計是很簡單的畫面，但我對前端也不怎麼熟悉(何苦找洞給自己跳QQ)，只好趕快來抱佛腳一下。</p>
-<span id="more"></span>
-<p>google了一下，目前主流的前端框架應該主要還是react/angular/vue，這裡我就隨意選了個react來實作。</p>
+        <h1 id="day05滑水的一天">Day05，滑水的一天</h1>
+<h2 id="正文">正文</h2>
+<p>今天要來產出一個簡單的畫面，目的是串接昨天的API，雖說預計是很簡單的畫面，但我對前端也不怎麼熟悉(何苦找洞給自己跳QQ)，只好趕快來抱佛腳一下。 <span id="more"></span> google了一下，目前主流的前端框架應該主要還是react/angular/vue，這裡我就隨意選了個react來實作。</p>
 <p>不管如何都要先安裝<a target="_blank" rel="noopener" href="https://nodejs.org/en">nodejs</a></p>
 <p>還不清楚怎麼開始，趕快google ithome過去的react教學，就照著<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10242451">前人的教學</a>設定了環境</p>
 <p>最終胡搞瞎搞弄了一點頁面出來(搭配呼叫前幾天寫的API)，很簡陋卻花了很多時間(在下資質駑鈍)，功能大概如下</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>route</th>
 <th>功能</th>
 <th>搭配API</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>/</td>
 <td>清單展示頁面，包含tag過濾</td>
 <td>/API/Blog/GetList?tag=null</td>
 </tr>
-<tr>
+<tr class="even">
 <td>/Details/:id</td>
 <td>單筆資料render</td>
 <td>/API/Blog/GetDetail?ID=xxxx</td>
 </tr>
-</tbody></table>
-<p><img src="https://i.imgur.com/UbcfKPf.gif"></p>
-<p><a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabreact">程式碼連結</a><br>今天先這樣好了，然後之後會將他搭配nginx，並用container打包起來……</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>今天的內容比較水一點，因為我也不知道要寫什麼，感覺怎麼寫都不對，只好亂寫一通。</p>
+</tbody>
+</table>
+<p><img src="https://i.imgur.com/UbcfKPf.gif" /></p>
+<p><a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabreact">程式碼連結</a> 今天先這樣好了，然後之後會將他搭配nginx，並用container打包起來......</p>
+<h2 id="閒聊">閒聊</h2>
+<p>今天的內容比較水一點，因為我也不知道要寫什麼，感覺怎麼寫都不對，只好亂寫一通。</p>
 
     </div>
 
@@ -323,6 +330,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

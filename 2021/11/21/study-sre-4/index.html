@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="ch27 可靠地進行大規模發行  上線協調工程師(LCE，Launch Coordination Engineer)  審核新產品與服務，確保可靠性標準與實踐一致 發行過程中做為多個團隊間的聯絡人 追蹤發行任務進度，負責發行過程相關技術 發行過程守門員  好的發行流程特徵  輕盈(Lightweight)  占用很少開發時間  穩健(Robust)  很少bug">
+<meta property="og:type" content="article">
+<meta property="og:title" content="網站可靠性工程 - Part 4 (O&#39;REILLY ISBN 978-986-476-625-3)">
+<meta property="og:url" content="http://example.com/2021/11/21/study-sre-4/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="ch27 可靠地進行大規模發行  上線協調工程師(LCE，Launch Coordination Engineer)  審核新產品與服務，確保可靠性標準與實踐一致 發行過程中做為多個團隊間的聯絡人 追蹤發行任務進度，負責發行過程相關技術 發行過程守門員  好的發行流程特徵  輕盈(Lightweight)  占用很少開發時間  穩健(Robust)  很少bug">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-11-21T04:54:50.000Z">
+<meta property="article:modified_time" content="2021-11-21T05:28:36.376Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="讀書心得">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/11/21/study-sre-4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/11/21/study-sre-4/","path":"2021/11/21/study-sre-4/","title":"網站可靠性工程 - Part 4 (O'REILLY ISBN 978-986-476-625-3)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>網站可靠性工程 - Part 4 (O'REILLY ISBN 978-986-476-625-3) | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch27-%E5%8F%AF%E9%9D%A0%E5%9C%B0%E9%80%B2%E8%A1%8C%E5%A4%A7%E8%A6%8F%E6%A8%A1%E7%99%BC%E8%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">ch27 可靠地進行大規模發行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch29-%E8%99%95%E7%90%86%E6%8F%92%E6%96%B7%E6%80%A7%E4%BB%BB%E5%8B%99"><span class="nav-number">2.</span> <span class="nav-text">ch29 處理插斷性任務</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B6%AD%E9%81%8B%E8%B2%A0%E8%8D%B7"><span class="nav-number">2.1.</span> <span class="nav-text">維運負荷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch30-%E9%80%8F%E9%81%8E%E5%B5%8C%E5%85%A5sre%E7%9A%84%E6%96%B9%E5%BC%8F%E5%B9%AB%E5%8A%A9%E5%9C%98%E9%9A%8A%E5%BE%9E%E7%B6%AD%E9%81%8B%E8%B6%85%E8%BC%89%E4%B8%AD%E6%81%A2%E5%BE%A9"><span class="nav-number">3.</span> <span class="nav-text">ch30 透過嵌入SRE的方式幫助團隊從維運超載中恢復</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%9A%8E%E6%AE%B5%E4%BA%86%E8%A7%A3%E6%9C%8D%E5%8B%99%E4%BA%86%E8%A7%A3%E7%92%B0%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text">第一階段：了解服務，了解環境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%8C%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">後略</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/study-sre-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          網站可靠性工程 - Part 4 (O'REILLY ISBN 978-986-476-625-3)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-21 12:54:50 / Modified: 13:28:36" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:50+08:00">2021-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="ch27-可靠地進行大規模發行">ch27 可靠地進行大規模發行</h2>
+<ul>
+<li>上線協調工程師(LCE，Launch Coordination Engineer)
+<ul>
+<li>審核新產品與服務，確保可靠性標準與實踐一致</li>
+<li>發行過程中做為多個團隊間的聯絡人</li>
+<li>追蹤發行任務進度，負責發行過程相關技術</li>
+<li>發行過程守門員</li>
+</ul></li>
+<li>好的發行流程特徵
+<ul>
+<li>輕盈(Lightweight)
+<ul>
+<li>占用很少開發時間</li>
+</ul></li>
+<li>穩健(Robust)
+<ul>
+<li>很少bug</li>
+</ul></li>
+<li>周全(Through)
+<ul>
+<li>完整、一致、易於追蹤</li>
+</ul></li>
+<li>可擴展(Scalable)
+<ul>
+<li>可用於簡單任務亦可用於複雜任務</li>
+</ul></li>
+<li>適應性(Adaptable)
+<ul>
+<li>適用於多數常見發行</li>
+</ul></li>
+</ul></li>
+<li>需求與特徵之間會存在衝突，Google的選擇策略
+<ul>
+<li>簡化</li>
+<li>高度客製化</li>
+<li>快速的共通模式(maybe 模組化)</li>
+</ul></li>
+</ul>
+<h2 id="ch29-處理插斷性任務">ch29 處理插斷性任務</h2>
+<h3 id="維運負荷">維運負荷</h3>
+<ul>
+<li>緊急警報
+<ul>
+<li>透過正式環境警報的問題任務</li>
+<li>通常會與SLO有關</li>
+</ul></li>
+<li>工單
+<ul>
+<li>因應客戶需求的某種<strong>操作</strong></li>
+</ul></li>
+<li>日常維運
+<ul>
+<li>又稱瑣事XD ### 如何決定插斷性任務處理策略</li>
+</ul></li>
+<li>插斷性任務預期的回應時間(SLO)</li>
+<li>任務數量</li>
+<li>嚴重程度</li>
+<li>發生頻率</li>
+<li>可投入的人力 ### 減少插斷 &gt; 提到工作狀態THE Zone XDD</li>
+<li>實際分析工單
+<ul>
+<li>避免干擾非根源問題的人事物</li>
+</ul></li>
+<li>尊重自己也尊重使用者
+<ul>
+<li><strong>定義合理的服務水平</strong></li>
+<li><strong>某些事物是可以推回給客戶自行解決的</strong></li>
+</ul></li>
+</ul>
+<h2 id="ch30-透過嵌入sre的方式幫助團隊從維運超載中恢復">ch30 透過嵌入SRE的方式幫助團隊從維運超載中恢復</h2>
+<h3 id="第一階段了解服務了解環境">第一階段：了解服務，了解環境</h3>
+<ul>
+<li>確認最大壓力來源</li>
+<li>找出癥結點(來源)
+<ul>
+<li>知識代溝</li>
+<li>SRE直接餐與開發的功能變得越來越重要</li>
+<li>對「未來一件大事」過度依賴</li>
+<li>開發團隊和SRE都視而不見的警報</li>
+<li>被投訴的服務又缺乏SLI/SLO/SLA</li>
+<li>任何的容量規劃都是<strong>增加</strong>
+<ul>
+<li>(永遠的錯誤都是增加XXXXXXX</li>
+</ul></li>
+<li>事後檢討只有RollBack?</li>
+<li>現有的SRE以「我們什麼也不知道，只有開發者才明白」來處理關鍵元件。<br />
+### 第二階段：分享背景知識</li>
+</ul></li>
+<li>良好的事後檢討範例</li>
+<li>緊急事件按類型排序 ### 第三階段：主導改變</li>
+<li>從基礎開始</li>
+<li>獲得團隊成員的幫助</li>
+<li>邏輯推理過程與引導性問題</li>
+</ul>
+<h2 id="後略">後略</h2>
+<p><span class="math display">\[\begin{equation}
+\left\{
+\begin{array}{lr}
+x=\dfrac{3\pi}{2}(1+2t)\cos(\dfrac{3\pi}{2}(1+2t)), &amp; \\
+y=s, &amp; 0 \leq s \leq L,|t| \leq1. \\
+z=\dfrac{3\pi}{2}(1+2t)\sin(\dfrac{3\pi}{2}(1+2t)), &amp;  
+\end{array}
+\right.
+\end{equation}\]</span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%80%E6%9B%B8%E5%BF%83%E5%BE%97/" rel="tag"># 讀書心得</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/21/study-sre-3/" rel="prev" title="網站可靠性工程 - Part 3 (O'REILLY ISBN 978-986-476-625-3)">
+                  <i class="fa fa-chevron-left"></i> 網站可靠性工程 - Part 3 (O'REILLY ISBN 978-986-476-625-3)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"a55caa61d941428afa350319aea9b066"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Done   OS hardware master node    ubuntu18.04(official) vm in ds718+(4vCores、8gb ram) V    ubuntu18.04(jeston) jeston nano(NVIDIA Tegra X1)  V    K3S預設使用containerd。 master我隨便用直接使用containerd node因nvid">
+<meta name="description" content="Done    OS hardware master node     ubuntu18.04(official) vm in ds718+(4vCores、8gb ram) V    ubuntu18.04(jeston) jeston nano(NVIDIA Tegra X1)  V     K3S預設使用containerd。  m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="k3s x jeston nano 隨手記">
 <meta property="og:url" content="http://example.com/2020/01/30/jestonNano-k3s/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Done   OS hardware master node    ubuntu18.04(official) vm in ds718+(4vCores、8gb ram) V    ubuntu18.04(jeston) jeston nano(NVIDIA Tegra X1)  V    K3S預設使用containerd。 master我隨便用直接使用containerd node因nvid">
+<meta property="og:description" content="Done    OS hardware master node     ubuntu18.04(official) vm in ds718+(4vCores、8gb ram) V    ubuntu18.04(jeston) jeston nano(NVIDIA Tegra X1)  V     K3S預設使用containerd。  m">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/uzz5yZ2.png">
 <meta property="og:image" content="https://i.imgur.com/RUTM2gD.png">
@@ -55,7 +55,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -125,7 +129,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Done"><span class="nav-number">1.</span> <span class="nav-text">Done</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Future"><span class="nav-number">2.</span> <span class="nav-text">Future</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#done"><span class="nav-number">1.</span> <span class="nav-text">Done</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#future"><span class="nav-number">2.</span> <span class="nav-text">Future</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -138,13 +142,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -228,43 +232,47 @@
     
     <div class="post-body" itemprop="articleBody">
         <span id="more"></span>
-<h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2><table>
+<h2 id="done">Done</h2>
+<table>
 <thead>
-<tr>
+<tr class="header">
 <th>OS</th>
 <th>hardware</th>
 <th>master</th>
 <th>node</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>ubuntu18.04(official)</td>
 <td>vm in ds718+(4vCores、8gb ram)</td>
 <td>V</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>ubuntu18.04(jeston)</td>
 <td>jeston nano(NVIDIA Tegra X1)</td>
 <td></td>
 <td>V</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <ul>
-<li>K3S預設使用containerd。<ul>
+<li>K3S預設使用containerd。
+<ul>
 <li>master我隨便用直接使用containerd</li>
-<li>node因nvidia container 僅 support docker、lxc、cri-o  所以改用docker搭建</li>
-</ul>
-</li>
+<li>node因nvidia container 僅 support docker、lxc、cri-o 所以改用docker搭建</li>
+</ul></li>
 <li>etcd 上層協議不變下層改用SQL lite轉譯，節點之間有抽象的etcd socket。</li>
 <li>rancher的框架master預設是可以schedule的，不想要需自己重上taint。</li>
 <li>目前未指定CNI(尚未測試是否無法溝通)，節點上有產出svclb-traefik的daemonset應該是作為取代kubeproxy的功能。</li>
 <li>預設會幫你直接安裝traefik ingress controller，若要取消可在安裝選項上取消。</li>
 <li>真的是非常簡單安裝、亦可一鍵取消安裝。</li>
 </ul>
-<p><img src="https://i.imgur.com/uzz5yZ2.png"></p>
-<p><img src="https://i.imgur.com/RUTM2gD.png"></p>
-<h2 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h2><ul>
+<p><img src="https://i.imgur.com/uzz5yZ2.png" /></p>
+<p><img src="https://i.imgur.com/RUTM2gD.png" /></p>
+<h2 id="future">Future</h2>
+<ul>
 <li>檢查CNI部分</li>
 <li>試跑TensorFlow/TensorRT</li>
 <li>跟之前跑的Jupyter sample上的usb camera搭上關係。</li>
@@ -340,6 +348,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

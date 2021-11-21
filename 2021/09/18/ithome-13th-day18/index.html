@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day 18，ArgoCD ( 1 &#x2F; 2 )正文先天要來裝GitOPs的工具之一，ArgoCD">
+<meta name="description" content="Day 18，ArgoCD ( 1 &#x2F; 2 ) 正文 先天要來裝GitOPs的工具之一，ArgoCD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day18，ArgoCD ( 1 &#x2F; 2 )">
 <meta property="og:url" content="http://example.com/2021/09/18/ithome-13th-day18/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day 18，ArgoCD ( 1 &#x2F; 2 )正文先天要來裝GitOPs的工具之一，ArgoCD">
+<meta property="og:description" content="Day 18，ArgoCD ( 1 &#x2F; 2 ) 正文 先天要來裝GitOPs的工具之一，ArgoCD">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/ofWvIud.png">
 <meta property="og:image" content="https://i.imgur.com/4xL5WLj.png">
@@ -62,7 +62,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -132,7 +136,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-18%EF%BC%8CArgoCD-1-2"><span class="nav-number">1.</span> <span class="nav-text">Day 18，ArgoCD ( 1 &#x2F; 2 )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day-18argocd-1-2"><span class="nav-number">1.</span> <span class="nav-text">Day 18，ArgoCD ( 1 &#x2F; 2 )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -145,13 +149,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -234,37 +238,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day-18，ArgoCD-1-2"><a href="#Day-18，ArgoCD-1-2" class="headerlink" title="Day 18，ArgoCD ( 1 / 2 )"></a>Day 18，ArgoCD ( 1 / 2 )</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>先天要來裝GitOPs的工具之一，ArgoCD</p>
-<span id="more"></span>
-<p>透過helm來安裝</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add argo https://argoproj.github.io/argo-helm</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/ofWvIud.png"></p>
-<p>一樣產出設定檔</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm show values argo/argo-cd --version 3.17.6 &gt; values.yml</span><br></pre></td></tr></table></figure>
-
+        <h1 id="day-18argocd-1-2">Day 18，ArgoCD ( 1 / 2 )</h1>
+<h2 id="正文">正文</h2>
+<p>先天要來裝GitOPs的工具之一，ArgoCD <span id="more"></span> 透過helm來安裝 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add argo https://argoproj.github.io/argo-helm</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/ofWvIud.png" /></p>
+<p>一樣產出設定檔 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm show values argo/argo-cd --version 3.17.6 &gt; values.yml</span><br></pre></td></tr></table></figure></p>
 <p>調整設定（這邊能夠設定非常之多），我們這次LAB必要的調整為service為Loadbalancer 並將他指派ip 192.168.1.241，搭配前幾天的openELB</p>
-<p><img src="https://i.imgur.com/4xL5WLj.png"></p>
-<p>安裝</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns argocd</span><br><span class="line">helm install homelab-argo argo/argo-cd --version 3.17.6 -f values.yml -n argocd</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/6bvNFtO.png"></p>
-<p>下載ArgoCD command line tools，並登入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64</span><br><span class="line"></span><br><span class="line">sudo chmod +x  /usr/local/bin/argocd </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 先取得預設密碼</span></span></span><br><span class="line">kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=&quot;&#123;.data.password&#125;&quot; | base64 -d</span><br><span class="line"></span><br><span class="line">argocd login 192.168.1.241</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/Yi6i6VB.png"><br>修改admin密碼</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">argocd account update-password  </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/278BbEL.png"></p>
-<blockquote>
-<p>argocd的admin密碼，其實會放置在secrets底下，但因為有特別進行過加解密機制，無法單純以base64的方式置換cm，這邊用CLI進行update最快。</p>
-</blockquote>
-<p>再來我們前往預計使用的 <a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/argo-cd-demo">Gitlab Repo</a>，當中我已把day12的YAML放在這個repo當中了。<br><img src="https://i.imgur.com/FvPHnJS.png"></p>
-<p>回到瀏覽器打開 <a target="_blank" rel="noopener" href="https://192.168.1.241/">https://192.168.1.241</a> 從UI登入，設定相關repositroy</p>
-<p><img src="https://i.imgur.com/R8pee5k.png"></p>
+<p><img src="https://i.imgur.com/4xL5WLj.png" /></p>
+<p>安裝 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns argocd</span><br><span class="line">helm install homelab-argo argo/argo-cd --version 3.17.6 -f values.yml -n argocd</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/6bvNFtO.png" /></p>
+<p>下載ArgoCD command line tools，並登入 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64</span><br><span class="line"></span><br><span class="line">sudo chmod +x  /usr/local/bin/argocd </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 先取得預設密碼</span></span></span><br><span class="line">kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=&quot;&#123;.data.password&#125;&quot; | base64 -d</span><br><span class="line"></span><br><span class="line">argocd login 192.168.1.241</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/Yi6i6VB.png" /> 修改admin密碼 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">argocd account update-password  </span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/278BbEL.png" /> &gt; argocd的admin密碼，其實會放置在secrets底下，但因為有特別進行過加解密機制，無法單純以base64的方式置換cm，這邊用CLI進行update最快。</p>
+<p>再來我們前往預計使用的 <a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/argo-cd-demo">Gitlab Repo</a>，當中我已把day12的YAML放在這個repo當中了。 <img src="https://i.imgur.com/FvPHnJS.png" /></p>
+<p>回到瀏覽器打開 https://192.168.1.241 從UI登入，設定相關repositroy</p>
+<p><img src="https://i.imgur.com/R8pee5k.png" /></p>
 <p>創建application</p>
-<p><img src="https://i.imgur.com/8vqF9k3.png"></p>
-<p>最終的結果，如下兩張圖<br><img src="https://i.imgur.com/rYxYLNT.png"></p>
-<p><img src="https://i.imgur.com/3fN58xQ.png"></p>
+<p><img src="https://i.imgur.com/8vqF9k3.png" /></p>
+<p>最終的結果，如下兩張圖 <img src="https://i.imgur.com/rYxYLNT.png" /></p>
+<p><img src="https://i.imgur.com/3fN58xQ.png" /></p>
 <p>之後我們就能透過異動gitlab上的repo來執行佈署了，明天會持續介紹ArgoCD SSO的功能</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>每次裝argocd的時候，都感覺介面產生了些變化，更新的也是挺頻繁的，真是令人頭痛。</p>
+<h2 id="閒聊">閒聊</h2>
+<p>每次裝argocd的時候，都感覺介面產生了些變化，更新的也是挺頻繁的，真是令人頭痛。</p>
 
     </div>
 
@@ -335,6 +327,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

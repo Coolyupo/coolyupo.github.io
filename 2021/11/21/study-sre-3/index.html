@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="ch22 處理連鎖故障 連鎖故障舉例  伺服器超載  負載平衡端點存在(A&amp;B)，單B端點故障時，導致A端點的QPS上升，進而導致A端點超載產生拒絕效應，連原先能乘載的QPS都無法達到。  資源耗盡(在多個系統、程式共用硬體資源的情境下，部分服務的超載都可能會透過硬體資源直接影響到其他服務)  CPU  請求上升 佇列過長 執行緒卡死 CPU死鎖 RPC Ti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="網站可靠性工程 - Part 3 (O&#39;REILLY ISBN 978-986-476-625-3)">
+<meta property="og:url" content="http://example.com/2021/11/21/study-sre-3/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="ch22 處理連鎖故障 連鎖故障舉例  伺服器超載  負載平衡端點存在(A&amp;B)，單B端點故障時，導致A端點的QPS上升，進而導致A端點超載產生拒絕效應，連原先能乘載的QPS都無法達到。  資源耗盡(在多個系統、程式共用硬體資源的情境下，部分服務的超載都可能會透過硬體資源直接影響到其他服務)  CPU  請求上升 佇列過長 執行緒卡死 CPU死鎖 RPC Ti">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-11-21T04:54:47.000Z">
+<meta property="article:modified_time" content="2021-11-21T05:18:37.862Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="讀書心得">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/11/21/study-sre-3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/11/21/study-sre-3/","path":"2021/11/21/study-sre-3/","title":"網站可靠性工程 - Part 3 (O'REILLY ISBN 978-986-476-625-3)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>網站可靠性工程 - Part 3 (O'REILLY ISBN 978-986-476-625-3) | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch22-%E8%99%95%E7%90%86%E9%80%A3%E9%8E%96%E6%95%85%E9%9A%9C"><span class="nav-number">1.</span> <span class="nav-text">ch22 處理連鎖故障</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%A3%E9%8E%96%E6%95%85%E9%9A%9C%E8%88%89%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">連鎖故障舉例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch23-%E7%AE%A1%E7%90%86%E9%97%9C%E9%8D%B5%E7%8B%80%E6%85%8B%E5%88%A9%E7%94%A8%E5%88%86%E6%95%A3%E5%BC%8F%E4%B8%80%E8%87%B4%E5%8C%96%E4%BE%86%E6%8F%90%E9%AB%98%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">Ch23 管理關鍵狀態：利用分散式一致化來提高可靠性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch24-%E5%88%86%E6%95%A3%E5%BC%8F%E4%BB%BB%E5%8B%99%E6%8E%92%E7%A8%8B%E7%B3%BB%E7%B5%B1"><span class="nav-number">3.</span> <span class="nav-text">ch24 分散式任務排程系統</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cron"><span class="nav-number">3.1.</span> <span class="nav-text">Cron</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch26-%E8%B3%87%E6%96%99%E5%AE%8C%E6%95%B4%E6%80%A7-%E8%AE%80%E5%AF%AB%E4%B8%80%E8%87%B4"><span class="nav-number">4.</span> <span class="nav-text">ch26 資料完整性 : 讀寫一致</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E9%AB%98%E8%B3%87%E6%96%99%E5%AE%8C%E6%95%B4%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5%E8%80%83%E9%87%8F%E6%9C%AC%E8%BA%AB%E6%9C%89%E7%9F%9B%E7%9B%BE%E8%88%87%E4%BA%9B%E8%A8%B1%E4%BA%92%E6%96%A5"><span class="nav-number">4.1.</span> <span class="nav-text">超高資料完整性的策略考量(本身有矛盾與些許互斥)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%99%E4%BB%BD%E8%88%87%E5%B0%81%E5%AD%98"><span class="nav-number">4.2.</span> <span class="nav-text">備份與封存</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/study-sre-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          網站可靠性工程 - Part 3 (O'REILLY ISBN 978-986-476-625-3)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-21 12:54:47 / Modified: 13:18:37" itemprop="dateCreated datePublished" datetime="2021-11-21T12:54:47+08:00">2021-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="ch22-處理連鎖故障">ch22 處理連鎖故障</h2>
+<h3 id="連鎖故障舉例">連鎖故障舉例</h3>
+<ul>
+<li>伺服器超載
+<ul>
+<li>負載平衡端點存在(A&amp;B)，單B端點故障時，導致A端點的QPS上升，進而導致A端點超載產生拒絕效應，連原先能乘載的QPS都無法達到。</li>
+</ul></li>
+<li>資源耗盡(在多個系統、程式共用硬體資源的情境下，部分服務的超載都可能會透過硬體資源直接影響到其他服務)
+<ul>
+<li>CPU
+<ul>
+<li>請求上升</li>
+<li>佇列過長</li>
+<li>執行緒卡死</li>
+<li>CPU死鎖</li>
+<li>RPC Timeout</li>
+<li>CPU 快取效率下降</li>
+</ul></li>
+<li>記憶體
+<ul>
+<li>當機</li>
+<li>導致CPU使用率上升(GC的關係)</li>
+<li>快取命中率下降</li>
+</ul></li>
+<li>執行緒
+<ul>
+<li>執行緒不足可能會影響到許多服務(以前遇過server上被zombie thread佔滿導致部分服務無法正常運作32767?)</li>
+</ul></li>
+<li>資源之間相依問題
+<ul>
+<li>資源的耗盡有可能是其他資源出現問題所導致的(以前有遇過，CPU處理速度太慢導致Worker queue不斷堆疊，反而產生oom的情境)</li>
+</ul></li>
+</ul></li>
+<li>防止軟體伺服器超載
+<ul>
+<li>進行負載壓力測試了解系統極限，測試超載失效模式</li>
+<li>提供降級的結果
+<ul>
+<li>問題發生時，由個別服務決定提供品質較低(資源消耗量較少)的結果</li>
+</ul></li>
+<li>超載情況下主動拒絕請求
+<ul>
+<li>軟體伺服器應該主動拒絕請求，與前面提到的adaptive throttling類似</li>
+</ul></li>
+<li>上層系統應主動拒絕請求，由上而下
+<ul>
+<li>反向代理層拒絕</li>
+<li>負載平衡層拒絕</li>
+<li>個別作業拒絕</li>
+<li>個別服務(元件)容量規劃</li>
+</ul></li>
+</ul></li>
+<li>佇列管理
+<ul>
+<li>cpu使用，執行耗時</li>
+<li>佇列越長導致記憶體使用量越高</li>
+<li>當處理無法跟上佇列時應提早拒絕、進行轉移負載。</li>
+</ul></li>
+<li>丟棄負載 load shedding
+<ul>
+<li>系統臨近超載時，主動丟棄一定量的負載
+<ul>
+<li>HTTP 503(Service unavailable)</li>
+<li>FIFO 先入先出</li>
+<li>LIFO 後入先出</li>
+<li>CoDel 可控制延遲</li>
+</ul></li>
+</ul></li>
+<li>優雅降級 graceful degradation
+<ul>
+<li>當系統開始丟棄負載時，服務可自行降低回應品質，減少運算量、運算時間。</li>
+<li>需要設計降級的決策指標(CPU、延遲、佇列長度、執行緒......)</li>
+<li>降級不該被經常觸發，平常也不會使用這個模式
+<ul>
+<li>更顯示測試的重要性，確保該模式在真正發生的情況下能夠正常運作。<br />
+</li>
+</ul></li>
+</ul></li>
+<li>重試
+<ul>
+<li>遇到錯誤時進行重試</li>
+<li>過度的重試反而會造成連鎖故障
+<ul>
+<li>被累加到後續QPS，造成伺服器過載，後端真正執行的工作反而很少</li>
+</ul></li>
+<li>設計重試應考量
+<ul>
+<li>前面提到防止軟體伺服器重載</li>
+<li>隨機化、指數型遞增重試週期</li>
+<li>限制重試、避免無限重試</li>
+<li>試著將重試納入全域的預算分配(指定同一時間內系統可允許的重試次數)</li>
+<li>多角度檢視服務(ex:前端、後端、資料庫)，避免放大效應</li>
+<li>明確的錯誤返回代碼，能夠劃分不需要重試的永久性錯誤，與可重試的錯誤。</li>
+</ul></li>
+</ul></li>
+<li>解決連鎖故障的立即步驟
+<ul>
+<li>增加資源</li>
+<li>停止健康檢查導致的作業當機(前面一值提到的sampling的副作用)</li>
+<li>重啟軟體伺服器(restart service or reboot? XD)</li>
+<li>丟棄流量
+<ul>
+<li>這邊就類似Kubernetes readness probe，服務一起動湧入大量流量便馬上當機，永遠都修不好<br />
+</li>
+</ul></li>
+<li>降級模式</li>
+<li>移除非關鍵Batch Job</li>
+<li>消除有害流量(會造成攻擊性或系統漏洞請求)
+<ul>
+<li>比較多應該是無特別限制的大範圍搜尋(應該從程式設計就考量)</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="ch23-管理關鍵狀態利用分散式一致化來提高可靠性">Ch23 管理關鍵狀態：利用分散式一致化來提高可靠性</h2>
+<ul>
+<li><p>CAP理論</p>
+<ul>
+<li>Consistency — A read is guaranteed to return the most recent write for a given client</li>
+<li>Availability — A non-failing node will return a reasonable response within a reasonable amount of time (no error or timeout).</li>
+<li>Partition Tolerance — The system will continue to function when network partitions occur. &gt; 當分散式系統發生問題時，往往無法滿足這三個要求。如Partition Tolerance(當網路分區發生問題時，至少一個或多個節點會被迫中斷，將不會是所有的節點都能夠被存取，資料當然也不會一致)</li>
+</ul></li>
+<li><p>領導者選舉與分散系統中的最終一致化(eventual consistency)</p>
+<ul>
+<li>這邊指就是像etcd，會經過定期的選舉來決定領頭者(主要的處理者)，透過傳遞使資料一致化</li>
+<li>資料庫的replication模式(master-slave架構)也是這種資料一致化的概念，只是沒有選舉的動作(沒有Availability)。</li>
+<li>如果不是一致化的架構，代表可能是用分散式的shard架構，則當叢集腦裂、損壞時可能會無法恢復，需要以另外的方式去做保險(就我所知很多使用shard機制的服務都會針對shard片段再做replication避免資料丟失無法還原)</li>
+<li>分散式一致化演算法
+<ul>
+<li>當機不可恢復 crash-fail</li>
+<li>當機可恢復 crash-recover
+<ul>
+<li>比較有用，很多時候可能會因為不知名外在因素(網路緩慢)導致重啟</li>
+</ul></li>
+<li>拜占庭式問題
+<ul>
+<li>簡單來說就是有節點惡意發送不正確訊息時。</li>
+</ul></li>
+<li>Paxos
+<ul>
+<li>proposer(提案者)</li>
+<li>acceptor(接受者)<br />
+</li>
+<li>當提案者收到總數一半+1人同意時(<span class="math inline">\(\frac{n}{2}\)</span>+1)，提交提案並記錄</li>
+<li>不成熟，但是後續分散式演算法的啟蒙(raft.......)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>分散式一致化系統效能問題 &gt; 普遍認為分散式一致化系統演算法速度太慢、資源要求過高、不適合搭建高處理能力且低延遲系統，未必正確，透過設計和系統優化、佈署策略都能夠有所改善。</p></li>
+<li><p>Multi-Paxos</p>
+<ul>
+<li>strong leader：在沒有發生錯誤、存在領頭者的情況下，提案者只需要對滿足法定人數的處理程序發送一次訊息，就可以保障系統達成一致化。</li>
+<li>原本的Paxos非strong leader，在Leader不常異動的情況下，原先Paxos階段一Prepare/Promise(提案者發送序號給接收者，接收者只能接收最高序號的提案)這件事情會變得單純，Leader持續提案、Acceptor持續接收(不會有發送舊的序號要驗證這件事情?)</li>
+</ul></li>
+<li><p>Fast Paxos</p>
+<ul>
+<li>Client直接向acceptor發送propose而非透過leader(傳統為Client透過Proposer、再由Proposer發送propose給acceptor)</li>
+<li>兩條訊息變成一條</li>
+<li>直覺上比較快，但還是得考慮網路延遲問題(若Client速度很慢，會由1個慢速網路(往proposer)變成N個慢速網路(往acceptors)反而拖垮效能)</li>
+</ul></li>
+<li><p>複本的數量</p>
+<ul>
+<li>採多數法定
+<ul>
+<li>2f+1，f:失敗</li>
+<li><strong>非拜占庭容忍</strong></li>
+<li>ex:3個節點，可允許1個失敗</li>
+</ul></li>
+<li>拜占庭容忍
+<ul>
+<li>3f+1，f:間諜數量(有節點在惡搞)</li>
+<li>這邊好像在Block chain上應用比較多(公有鏈?)，需要積極去考量防偽</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="ch24-分散式任務排程系統">ch24 分散式任務排程系統</h2>
+<h3 id="cron">Cron</h3>
+<ul>
+<li>最常見的排成格式(crontab)</li>
+<li>由單一元件組成crond，是一隻系統服務程式(daemon)，管理載入任務清單。</li>
+<li>從可靠性探討Cron
+<ul>
+<li>任何的故障都可能會影響服務可靠性(單伺服器運作)</li>
+<li>crond重啟需保留的只有組態檔(crontab)，啟動任務後不再追蹤狀態</li>
+<li>anacron是特例
+<ul>
+<li>會執行當機期間的任務</li>
+<li>但其實只對短周期任務有作用，每天只執行一次之類的</li>
+<li>對電腦OR工作站維護紀錄有幫助，做法就是將Cron執行的紀錄再做一次紀錄XD ### 大型系統的Cron</li>
+</ul></li>
+</ul></li>
+<li>這邊在講的其實就是Kubernetes中的Cronjob XD</li>
+<li>將實際處理序與實體機器分開，故障發生時能自動移轉(增加可靠性)</li>
+<li>追蹤兩個選項
+<ul>
+<li>將資料儲存在可用度很高的外部分散式儲存裝置上</li>
+<li>系統內部自行儲存一些(很小量的)狀態資料，(Kubernetes之於etcd的作法)</li>
+</ul></li>
+<li>大型Cron系統的驚群效應(thundering herd)
+<ul>
+<li>在大量Crontab任務的情況下，要小心處理將任務時間平均設置，避免大家都在同個時間點執行大量作業(也許是午夜)，反而造成系統超載問題。</li>
+<li>即便如此，Google的排成任務負載仍是尖銳。</li>
+</ul></li>
+</ul>
+<h2 id="ch26-資料完整性-讀寫一致">ch26 資料完整性 : 讀寫一致</h2>
+<h3 id="超高資料完整性的策略考量本身有矛盾與些許互斥">超高資料完整性的策略考量(本身有矛盾與些許互斥)</h3>
+<ul>
+<li>線上時間
+<ul>
+<li>通常以可用率(availability)，代表服務可被使用者使用的時間</li>
+</ul></li>
+<li>延遲
+<ul>
+<li>服務對使用者回應時間</li>
+</ul></li>
+<li>規模
+<ul>
+<li>服務的使用數量、維持服務水平最高負載</li>
+</ul></li>
+<li>創新速度
+<ul>
+<li>合理成本下的服務創新跌代</li>
+</ul></li>
+<li>隱私
+<ul>
+<li>這邊只探討刪除，使用者刪除資料後(軟刪除)，資料必須在合理時間內<strong>真正摧毀</strong> &gt;ACID &gt;原子性（Atomicity） &gt;一致性（Consistency） &gt;隔離性（Isolation） &gt;持久性（Durability） &gt;BASE &gt;Basically Available(基本可用） &gt;Soft state(軟狀態） &gt;Eventually consistent(最终一致性）</li>
+</ul></li>
+</ul>
+<h3 id="備份與封存">備份與封存</h3>
+<ul>
+<li>封存(archives)
+<ul>
+<li>將資料長時間安全儲存，滿足稽核、鑑識與法律遵循要求。(交易日誌、財務資料?......現實生活的話可能就是所得稅申報?)</li>
+</ul></li>
+<li>雲端環境下備份難點與需求
+<ul>
+<li>難點
+<ul>
+<li>使用混合交易與非交易(non-trasaction)型備份與復原，恢復的資料不一定是正確的</li>
+<li>不停機的情況下，有同時操作不同版本風險(Rolling Update?)</li>
+</ul></li>
+<li>雲端服務API需求
+<ul>
+<li>資料區域性與快取</li>
+<li>區域合全域資料分布</li>
+<li>強一致性、最終一致性</li>
+<li>資料持久性、備份與災害復原</li>
+</ul></li>
+</ul></li>
+<li>備份就像納稅一樣
+<ul>
+<li>需要持久付出的代價</li>
+<li>交付一套<strong>復原系統而非備份系統</strong><br />
+</li>
+<li>複製機制與冗餘不代表可恢復性</li>
+</ul></li>
+<li>保留期限
+<ul>
+<li>資料備份的儲存時間也許要考量</li>
+<li>長期下來也是花空間跟花$，需要設計如何Rotate</li>
+</ul></li>
+<li>保障資料完整性手段
+<ul>
+<li>軟刪除(似資料庫修改Delete欄位的方式，不在第一時間做刪除，用以處理誤刪或一定時間內快速復原)
+<ul>
+<li>由API等應用操作的誤刪(非一般軟刪除)可能會再增加一層<strong>懶刪除(lazy deletion)</strong>，刪除當下服務馬上不可使用，但由雲端供應商多保留幾周再徹底銷毀。(之前在Azure Blob上好像有看到相關的內容)</li>
+</ul></li>
+<li>備份和相關的復原方法
+<ul>
+<li>備份與還原的方法</li>
+<li>完整or增量備份的復原點頻率</li>
+<li>備份儲存位置</li>
+<li>備份保留時間</li>
+</ul></li>
+<li>複製機制
+<ul>
+<li>儲存設備或服務架構具備複製的機制，Hardware RAID、MDADM、DB Replication......</li>
+<li>在資料存放到越大時難度將越來越難</li>
+</ul></li>
+<li>早期預警
+<ul>
+<li>資料檢查與校驗動作</li>
+<li>監控<br />
+</li>
+<li>確保恢復策略正常工作(演練?)</li>
+</ul></li>
+</ul></li>
+<li>心態
+<ul>
+<li>保持初學者心態
+<ul>
+<li>永遠會有自己不了解的BUG</li>
+</ul></li>
+<li>信任但還是要驗證
+<ul>
+<li>即便在完美都是需要驗證!</li>
+</ul></li>
+<li>不要一廂情願
+<ul>
+<li>系統總有一天會出錯</li>
+<li>人類天生不適合持續性，自動化很重要</li>
+<li>資料復原很重要、需時常演練<br />
+</li>
+</ul></li>
+<li>縱深防禦
+<ul>
+<li>任何完美的系統都有存在BUG的可能</li>
+<li>在允許的情況下多加幾層防禦能夠加速檢測問題的存在</li>
+<li>(如同起司理論的意思XD)</li>
+</ul></li>
+</ul></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%80%E6%9B%B8%E5%BF%83%E5%BE%97/" rel="tag"># 讀書心得</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/21/study-sre-2/" rel="prev" title="網站可靠性工程 - Part 2 (O'REILLY ISBN 978-986-476-625-3)">
+                  <i class="fa fa-chevron-left"></i> 網站可靠性工程 - Part 2 (O'REILLY ISBN 978-986-476-625-3)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/21/study-sre-4/" rel="next" title="網站可靠性工程 - Part 4 (O'REILLY ISBN 978-986-476-625-3)">
+                  網站可靠性工程 - Part 4 (O'REILLY ISBN 978-986-476-625-3) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"088c7444995fb1278826bf17704ae3a5"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

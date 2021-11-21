@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day15，設定一下Ingress正文在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。">
+<meta name="description" content="Day15，設定一下Ingress 正文 在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等......我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day15，設定一下Ingress">
 <meta property="og:url" content="http://example.com/2021/09/15/ithome-13th-day15/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day15，設定一下Ingress正文在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。">
+<meta property="og:description" content="Day15，設定一下Ingress 正文 在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等......我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/L2KSrUH.png">
 <meta property="og:image" content="https://i.imgur.com/tdSEgz8.png">
@@ -60,7 +60,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -130,7 +134,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day15%EF%BC%8C%E8%A8%AD%E5%AE%9A%E4%B8%80%E4%B8%8BIngress"><span class="nav-number">1.</span> <span class="nav-text">Day15，設定一下Ingress</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day15%E8%A8%AD%E5%AE%9A%E4%B8%80%E4%B8%8Bingress"><span class="nav-number">1.</span> <span class="nav-text">Day15，設定一下Ingress</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -143,13 +147,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,43 +236,31 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day15，設定一下Ingress"><a href="#Day15，設定一下Ingress" class="headerlink" title="Day15，設定一下Ingress"></a>Day15，設定一下Ingress</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等……我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。</p>
-<span id="more"></span>
-
+        <h1 id="day15設定一下ingress">Day15，設定一下Ingress</h1>
+<h2 id="正文">正文</h2>
+<p>在很多的情境下，我們會使用到前天所提及的Service Type Loadbalancer，而也因為IP拮据的問題、或是cost問題等等......我們需要額外搭建所謂的reverse proxy，使用相同的對外IP代理不同的服務，在過去這樣的需求中，我們往往會調整在reverse proxy的規則當中。 <span id="more"></span></p>
 <p>而Ingress controller 則是在Kubernetes中被提出的一種solution，以api yaml的方式撰寫規則，背後透過controller進行轉譯，從而達到想要的reverse proxy效果。</p>
-<p>目前檯面上的Ingress class 也有許多種選擇如nginx、haproxy、traefik、kong等等……<br>我這邊選擇的是我常用ingress-nginx，選擇的考量其實也很單純，在還未導入Kubernetes的前，nginx &amp; kong 算是一直以來就比較常接觸的工具，其中Kong的定義為Api Gateway，雖說與nginx也頗有淵源，也能夠達到類似效果，但與nginx不同的是更著重在<strong>API控管</strong>這一塊，如身份驗證、流量控制，等等眾多plugin……</p>
-<blockquote>
-<p>kong是基於OpenResty延伸，而OpenResty則是基於nginx+LuaJIT<br>順代一提ingress-nginx controller也是基於lua，如果我沒記錯的話</p>
-</blockquote>
+<p>目前檯面上的Ingress class 也有許多種選擇如nginx、haproxy、traefik、kong等等...... 我這邊選擇的是我常用ingress-nginx，選擇的考量其實也很單純，在還未導入Kubernetes的前，nginx &amp; kong 算是一直以來就比較常接觸的工具，其中Kong的定義為Api Gateway，雖說與nginx也頗有淵源，也能夠達到類似效果，但與nginx不同的是更著重在<strong>API控管</strong>這一塊，如身份驗證、流量控制，等等眾多plugin...... &gt; kong是基於OpenResty延伸，而OpenResty則是基於nginx+LuaJIT &gt; 順代一提ingress-nginx controller也是基於lua，如果我沒記錯的話</p>
 <p>而這裡我的需求要的只是個支援mutidomain的reverse proxy，在這裡ingress-nginx更貼切我的需求</p>
 <p>那今天要來安裝Ingress-nginx的controller<a target="_blank" rel="noopener" href="https://github.com/kubernetes/ingress-nginx/">(ingress-nginx的github連結)</a></p>
-<p>我們這邊要使用helm佈署，所以要先執行下列的動作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx</span><br><span class="line">helm repo update</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 查看可裝版本</span></span></span><br><span class="line">helm search repo ingress -l</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/L2KSrUH.png"></p>
+<p>我們這邊要使用helm佈署，所以要先執行下列的動作 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx</span><br><span class="line">helm repo update</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 查看可裝版本</span></span></span><br><span class="line">helm search repo ingress -l</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/L2KSrUH.png" /></p>
 <p>比對官網的readme support version，本次lab的kubernetes為1.20，所以最新版本應該都能裝。</p>
-<p><img src="https://i.imgur.com/tdSEgz8.png"></p>
-<p>使用helm指令操作產出設定檔</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 產出ingress-nginx 使用helm佈署時的參數調整檔</span></span></span><br><span class="line">helm show values ingress-nginx/ingress-nginx --version 4.0.1 &gt; values.yml</span><br></pre></td></tr></table></figure>
-<p>修改value.yaml，將昨日設定的openELB設定帶入，使地端的LoadBalancer得以運作</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">service:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">lb.kubesphere.io/v1alpha1:</span> <span class="string">porter</span></span><br><span class="line">    <span class="attr">protocol.porter.kubesphere.io/v1alpha1:</span> <span class="string">layer2</span></span><br><span class="line">    <span class="attr">eip.porter.kubesphere.io/v1alpha2:</span> <span class="string">porter-layer2-eip</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>使用helm指定版本與設定檔案進行佈署</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm install  ithome-ingress ingress-nginx/ingress-nginx --version 4.0.1 -f values.yaml  -n ithomelab </span><br></pre></td></tr></table></figure>
-
+<p><img src="https://i.imgur.com/tdSEgz8.png" /></p>
+<p>使用helm指令操作產出設定檔 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 產出ingress-nginx 使用helm佈署時的參數調整檔</span></span></span><br><span class="line">helm show values ingress-nginx/ingress-nginx --version 4.0.1 &gt; values.yml</span><br></pre></td></tr></table></figure> 修改value.yaml，將昨日設定的openELB設定帶入，使地端的LoadBalancer得以運作 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">service:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">lb.kubesphere.io/v1alpha1:</span> <span class="string">porter</span></span><br><span class="line">    <span class="attr">protocol.porter.kubesphere.io/v1alpha1:</span> <span class="string">layer2</span></span><br><span class="line">    <span class="attr">eip.porter.kubesphere.io/v1alpha2:</span> <span class="string">porter-layer2-eip</span></span><br><span class="line"></span><br></pre></td></tr></table></figure> 使用helm指定版本與設定檔案進行佈署 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm install  ithome-ingress ingress-nginx/ingress-nginx --version 4.0.1 -f values.yaml  -n ithomelab </span><br></pre></td></tr></table></figure></p>
 <p>佈署完成的結果展示</p>
-<p><img src="https://i.imgur.com/ZX3ZBHC.png"></p>
-<p><img src="https://i.imgur.com/6WGClMw.png"></p>
-<p>接著必須要設定並佈署ingress.yaml，設定完成後會根據設定的規則被ingress-controller轉譯成對應的nginx設定檔。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">&quot;nginx&quot;</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-ing</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">www.gurubear.cf</span></span><br><span class="line">      <span class="attr">http:</span></span><br><span class="line">        <span class="attr">paths:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-react-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                 <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-api-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                 <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/API</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>檢查ingress 是否確實綁到IP</p>
-<p><img src="https://i.imgur.com/84ua5GI.png"></p>
+<p><img src="https://i.imgur.com/ZX3ZBHC.png" /></p>
+<p><img src="https://i.imgur.com/6WGClMw.png" /></p>
+<p>接著必須要設定並佈署ingress.yaml，設定完成後會根據設定的規則被ingress-controller轉譯成對應的nginx設定檔。 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">&quot;nginx&quot;</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ithomelab-ing</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">ithomelab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">www.gurubear.cf</span></span><br><span class="line">      <span class="attr">http:</span></span><br><span class="line">        <span class="attr">paths:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-react-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                 <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">backend:</span></span><br><span class="line">              <span class="attr">service:</span></span><br><span class="line">                <span class="attr">name:</span> <span class="string">ithomelab-api-deployment</span></span><br><span class="line">                <span class="attr">port:</span></span><br><span class="line">                 <span class="attr">number:</span> <span class="number">80</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">/API</span></span><br><span class="line">            <span class="attr">pathType:</span> <span class="string">Prefix</span></span><br><span class="line"></span><br></pre></td></tr></table></figure> 檢查ingress 是否確實綁到IP</p>
+<p><img src="https://i.imgur.com/84ua5GI.png" /></p>
 <p>因為尚未設定domain與IP Forward，佈署完成後先在本機 <code>/etc/hosts</code> 設定偽造的A Record</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.240 www.gurubear.cf</span><br></pre></td></tr></table></figure>
 <p>打開瀏覽器檢查，左邊為輸入domain的情況，右邊為ip直連</p>
-<p><img src="https://i.imgur.com/hDex5El.png"></p>
-<p><img src="https://i.imgur.com/BamGncy.png"></p>
-<p>進去container可以看到/etc/nginx中被轉譯的nginx.conf檔案<br><img src="https://i.imgur.com/6UmuC1r.png"></p>
+<p><img src="https://i.imgur.com/hDex5El.png" /></p>
+<p><img src="https://i.imgur.com/BamGncy.png" /></p>
+<p>進去container可以看到/etc/nginx中被轉譯的nginx.conf檔案 <img src="https://i.imgur.com/6UmuC1r.png" /></p>
 <p>那到這邊服務都沒問題，明天就來設定真正的domain與憑證的事情了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>其實如果很擅長寫Reverse Proxy Rules的話Ingress好像也不是那麼必要XD。</p>
+<h2 id="閒聊">閒聊</h2>
+<p>其實如果很擅長寫Reverse Proxy Rules的話Ingress好像也不是那麼必要XD。</p>
 
     </div>
 
@@ -339,6 +331,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

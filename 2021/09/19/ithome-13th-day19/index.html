@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Day19，ArgoCD ( 2 &#x2F; 2 )正文今天要來Demo ArgoCD上透過Gitlab的SSO與權限控管">
+<meta name="description" content="Day19，ArgoCD ( 2 &#x2F; 2 ) 正文 今天要來Demo ArgoCD上透過Gitlab的SSO與權限控管">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HomeLab 30天，胡搞瞎搞亂弄一通，Day19，ArgoCD ( 2 &#x2F; 2 )">
 <meta property="og:url" content="http://example.com/2021/09/19/ithome-13th-day19/index.html">
 <meta property="og:site_name" content="阿熊的日常筆記">
-<meta property="og:description" content="Day19，ArgoCD ( 2 &#x2F; 2 )正文今天要來Demo ArgoCD上透過Gitlab的SSO與權限控管">
+<meta property="og:description" content="Day19，ArgoCD ( 2 &#x2F; 2 ) 正文 今天要來Demo ArgoCD上透過Gitlab的SSO與權限控管">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/GSAQjg5.png">
 <meta property="og:image" content="https://i.imgur.com/6rJOdAw.png">
@@ -62,7 +62,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -132,7 +136,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Day19%EF%BC%8CArgoCD-2-2"><span class="nav-number">1.</span> <span class="nav-text">Day19，ArgoCD ( 2 &#x2F; 2 )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#day19argocd-2-2"><span class="nav-number">1.</span> <span class="nav-text">Day19，ArgoCD ( 2 &#x2F; 2 )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.2.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -145,13 +149,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -234,29 +238,26 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Day19，ArgoCD-2-2"><a href="#Day19，ArgoCD-2-2" class="headerlink" title="Day19，ArgoCD ( 2 / 2 )"></a>Day19，ArgoCD ( 2 / 2 )</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來Demo ArgoCD上透過Gitlab的SSO與權限控管</p>
-<span id="more"></span>
-<p>先創建一個namespace</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns group1</span><br></pre></td></tr></table></figure>
-<p>然後在gitlab上的group再創建一個subgroup 創建這次demo使用的<a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/group1/argo-demo-group1">repo</a></p>
-<p>創建後我們group的示意圖如下<br><img src="https://i.imgur.com/GSAQjg5.png"></p>
-<p>點入我們的subgroup，這時候就要請出我們的分身一號gitlab帳號加入這個subgroup啦<br><img src="https://i.imgur.com/6rJOdAw.png"></p>
-<p>回到外層的group點選application創建供dex server sso使用ClientID &amp; ClientSecret，並設定CallBackURL<br><img src="https://i.imgur.com/clsf9Lz.png"></p>
-<p>最後回到ArgoCD的UI，在上面多create一個repository&amp;project，project名為group1<br><img src="https://i.imgur.com/8GXAqrM.png"></p>
-<p>並將<a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/group1/argo-demo-group1">這個repo</a>設定為demogroup1的application<br><img src="https://i.imgur.com/5uxkQ1j.png"></p>
-<p>接著調整昨天的values.yml 修改dex.config與policy.csv 重新佈署 </p>
+        <h1 id="day19argocd-2-2">Day19，ArgoCD ( 2 / 2 )</h1>
+<h2 id="正文">正文</h2>
+<p>今天要來Demo ArgoCD上透過Gitlab的SSO與權限控管 <span id="more"></span> 先創建一個namespace <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns group1</span><br></pre></td></tr></table></figure> 然後在gitlab上的group再創建一個subgroup 創建這次demo使用的<a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/group1/argo-demo-group1">repo</a></p>
+<p>創建後我們group的示意圖如下 <img src="https://i.imgur.com/GSAQjg5.png" /></p>
+<p>點入我們的subgroup，這時候就要請出我們的分身一號gitlab帳號加入這個subgroup啦 <img src="https://i.imgur.com/6rJOdAw.png" /></p>
+<p>回到外層的group點選application創建供dex server sso使用ClientID &amp; ClientSecret，並設定CallBackURL <img src="https://i.imgur.com/clsf9Lz.png" /></p>
+<p>最後回到ArgoCD的UI，在上面多create一個repository&amp;project，project名為group1 <img src="https://i.imgur.com/8GXAqrM.png" /></p>
+<p>並將<a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/group1/argo-demo-group1">這個repo</a>設定為demogroup1的application <img src="https://i.imgur.com/5uxkQ1j.png" /></p>
+<p>接著調整昨天的values.yml 修改dex.config與policy.csv 重新佈署</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">configEnabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">config:</span></span><br><span class="line">  <span class="comment"># Argo CD&#x27;s externally facing base URL (optional). Required when configuring SSO</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">https://192.168.1.241</span></span><br><span class="line">  <span class="comment"># Argo CD instance label key</span></span><br><span class="line">  <span class="attr">application.instanceLabelKey:</span> <span class="string">argocd.argoproj.io/instance</span></span><br><span class="line">  <span class="attr">dex.config:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    connectors: </span></span><br><span class="line"><span class="string">      - type: gitlab</span></span><br><span class="line"><span class="string">        id: gitlab</span></span><br><span class="line"><span class="string">        name: gitlab</span></span><br><span class="line"><span class="string">        config:</span></span><br><span class="line"><span class="string">          baseURL: https://gitlab.com</span></span><br><span class="line"><span class="string">          clientID: xxx</span></span><br><span class="line"><span class="string">          clientSecret: xxx</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="comment">## Annotations to be added to ArgoCD ConfigMap</span></span><br><span class="line"><span class="attr">configAnnotations:</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">## ArgoCD rbac config</span></span><br><span class="line"><span class="comment">## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md</span></span><br><span class="line"><span class="attr">rbacConfig:</span></span><br><span class="line">  <span class="attr">policy.csv:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    p, role:group1role, applications, *, group1/*, allow</span></span><br><span class="line"><span class="string">    p, role:group1role, clusters, get, *, allow</span></span><br><span class="line"><span class="string">    p, role:group1role, repositories, get, *, allow</span></span><br><span class="line"><span class="string">    p, role:group1role, projects, get, *, allow</span></span><br><span class="line"><span class="string">    p, role:mainrole, applications, *, *, allow</span></span><br><span class="line"><span class="string">    p, role:mainrole, clusters, *, *, allow</span></span><br><span class="line"><span class="string">    p, role:mainrole, repositories, *, *, allow</span></span><br><span class="line"><span class="string">    p, role:mainrole, projects, *, *, allow</span></span><br><span class="line"><span class="string">    g, gurubear-ithome-13th/group1, role:group1role</span></span><br><span class="line"><span class="string">    g, gurubear-ithome-13th, role:mainrole</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>這邊設定的規則大概就是gurubear-ithome-13th/group1能對group1 project下的所有application做異動，針對clusters、repositories、projects全部僅能GET。gurubear-ithome-13th則是全部都可以。</p>
 </blockquote>
-<p>執行helm更新佈署的動作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm upgrade homelab-argo argo/argo-cd --version 3.17.6 -f values.yml -n argocd</span><br></pre></td></tr></table></figure>
-<p>可以看到介面上已經有<strong>LOG IN VIA GITLAB</strong>的按鈕了<br><img src="https://i.imgur.com/zpyJkT0.jpg"></p>
-<p>分別使用分身與本尊登入，登入時需要同意授權<br><img src="https://i.imgur.com/rzrxkSg.png"></p>
-<p>本尊帳號能看到全部的applications<br><img src="https://i.imgur.com/3no1k0y.png"></p>
-<p>分身帳號因為group的限制(下圖顯示該分身帳號底下只有這個gurubear-ithome-13th/group1)，所以只能看到的group1的applications<br><img src="https://i.imgur.com/JbM4X4O.png"><br><img src="https://i.imgur.com/kouNkHd.png"></p>
+<p>執行helm更新佈署的動作 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm upgrade homelab-argo argo/argo-cd --version 3.17.6 -f values.yml -n argocd</span><br></pre></td></tr></table></figure> 可以看到介面上已經有<strong>LOG IN VIA GITLAB</strong>的按鈕了 <img src="https://i.imgur.com/zpyJkT0.jpg" /></p>
+<p>分別使用分身與本尊登入，登入時需要同意授權 <img src="https://i.imgur.com/rzrxkSg.png" /></p>
+<p>本尊帳號能看到全部的applications <img src="https://i.imgur.com/3no1k0y.png" /></p>
+<p>分身帳號因為group的限制(下圖顯示該分身帳號底下只有這個gurubear-ithome-13th/group1)，所以只能看到的group1的applications <img src="https://i.imgur.com/JbM4X4O.png" /> <img src="https://i.imgur.com/kouNkHd.png" /></p>
 <p>透過這樣的方式就能去做一定的權限控管了。</p>
-<h2 id="閒聊"><a href="#閒聊" class="headerlink" title="閒聊"></a>閒聊</h2><p>今天這樣大概就把我想講的ArgoCD部分結束了，在實務上也都可以搭配CI/CD、argocd CLI來處理這一連串的pipeline，就是需要去設計一下而已~</p>
+<h2 id="閒聊">閒聊</h2>
+<p>今天這樣大概就把我想講的ArgoCD部分結束了，在實務上也都可以搭配CI/CD、argocd CLI來處理這一連串的pipeline，就是需要去設計一下而已~</p>
 
     </div>
 
@@ -327,6 +328,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

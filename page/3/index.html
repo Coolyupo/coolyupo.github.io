@@ -49,7 +49,11 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -131,13 +135,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -166,6 +170,325 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/14/ithome-13th-day14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/14/ithome-13th-day14/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day14，來試試 OpenELB</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-14 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-14T00:00:00+08:00">2021-09-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 19:28:52" itemprop="dateModified" datetime="2021-11-16T19:28:52+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="day14來試試-openelb">Day14，來試試 OpenELB</h1>
+<h2 id="正文">正文</h2>
+<p>前面幾個章節有提到Service type LoadBalancer，這個service type在雲端上依賴cloud vendor的loadbalancer得以實作，而在地端想要有同樣的功能體驗則大致上有兩種做法，第一種是透過硬體Loadbalancer串接，且有提供Kubernetes custom controller/CRD之類的廠商(ex. <a target="_blank" rel="noopener" href="https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/v1.5/">F5 BIG-IP</a>)，而另一種則是透過software實作，達成類似情境。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/14/ithome-13th-day14/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/ithome-13th-day13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/13/ithome-13th-day13/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day13，先讓我設定一下terminal(插曲)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-13 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-13T00:00:00+08:00">2021-09-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 19:28:57" itemprop="dateModified" datetime="2021-11-16T19:28:57+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="day13先讓我設定一下terminal插曲">Day13，先讓我設定一下terminal(插曲)</h1>
+<h2 id="正文">正文</h2>
+<p>前幾天開始在弄Kubernetes相關LAB的時候不是很順手，因為這台筆電平常很少使用，所以常用的工具、Shell、Terminal甚至顏色都沒有調整，我覺得繼續這樣下去對我不行，所以決定在這裡插入一天來處理這些事情XD。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/13/ithome-13th-day13/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/ithome-13th-day12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/12/ithome-13th-day12/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day12，YAML Engineer 初登板</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-12 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-12T00:00:00+08:00">2021-09-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 19:29:03" itemprop="dateModified" datetime="2021-11-16T19:29:03+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="day12yaml-engineer-初登板">Day12，YAML Engineer 初登板</h1>
+<h2 id="正文">正文</h2>
+<p>今天準備來將Day04、Day06的東西佈署上來。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/12/ithome-13th-day12/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/11/ithome-13th-day11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/11/ithome-13th-day11/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day11，看法講完後該安裝了</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-11T00:00:00+08:00">2021-09-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-16 19:29:09" itemprop="dateModified" datetime="2021-11-16T19:29:09+08:00">2021-11-16</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="day11看法講完後該安裝了">Day11，看法講完後該安裝了</h1>
+<h2 id="正文">正文</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/11/ithome-13th-day11/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -219,7 +542,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day10，先來聊聊我的Kubernetes看法"><a href="#Day10，先來聊聊我的Kubernetes看法" class="headerlink" title="Day10，先來聊聊我的Kubernetes看法"></a>Day10，先來聊聊我的Kubernetes看法</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套<strong>container orchestration platform</strong>眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。</p>
+          <h1 id="day10先來聊聊我的kubernetes看法">Day10，先來聊聊我的Kubernetes看法</h1>
+<h2 id="正文">正文</h2>
+<p>在開始建置之前，今天先來聊聊我自己對Kubernetes的想法，Kubernetes是一套<strong>container orchestration platform</strong>眾所皆知，而其前世今生的緣由就不多談了，網路上已經有很多相關的資料可以查詢。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/10/ithome-13th-day10/#more" rel="contents">
@@ -297,7 +622,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day09，我也好想用用看Terraform"><a href="#Day09，我也好想用用看Terraform" class="headerlink" title="Day09，我也好想用用看Terraform"></a>Day09，我也好想用用看Terraform</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來開機器，先去下載server版的<a target="_blank" rel="noopener" href="https://releases.ubuntu.com/20.04/">Ubuntu 20.04 iso</a>，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。</p>
+          <h1 id="day09我也好想用用看terraform">Day09，我也好想用用看Terraform</h1>
+<h2 id="正文">正文</h2>
+<p>今天要來開機器，先去下載server版的<a target="_blank" rel="noopener" href="https://releases.ubuntu.com/20.04/">Ubuntu 20.04 iso</a>，因為以前自己做環境練習時有購買過VMWare Workstation PRO 15的授權，這邊就會直接使用VMWare來建立(使用Hyper-V、Virtual Box、Proxmox VE等工具當然也都可以)。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/09/ithome-13th-day09/#more" rel="contents">
@@ -375,7 +702,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day08，先介紹一下預備的家中環境"><a href="#Day08，先介紹一下預備的家中環境" class="headerlink" title="Day08，先介紹一下預備的家中環境"></a>Day08，先介紹一下預備的家中環境</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>動手做之前，今天先來簡單介紹一下目前有限的家中環境規劃，大概如圖。</p>
+          <h1 id="day08先介紹一下預備的家中環境">Day08，先介紹一下預備的家中環境</h1>
+<h2 id="正文">正文</h2>
+<p>動手做之前，今天先來簡單介紹一下目前有限的家中環境規劃，大概如圖。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/08/ithome-13th-day08/#more" rel="contents">
@@ -453,7 +782,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day07，搭配gitlab-ci執行image-auto-build"><a href="#Day07，搭配gitlab-ci執行image-auto-build" class="headerlink" title="Day07，搭配gitlab-ci執行image auto build"></a>Day07，搭配gitlab-ci執行image auto build</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要設定gitlab上的專案，讓他們能夠在git commit時自動打包成docker image並存放於gitlab registry。</p>
+          <h1 id="day07搭配gitlab-ci執行image-auto-build">Day07，搭配gitlab-ci執行image auto build</h1>
+<h2 id="正文">正文</h2>
+<p>今天要設定gitlab上的專案，讓他們能夠在git commit時自動打包成docker image並存放於gitlab registry。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/07/ithome-13th-day07/#more" rel="contents">
@@ -531,7 +862,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>將Gitlab從13.X版更新至14.X，部分專案路徑於資料庫內未被修正為Hashed storage位置(實體檔案卻有修正成功)，該類型專案因查無路徑檔案而被設定為readonly。</p>
+          <h2 id="原因">原因</h2>
+<p>將Gitlab從13.X版更新至14.X，部分專案路徑於資料庫內未被修正為Hashed storage位置(實體檔案卻有修正成功)，該類型專案因查無路徑檔案而被設定為readonly。
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/06/gitlab-upgrade-problem-20210906/#more" rel="contents">
@@ -609,7 +941,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Day06，將昨日的靜態頁面打包"><a href="#Day06，將昨日的靜態頁面打包" class="headerlink" title="Day06，將昨日的靜態頁面打包"></a>Day06，將昨日的靜態頁面打包</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天來把昨天寫的頁面進行容器化的動作，首先撰寫Dockerfile</p>
+          <h1 id="day06將昨日的靜態頁面打包">Day06，將昨日的靜態頁面打包</h1>
+<h2 id="正文">正文</h2>
+<p>今天來把昨天寫的頁面進行容器化的動作，首先撰寫Dockerfile
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/06/ithome-13th-day06/#more" rel="contents">
@@ -635,320 +969,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/05/ithome-13th-day05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="紀錄一些我的學習筆記">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的日常筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/05/ithome-13th-day05/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day05，滑水的一天</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-05 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-05T00:00:00+08:00">2021-09-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:29:36" itemprop="dateModified" datetime="2021-11-16T19:29:36+08:00">2021-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Day05，滑水的一天"><a href="#Day05，滑水的一天" class="headerlink" title="Day05，滑水的一天"></a>Day05，滑水的一天</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>今天要來產出一個簡單的畫面，目的是串接昨天的API，雖說預計是很簡單的畫面，但我對前端也不怎麼熟悉(何苦找洞給自己跳QQ)，只好趕快來抱佛腳一下。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/05/ithome-13th-day05/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/04/ithome-13th-day04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="紀錄一些我的學習筆記">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的日常筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/04/ithome-13th-day04/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day04，弄幾隻API</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-04T00:00:00+08:00">2021-09-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:29:41" itemprop="dateModified" datetime="2021-11-16T19:29:41+08:00">2021-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Day04，弄幾隻API"><a href="#Day04，弄幾隻API" class="headerlink" title="Day04，弄幾隻API"></a>Day04，弄幾隻API</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>弄完資料庫後，花了一點時間的寫了這幾隻API。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/04/ithome-13th-day04/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/03/ithome-13th-day03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="紀錄一些我的學習筆記">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的日常筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/03/ithome-13th-day03/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day03，Model摸象</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-03T00:00:00+08:00">2021-09-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:29:46" itemprop="dateModified" datetime="2021-11-16T19:29:46+08:00">2021-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Day03，Model摸象"><a href="#Day03，Model摸象" class="headerlink" title="Day03，Model摸象"></a>Day03，Model摸象</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/03/ithome-13th-day03/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/ithome-13th-day02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="GuruBear">
-      <meta itemprop="description" content="紀錄一些我的學習筆記">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿熊的日常筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/02/ithome-13th-day02/" class="post-title-link" itemprop="url">HomeLab 30天，胡搞瞎搞亂弄一通，Day02，先來建個開發資料庫好了。</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-02T00:00:00+08:00">2021-09-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:29:48" itemprop="dateModified" datetime="2021-11-16T19:29:48+08:00">2021-11-16</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Day02，先來建個開發資料庫好了。"><a href="#Day02，先來建個開發資料庫好了。" class="headerlink" title="Day02，先來建個開發資料庫好了。"></a>Day02，先來建個開發資料庫好了。</h1><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/02/ithome-13th-day02/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 </div>
@@ -985,6 +1007,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

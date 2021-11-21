@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Ch03 擁抱風險 可用性公式:  \((基於時間)可用性&#x3D;\frac{系統正常執行時間}{系統正常執行時間+停機時間}\) \((整體)可用性&#x3D;\frac{成功請求數}{請求總數}\)  客戶對服務的風險(錯誤)容忍度  需求可用性水平  使用者預期的結果&amp;服務內容 是否為商業服務(與收入直接關聯) 競爭對手 主要客戶族群  錯誤的影響層面  故障類型分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="網站可靠性工程 - Part 1 (O&#39;REILLY ISBN 978-986-476-625-3)">
+<meta property="og:url" content="http://example.com/2021/11/21/study-sre-1/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Ch03 擁抱風險 可用性公式:  \((基於時間)可用性&#x3D;\frac{系統正常執行時間}{系統正常執行時間+停機時間}\) \((整體)可用性&#x3D;\frac{成功請求數}{請求總數}\)  客戶對服務的風險(錯誤)容忍度  需求可用性水平  使用者預期的結果&amp;服務內容 是否為商業服務(與收入直接關聯) 競爭對手 主要客戶族群  錯誤的影響層面  故障類型分">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-11-21T04:53:34.000Z">
+<meta property="article:modified_time" content="2021-11-21T04:54:33.272Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="讀書心得">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/11/21/study-sre-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/11/21/study-sre-1/","path":"2021/11/21/study-sre-1/","title":"網站可靠性工程 - Part 1 (O'REILLY ISBN 978-986-476-625-3)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>網站可靠性工程 - Part 1 (O'REILLY ISBN 978-986-476-625-3) | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch03-%E6%93%81%E6%8A%B1%E9%A2%A8%E9%9A%AA"><span class="nav-number">1.</span> <span class="nav-text">Ch03 擁抱風險</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E7%94%A8%E6%80%A7%E5%85%AC%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">可用性公式:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B6%E5%B0%8D%E6%9C%8D%E5%8B%99%E7%9A%84%E9%A2%A8%E9%9A%AA%E9%8C%AF%E8%AA%A4%E5%AE%B9%E5%BF%8D%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">客戶對服務的風險(錯誤)容忍度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch04-%E6%9C%8D%E5%8B%99%E6%B0%B4%E6%BA%96%E7%9B%AE%E6%A8%99"><span class="nav-number">2.</span> <span class="nav-text">Ch04 服務水準目標</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sli-service-level-indicator-%E6%9C%8D%E5%8B%99%E6%B0%B4%E6%BA%96%E6%8C%87%E6%A8%99"><span class="nav-number">2.1.</span> <span class="nav-text">SLI (Service Level Indicator) 服務水準指標</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E6%A8%99%E7%9A%84%E5%AF%A6%E5%8B%99%E9%81%8B%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">指標的實務運用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%BE%A9%E7%9B%AE%E6%A8%99"><span class="nav-number">2.3.</span> <span class="nav-text">定義目標</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch06-%E7%9B%A3%E6%8E%A7%E5%88%86%E6%95%A3%E5%BC%8F%E7%B3%BB%E7%B5%B1"><span class="nav-number">3.</span> <span class="nav-text">ch06 監控分散式系統</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch07-google-%E8%87%AA%E5%8B%95%E5%8C%96%E7%B3%BB%E7%B5%B1%E7%9A%84%E6%BC%94%E9%80%B2"><span class="nav-number">4.</span> <span class="nav-text">ch07 Google 自動化系統的演進</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8B%95%E5%8C%96%E7%9A%84%E5%83%B9%E5%80%BC"><span class="nav-number">4.1.</span> <span class="nav-text">自動化的價值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%84%E6%85%8B%E7%AE%A1%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text">組態管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ch09-%E7%B0%A1%E5%96%AE%E5%8C%96%E5%BF%83%E9%9D%88%E9%9B%9E%E6%B9%AF"><span class="nav-number">4.3.</span> <span class="nav-text">ch09 簡單化(心靈雞湯?)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch10-%E5%9F%BA%E6%96%BC%E6%99%82%E9%96%93%E5%BA%8F%E5%88%97%E8%B3%87%E6%96%99%E9%80%B2%E8%A1%8C%E6%9C%89%E6%95%88%E8%AD%A6%E5%A0%B1"><span class="nav-number">5.</span> <span class="nav-text">ch10 基於時間序列資料進行有效警報</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/study-sre-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          網站可靠性工程 - Part 1 (O'REILLY ISBN 978-986-476-625-3)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-21 12:53:34 / Modified: 12:54:33" itemprop="dateCreated datePublished" datetime="2021-11-21T12:53:34+08:00">2021-11-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="ch03-擁抱風險">Ch03 擁抱風險</h2>
+<h3 id="可用性公式">可用性公式:</h3>
+<ul>
+<li><span class="math inline">\((基於時間)可用性=\frac{系統正常執行時間}{系統正常執行時間+停機時間}\)</span></li>
+<li><span class="math inline">\((整體)可用性=\frac{成功請求數}{請求總數}\)</span></li>
+</ul>
+<h3 id="客戶對服務的風險錯誤容忍度">客戶對服務的風險(錯誤)容忍度</h3>
+<ul>
+<li>需求可用性水平
+<ul>
+<li>使用者預期的結果&amp;服務內容</li>
+<li>是否為商業服務(與收入直接關聯)</li>
+<li>競爭對手</li>
+<li>主要客戶族群</li>
+</ul></li>
+<li>錯誤的影響層面
+<ul>
+<li>故障類型分類與影響層面、解決方法</li>
+</ul></li>
+<li>成本
+<ul>
+<li>以google SRE為例，可用性的計算是以小數點後幾個9為依據</li>
+<li>考量如將可用性提升99.9%-&gt;99.99%時所需花費的成本與其改進後的預期收益是否取得平衡 ### 使用錯誤預算的動機</li>
+</ul></li>
+<li>錯誤的發生可能來自於下列
+<ul>
+<li>Software Fault Tolerance，軟體容錯程度脆弱(exception or error)</li>
+<li>Test 不夠充足、完善的測試</li>
+<li>Deploy Frequency 發布頻率過快，與上述兩點息息相關</li>
+<li>Canary Deploy 金絲雀佈署與其規模，一種UAT的測試手法</li>
+</ul></li>
+<li>匡列錯誤處理預算
+<ul>
+<li>定義自身系統產品SLO，確認服務預計正常執行的總時間</li>
+<li>第三方公正系統決定正常運行時間(uptime robot?)</li>
+<li>透過上方的時間可用性公式可計算出系統不可靠性預算</li>
+<li>目前運行的時間高於SLO也就代表還能更發布新的版本(還有錯誤容忍的預算在)</li>
+</ul></li>
+<li>當頻繁違反SLO時可考慮
+<ul>
+<li>版本Roll Back</li>
+<li>降低發布頻率 &gt; 100%可靠度基本上不切實際，有效面對風險與管理比較重要。</li>
+</ul></li>
+</ul>
+<h2 id="ch04-服務水準目標">Ch04 服務水準目標</h2>
+<h3 id="sli-service-level-indicator-服務水準指標">SLI (Service Level Indicator) 服務水準指標</h3>
+<p>為某套系統服務定義的定量指標，例如: - 請求延遲(request time) - 錯誤率(如 http 200 or 非200) - 系統處理能力(ex. QPS) - 可用性(服務可用時間百分比)，或稱<strong>服務產出(yield)</strong> - 「格式正確的請求處理成功比例」 - 持久性(資料能夠完整儲存的時間) 透過測量將數據收集計算，統計平均、百分比等等 ### SLO (Service Level Objective) 服務水準目標 為某套系統達成SLI目標值或目標範圍，ex: - <span class="math inline">\(SLI \leq 目標值\)</span><br />
+- <span class="math inline">\(範圍下限\leq SLI \leq 範圍上限\)</span> - Average Requeset Latency &lt; 100ms (100ms為SLI，意思為小於SLI即達成SLO) ### SLA (Service Level Agreement) 服務水準協議 服務與使用者之間明示或暗示性協議，未達到SLO產生的後果(退款或罰款或訴訟之類的) &gt; 大多數討論「SLA」時，其實是在講SLO~</p>
+<h3 id="指標的實務運用">指標的實務運用</h3>
+<ul>
+<li>Application(user參與):
+<ul>
+<li>系統效能、可用性、延遲</li>
+</ul></li>
+<li>儲存系統
+<ul>
+<li>延遲、可用性、持久性</li>
+</ul></li>
+<li>大數據系統
+<ul>
+<li>系統效能、資料輸入至轉出的時間</li>
+</ul></li>
+<li>正確性 &gt; 收集指標(metrics)的方式 Borgmono or Prometheus，也需要定義好所謂的sampling rate(我想這邊跟open tracing概念相去不遠)</li>
+</ul>
+<h3 id="定義目標">定義目標</h3>
+<ul>
+<li>以系統全面性考量，而非以當前狀態</li>
+<li>保持簡單SLI彙整，可簡化整個過程</li>
+<li>SLO越少越好
+<ul>
+<li>選擇足夠象徵(涵蓋)系統的SLO，確保每一項SLO都是必要</li>
+</ul></li>
+<li>不要追求完美
+<ul>
+<li>先透過鬆散的目標，再隨著時間驗證逐漸收斂標準 &gt; SLI與SLO是進行維運決策時的重要元素(透過定量指標與違反與否決定相對應的處理行為) ### SLO會建議使用者預期</li>
+</ul></li>
+<li>保留安全區
+<ul>
+<li>對內使用較高SLO、對外使用較低SLO，可做為問題緩衝處理</li>
+</ul></li>
+<li>實際的SLO不要過高
+<ul>
+<li>實際的SLO比告知消費者的SLO還高，會導致使用者產生依賴
+<ul>
+<li>應採取ratelimit、限速等策略，也能讓系統處在相對低負載，而非有多少給多少</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="ch06-監控分散式系統">ch06 監控分散式系統</h2>
+<ul>
+<li>監控
+<ul>
+<li>收集、處理、彙總、並即時呈現之量化資料。(prometheus &amp; metrics &amp; grafana)</li>
+</ul></li>
+<li>白箱監控(white-box monitoring)
+<ul>
+<li>透過系統內部供應的效能指標進行監控(包含日誌分析、prometheus、metrics &amp; grafana dashboard......)</li>
+</ul></li>
+<li>黑箱監控(black-box monitoring)
+<ul>
+<li>測試以外部使用者角度方式針對系統行為進行監控</li>
+</ul></li>
+<li>dashboard
+<ul>
+<li>監控儀錶板<br />
+</li>
+</ul></li>
+<li>alert (ex. alertmanager)
+<ul>
+<li>根據指標觸發通知(maybe email、slack、line、webhook.......)</li>
+</ul></li>
+<li>root cause(問題根源)
+<ul>
+<li>一個問題可能有多個問題根源</li>
+<li>當問題根源被修復後在相同的情境下將不會再度造成相同的問題</li>
+</ul></li>
+<li>node
+<ul>
+<li>相互關聯的服務(AP+Redis+DB，這邊感覺就跟open tracing有關)</li>
+<li>不相關的服務but share hardware resource(共用機器CPU or networking or memory......) ### why monitoring</li>
+</ul></li>
+<li>分析趨勢</li>
+<li>告警</li>
+<li>線上除錯(根據量化指標)</li>
+<li>儀錶板
+<ul>
+<li>我自己認為透過量化介面，能在一定的學習下降低技術門檻，也有助於洞悉系統異常 ### 四個黃金訊號</li>
+</ul></li>
+<li>延遲
+<ul>
+<li>成功請求延遲</li>
+<li>失敗請求延遲
+<ul>
+<li>透過監控錯誤回復的延遲也許能夠進一步區分問題難易度</li>
+</ul></li>
+</ul></li>
+<li>流量
+<ul>
+<li>HTTP/TCP 連線數量、Network I/O、</li>
+</ul></li>
+<li>錯誤
+<ul>
+<li>HTTP 500</li>
+<li>HTTP 200(錯誤內容)，這需要透過額外的驗證系統</li>
+</ul></li>
+<li>飽和度
+<ul>
+<li>I/O，(netowrk、disk、cpu飽和度計算與預期) ### 設計監控系統應追求簡化</li>
+</ul></li>
+<li>反映真實故障、規則越簡單越好、預測性越強越好、可靠性高。</li>
+<li>不常用的資料收集、彙總警報設定應定時刪除。</li>
+<li>只收集訊息，但沒有在任何dashboard或告警規則內使用的應定時刪除 &gt; 告警能夠對應到問題，避免過度的狼來了效應</li>
+</ul>
+<h2 id="ch07-google-自動化系統的演進">ch07 Google 自動化系統的演進</h2>
+<h3 id="自動化的價值">自動化的價值</h3>
+<ul>
+<li>一致性
+<ul>
+<li>使造成結果相同</li>
+</ul></li>
+<li>平台性
+<ul>
+<li>使錯誤集中化、統一Patch修復(一致性)</li>
+</ul></li>
+<li>更快修復
+<ul>
+<li>因為一致性，可假設自動化的結果為成功執行，可相對降地常見的故障瑣事(我想是手殘錯誤配置等等問題......)。</li>
+</ul></li>
+<li>快速反應
+<ul>
+<li>指Failover or AutoScaling哪一類的，這也是一種自動化的展現</li>
+</ul></li>
+<li>節省時間
+<ul>
+<li>規模越大越有感 ### 自動化程式的三個面向</li>
+</ul></li>
+<li>能力
+<ul>
+<li>準確性</li>
+</ul></li>
+<li>延遲
+<ul>
+<li>指執行完畢時間</li>
+</ul></li>
+<li>相關性
+<ul>
+<li>自動化所涵蓋的流程比例(應該是像coverage report?) ## ch08 發行工程(Release Engineering)</li>
+</ul></li>
+</ul>
+<h3 id="組態管理">組態管理</h3>
+<ul>
+<li>使用master branch組態檔
+<ul>
+<li>這是早期的方式(現在應該不太可能這樣用)，開發者與SRE皆可修改Master上的組態檔。</li>
+<li>容易混亂、提交與實際運行的不一致導致重工。</li>
+</ul></li>
+<li>將config與binary封裝為一起
+<ul>
+<li>這邊指的就是像把應用程式的設定檔(config)調整完畢後與應用程式一起封裝成container的概念</li>
+<li>每當修改設定檔時便需要重新封裝，但簡化了佈署(只需要針對應用程式去更新佈署)</li>
+</ul></li>
+<li>將config獨立封裝並設定為可抽換的方式
+<ul>
+<li>能夠容易去重建某一時刻的組態檔，更新時也能只更新組態檔</li>
+<li>要佈署與管理的東西變多了，可能會變得較複雜一些。</li>
+</ul></li>
+</ul>
+<h3 id="ch09-簡單化心靈雞湯">ch09 簡單化(心靈雞湯?)</h3>
+<p>簡單來說就是...... - 把code寫好 - 不要放棄重構的念頭，持續優化程式碼，將刪減行數作為指標之一。 - (可允許情況下)最小化API - 模組化 - (可允許情況下)簡化發行程序</p>
+<h2 id="ch10-基於時間序列資料進行有效警報">ch10 基於時間序列資料進行有效警報</h2>
+<ul>
+<li>Borgmon
+<ul>
+<li>/varz (類似於現今/metrics的東西)</li>
+<li>Borgmon與Prometheus十分類似</li>
+<li>時間序列的儲存，(timestamp,value)</li>
+<li>一般情況下至少會存放12小時</li>
+</ul></li>
+<li>警報
+<ul>
+<li>警報有可能時常變動(flap)，所以會設定當觸發警報的持續時間到達某個設定值時才會發送警報(與現今的prometheus+alertmanager做法一致)</li>
+</ul></li>
+<li>分段機制
+<ul>
+<li>這邊指的就是像multi-prometheus/federation的概念，各自負責區域中的監控，再交換彼此獲取的metrics，達到分流再聚合進而達到高可靠性避免單點故障問題發生(自己補充: 這邊應該會遇到很多問題，sampling rate、timestamp產生一些不可避免的細微差距)</li>
+</ul></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%80%E6%9B%B8%E5%BF%83%E5%BE%97/" rel="tag"># 讀書心得</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/30/ithome-13th-day30/" rel="prev" title="HomeLab 30天，胡搞瞎搞亂弄一通，Day30，旅途的終點">
+                  <i class="fa fa-chevron-left"></i> HomeLab 30天，胡搞瞎搞亂弄一通，Day30，旅途的終點
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/21/study-sre-2/" rel="next" title="網站可靠性工程 - Part 2 (O'REILLY ISBN 978-986-476-625-3)">
+                  網站可靠性工程 - Part 2 (O'REILLY ISBN 978-986-476-625-3) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"fc04507f4214ea36aa69d5ea1d3fb4eb"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
