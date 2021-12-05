@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Linux Network Course Note 這幾天終於把矽谷牛大大的線上課程上完了，Linux Network這們課上完的感觸特別深，就決定來把課程筆記重新紀錄一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="network course note">
+<meta property="og:url" content="http://example.com/2021/12/05/network-course/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="Linux Network Course Note 這幾天終於把矽谷牛大大的線上課程上完了，Linux Network這們課上完的感觸特別深，就決定來把課程筆記重新紀錄一下。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/kXyaWdE.png">
+<meta property="article:published_time" content="2021-12-05T12:55:05.000Z">
+<meta property="article:modified_time" content="2021-12-05T13:00:53.927Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="讀書心得">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/kXyaWdE.png">
+
+
+<link rel="canonical" href="http://example.com/2021/12/05/network-course/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2021/12/05/network-course/","path":"2021/12/05/network-course/","title":"network course note"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>network course note | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-network-course-note"><span class="nav-number">1.</span> <span class="nav-text">Linux Network Course Note</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch1"><span class="nav-number">1.1.</span> <span class="nav-text">ch1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch2"><span class="nav-number">1.2.</span> <span class="nav-text">ch2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#network-namespace%E7%B3%BB%E7%B5%B1%E8%B3%87%E6%BA%90%E7%B6%B2%E8%B7%AF%E9%9A%94%E9%9B%A2%E5%8C%96"><span class="nav-number">1.2.1.</span> <span class="nav-text">Network Namespace:(系統資源&quot;網路&quot;隔離化)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#note"><span class="nav-number">1.2.2.</span> <span class="nav-text">note</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-virtual-network"><span class="nav-number">1.2.3.</span> <span class="nav-text">Linux Virtual Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcpdump"><span class="nav-number">1.2.4.</span> <span class="nav-text">tcpdump</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#icmparpmac"><span class="nav-number">1.2.5.</span> <span class="nav-text">ICMP&#x2F;ARP&#x2F;MAC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch3"><span class="nav-number">1.3.</span> <span class="nav-text">ch3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#routing"><span class="nav-number">1.3.1.</span> <span class="nav-text">Routing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables"><span class="nav-number">1.3.2.</span> <span class="nav-text">iptables</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch4"><span class="nav-number">1.4.</span> <span class="nav-text">ch4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nat"><span class="nav-number">1.4.1.</span> <span class="nav-text">NAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables-with-nat"><span class="nav-number">1.4.2.</span> <span class="nav-text">iptables with NAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#snat"><span class="nav-number">1.4.3.</span> <span class="nav-text">SNAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dnat"><span class="nav-number">1.4.4.</span> <span class="nav-text">DNAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conntrack"><span class="nav-number">1.4.5.</span> <span class="nav-text">Conntrack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch5"><span class="nav-number">1.5.</span> <span class="nav-text">ch5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-%E7%84%A1%E5%BD%A2%E9%80%9A%E9%81%93%E4%B8%B2%E6%B5%81"><span class="nav-number">1.5.1.</span> <span class="nav-text">TCP: 無形通道、串流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#udp%E5%BE%88%E5%BF%AB"><span class="nav-number">1.5.2.</span> <span class="nav-text">udp(很快):</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#icmp---internet-control-message-protocol"><span class="nav-number">1.5.3.</span> <span class="nav-text">ICMP - Internet Control Message Protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http"><span class="nav-number">1.5.4.</span> <span class="nav-text">http</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http2--%E5%96%AE%E4%B8%80tcp-connection-%E5%A4%9A%E5%80%8B%E9%9B%99%E5%90%91%E8%B3%87%E6%96%99%E5%82%B3%E9%80%81bidirectional-streams"><span class="nav-number">1.5.5.</span> <span class="nav-text">HTTP&#x2F;2- 單一TCP connection 多個雙向資料傳送(bidirectional streams)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dns-in-linux"><span class="nav-number">1.5.6.</span> <span class="nav-text">DNS in Linux:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#load-balacing-101"><span class="nav-number">1.5.7.</span> <span class="nav-text">Load Balacing 101</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dpi-deep-packet-inspection-%E6%B7%B1%E5%BA%A6%E5%B0%81%E5%8C%85%E6%AA%A2%E6%B8%AC"><span class="nav-number">1.5.8.</span> <span class="nav-text">DPI Deep Packet Inspection 深度封包檢測</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch6"><span class="nav-number">1.6.</span> <span class="nav-text">ch6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vpn"><span class="nav-number">1.6.1.</span> <span class="nav-text">VPN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%8F%96remote-server%E7%9A%84%E5%B9%BE%E7%A8%AE%E6%96%B9%E5%BC%8F"><span class="nav-number">1.6.2.</span> <span class="nav-text">存取remote server的幾種方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tuntap"><span class="nav-number">1.6.3.</span> <span class="nav-text">Tun&#x2F;Tap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tunneling"><span class="nav-number">1.6.4.</span> <span class="nav-text">Tunneling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-in-ip"><span class="nav-number">1.6.5.</span> <span class="nav-text">IP-in-IP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch7"><span class="nav-number">1.7.</span> <span class="nav-text">ch7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch8"><span class="nav-number">1.8.</span> <span class="nav-text">ch8</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuruBear"
+      src="/uploads/gurubear.png">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/05/network-course/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/gurubear.png">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          network course note
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-12-05 20:55:05 / Modified: 21:00:53" itemprop="dateCreated datePublished" datetime="2021-12-05T20:55:05+08:00">2021-12-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="linux-network-course-note">Linux Network Course Note</h1>
+<p>這幾天終於把<a target="_blank" rel="noopener" href="https://hiskio.com/courses/479/about">矽谷牛大大的線上課程</a>上完了，Linux Network這們課上完的感觸特別深，就決定來把課程筆記重新紀錄一下。 <span id="more"></span></p>
+<h2 id="ch1">ch1</h2>
+<table>
+<thead>
+<tr class="header">
+<th>OSI</th>
+<th>Usage</th>
+<th>TCP/IP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>7 Application</td>
+<td>DHCP,HTTP,gRPC,SSH</td>
+<td>4 Application</td>
+</tr>
+<tr class="even">
+<td>6 Presentation</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5 Session</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4 Transport</td>
+<td>TCP,UDP,ICMP... (Segment)</td>
+<td>3 Transport</td>
+</tr>
+<tr class="odd">
+<td>3 Netowrk</td>
+<td>IPv4,IPv6,routing (Datagram)</td>
+<td>2 Internet</td>
+</tr>
+<tr class="even">
+<td>2 Link</td>
+<td>MAC Address (Frame)</td>
+<td>1 NetworkAccess</td>
+</tr>
+<tr class="odd">
+<td>1 Physical</td>
+<td>Cable,fiber,wireless...</td>
+<td>1 NetworkAccess</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Network Access - Internet - Transport - Application 由左至右逐一解析
+<ul>
+<li>Network Access在linux kernel中會定義上一層Internet進入點(ipv4/ipv6/ARP?) ex ETH_P_IP</li>
+<li>Internet 也會記錄再上一層的transport是誰ICMP/TCP/UDP</li>
+</ul></li>
+<li>Bridge:
+<ul>
+<li>Data Link Layer</li>
+<li>Forwarding packets by MAC address/ Forwarding table , not routing table</li>
+<li>Single broadcast domain</li>
+</ul></li>
+<li>Linux bridge != bridge
+<ul>
+<li>using IP address with iptables/Firewall......</li>
+</ul></li>
+</ul>
+<h2 id="ch2">ch2</h2>
+<h3 id="network-namespace系統資源網路隔離化">Network Namespace:(系統資源"網路"隔離化)</h3>
+<ul>
+<li>Network devices-不同network namespace網卡可重複</li>
+<li>IPv4/IPv6 protocol stack 處理獨立</li>
+<li>IP routing/ Firewall 處理獨立</li>
+<li>Port number獨立</li>
+</ul>
+<h3 id="note">note</h3>
+<ul>
+<li>docker 創建時 預設創建一個network namespace</li>
+<li>share namespace 使用相同的docker net</li>
+<li>一般network namesapce位置 : /var/run/netns/NAME</li>
+<li>docker位置: /var/run/docker/netns</li>
+<li>過去大多使用net-tools(ifconifg,netstat...)</li>
+<li>現在大多使用iproute2(ip,ss)
+<ul>
+<li>net-tools比較沒再更新</li>
+<li>iproute2 有再追kernel版號(為ubuntu 20.04預設安裝)</li>
+</ul></li>
+<li>strace (system call trace)(debug command)</li>
+<li>ip netns exec NAME bash =&gt; 可進入該隔離network namespace</li>
+</ul>
+<h3 id="linux-virtual-network">Linux Virtual Network</h3>
+<ul>
+<li>Bridge</li>
+<li>Bonding/Team</li>
+<li>VLAN/VXLAN</li>
+<li>MACVLAN/IPVLAN -.....etc ### Virtual Ethernet(VETH):</li>
+<li>本地網路通道</li>
+<li>成對出現</li>
+<li>進出於kernel內處理</li>
+</ul>
+<h3 id="tcpdump">tcpdump</h3>
+<ul>
+<li>-vvv 訊息強度</li>
+<li>-n 以IP為主(非hostname)</li>
+<li>-l 不要buffer</li>
+<li>-i 網卡</li>
+</ul>
+<blockquote>
+<p>docker run --net=container:Name 將share network namespace kubernetes中的pod也是如此使用</p>
+</blockquote>
+<h3 id="icmparpmac">ICMP/ARP/MAC</h3>
+<ul>
+<li>ICMP-layer 4</li>
+<li>ipv4 32-bits</li>
+<li>ipv6 128-bits</li>
+<li>MAC 48-bits</li>
+<li>Mac : 6組 雙16進位表示 ff:ff:ff:ff:ff:ff
+<ul>
+<li>http://standards-oui.ieee.org/oui/oui.txt</li>
+<li>MAC 會衝突(可以偽造)</li>
+</ul></li>
+<li>ARP 協助找出Dest MAC Address
+<ul>
+<li>ipv4 用arp</li>
+<li>ipv6 用Neighbor Discovery</li>
+<li>ip neigh 指令取代 arp</li>
+<li>ARP Request (<em>Broadcast</em>)</li>
+<li>ARP Reply (<em>Unicast</em>)</li>
+</ul></li>
+<li>ARP state: <code>man ip-neighbour</code>
+<ul>
+<li>REACHABLE 可用 直到Timeout</li>
+<li>STALE 懷疑可用</li>
+<li>DELAY 驗證延遲但可用</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>tcpterm工具可簡易讀取pcap，但還是建議用wireshark。tcpterm Detail 上的"layer" 建議不要管，與原本的OSI/TCP-IP模組不同(可能會混淆)</p>
+</blockquote>
+<h2 id="ch3">ch3</h2>
+<ul>
+<li>Linux Bridge: 看Mac address
+<ul>
+<li>有Forwarding table 會偷記錄 輸入輸出端口</li>
+<li>預設不會從同個接口進入&amp;輸出(可修正)</li>
+<li>hairpin mode(A進A出 kernel預設不允許，還是讓他送)</li>
+</ul></li>
+<li>bridge fdb show br br0 (檢查bridge forwarding table)</li>
+<li>bridge fdb show dev veth0 (針對檢查到的forwarding table 鎖定在veth0介面上)</li>
+<li>icmp 不通為docker(iptables導致)，後續解釋為SNAT原因 ### 常用的IP分級</li>
+<li>CLASS A (netowrk:8bit,host 24bit)
+<ul>
+<li>Leading bits (0) (首碼0-127)</li>
+</ul></li>
+<li>CLASS B (netowrk:16bit,host 16bit)
+<ul>
+<li>Leading bits (10) (首碼128-191)</li>
+</ul></li>
+<li>CLASS C (netowrk:24bit,host 8bit)
+<ul>
+<li>Leading bits (110) (首碼192-223)</li>
+</ul></li>
+<li>CLASS 還有D/E不解釋</li>
+<li>CIDR Notation
+<ul>
+<li>Classless Inter-Domain Routing</li>
+<li>192.168.254.21/24 --Prefix=24</li>
+<li>不在像傳統Class限制host bit，prefix可動態調整</li>
+<li>Broadcast IP 則是後面全填1 (ex. 192.168.254.254)</li>
+</ul></li>
+<li>Loacl system
+<ul>
+<li>127.0.0.1 : local systeml</li>
+<li>127.0.0.0/8: belong to local system</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>ipcalc CLI工具計算Ip range</p>
+</blockquote>
+<h3 id="routing">Routing</h3>
+<ul>
+<li>封包轉送中
+<ul>
+<li>IP 通常不會改變 (src&amp;dest)</li>
+<li>mac address會改變(碰到router)(layer2)</li>
+</ul></li>
+<li>開啟IP轉發動左</li>
+<li>/proc/sys/net/ipv4/ip_forward (sysctl -w net.ipv4.ip_forward=1 ) =&gt; /proc/sys/net/ipv4/conf/$NIC/forwarding (kernel會apply每張網卡)</li>
+<li>Linux 支援多張routing tables
+<ul>
+<li>local and main 最常用</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>通常Linux Bridge是基於同網段，但不代表不行跨網段(因為是基於mac交換運行的)，透過設定還是可以強迫轉發?</p>
+</blockquote>
+<blockquote>
+<p>Linux Bridge會幫忙回arp (已知host網路情況下)(linux從kernel處理的，幫自己其他網卡回傳arp)</p>
+</blockquote>
+<ul>
+<li>ip rule ，可看有哪些routing table</li>
+</ul>
+<h3 id="iptables">iptables</h3>
+<p><img src="https://i.imgur.com/kXyaWdE.png" alt="http://xkr47.outerspace.dyndns.org/netfilter/packet_flow/" /> (ref: http://xkr47.outerspace.dyndns.org/netfilter/packet_flow/)</p>
+<ul>
+<li>iptables:
+<ul>
+<li>user-space program (configure kernel's netfilter)</li>
+<li>filter : 跟防火牆有關</li>
+<li>docker會創建自定義iptables chain</li>
+<li>預設行為
+<ul>
+<li>Default DROP (預設丟棄-要設定白名單)</li>
+<li>Default ACCEPT (預設接受-要設定黑名單)</li>
+</ul></li>
+<li>Docker 將預設FORWARD Policy改為DROP</li>
+</ul></li>
+<li>為什麼基於Linux Bridge 要跑Iptables?(理論上Forward by MAC addresses,而不是IP Routing)
+<ul>
+<li>ebtables：專門來看MAC addresses的(理論上要看這個)</li>
+<li>sysctl net.bridge.bridge-nf-call-iptables =&gt; 設定過後封包使封包經過Bridge會呼叫iptables</li>
+<li>docker 會幫你設定 net.bridge.bridge-nf-call-iptables = 1</li>
+<li>Linux Bridge 與傳統標準OSI架構，有些出入</li>
+<li>透過Kernel Code，讓原本L2只能透過MAC Address的事情，混雜了L3的router&amp;IP</li>
+</ul></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- echo &quot;0&quot; | sudo tee bridge-nf-call-iptables</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>tee 指令同時輸出到檔案&amp;stdout</p>
+</blockquote>
+<ul>
+<li>iptables -A(append) 往後塞 -I(insert)</li>
+<li>nsenter -n -t ${PID} (command 進入 container的network namespace)</li>
+</ul>
+<h2 id="ch4">ch4</h2>
+<h3 id="nat">NAT</h3>
+<ul>
+<li>NAPT (Network address and port translation): 用Port number辨識真實服務</li>
+<li>NAT 表也會滿，滿了就送不出去</li>
+<li>NAT 4 types
+<ul>
+<li>Destination IP or Post 改變仍要使用與之前相同的連線&amp;Port (Full Cone/Restricted/Port-Restricted)</li>
+<li>根據目標變動調整Changed src ip port (Symmetric) -&gt; 安全性較嚴謹<br />
+</li>
+<li>Detail
+<ul>
+<li>(1)Full Cone(NAT_IP:Port開啟後，連原本非目的地的IP也能根據開啟的NAT_IP+PORT與之連線) 很不安全</li>
+<li>(2)Restricted Cone (NAT_IP:Port開啟後，限制屬於同樣的目的IP能回來 ) 好一些</li>
+<li>(3&amp;4)Post Restricted Cone/Symmetric (只有與建立連線時相同的IP+Port 才能透過NAT_IP:Port 回應連線)</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="iptables-with-nat">iptables with NAT</h3>
+<ul>
+<li>Firewall</li>
+<li>Change packet header</li>
+<li>PREROUTING/OUTPUT : DNAT</li>
+<li>POSTROUTING: SNAT</li>
+</ul>
+<h3 id="snat">SNAT</h3>
+<ul>
+<li>如果在routing前做SNAT意義不大，會搞混(還不知道出去的網卡)</li>
+<li>iptables:
+<ul>
+<li>SNAT: 幫做SNAT，設定欲改的IP&amp;Port</li>
+<li>Masquerade: 動態根據網卡修改成該對應IP(Kernel選擇，選擇很多則根據第一個) &gt; iptables SNAT 沒指定Port 則預保留或從(1024~64512)挑</li>
+</ul></li>
+</ul>
+<h3 id="dnat">DNAT</h3>
+<ul>
+<li>DNAT
+<ul>
+<li>docker run "-p" 基於DNAT 實作的</li>
+<li>Port Forwarding/Virtual Function</li>
+<li>DMZ</li>
+</ul></li>
+<li>DNAT in PREROUTING/OUTPUT</li>
+<li>DNAT 在 Routing前
+<ul>
+<li>localhost (不太能用 iptables處理)</li>
+<li>docker 自己弄了一個docker-proxy</li>
+<li>container 透過外部IP curl回自己
+<ul>
+<li>docker-proxy</li>
+<li>hairpin mode</li>
+<li>promiscuous mode(混亂模式)</li>
+</ul></li>
+</ul></li>
+<li>curl localhost:12345(container port) -&gt; 被 docker-proxy轉發
+<ul>
+<li>砍掉docker-proxy無法接收 localhost (iptables也沒處理)</li>
+<li>-A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER (在output chain時 當目的不是127開頭的IP，adresses 符合其他網卡(非localhost))</li>
+</ul></li>
+<li>從 docker0 進入container的封包 也會不做事(變成靠docker-proxy)
+<ul>
+<li>關掉docker-proxy情況下，container自己呼叫自己，以DNAT方式仍不通</li>
+<li>tcpdump 一開就通(通常與混亂模式promiscuous有關，即便網卡封包不屬於他，仍會收集由Kernel處理)</li>
+<li>ip link set dev docker0 promisc on 強迫打開混亂模式也會通</li>
+<li>hairpin mode 打開也能通
+<ul>
+<li>sudo bridge link set dev $VETH1 hairpin on</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="conntrack">Conntrack</h3>
+<ul>
+<li>Conntrack (connection tracking) 追蹤連線
+<ul>
+<li>使用在NAT、協助記錄NAT結果，減少每次都要處理的工作</li>
+<li>Stateful firewalls 針對狀態
+<ul>
+<li>NEW</li>
+<li>RELATED</li>
+<li>ESTABLISHED</li>
+<li>INVALID</li>
+</ul></li>
+<li>conntrack -L (list)</li>
+<li>conntrack -F (Flush)</li>
+</ul></li>
+<li>Docker 使用了conntrack 搭建有狀態的防火牆(效能考量，一定程度上減少iptabels的比對)</li>
+<li>conntrack 可 tuning於system中，(代表可連線的數量一個指標)</li>
+</ul>
+<h2 id="ch5">ch5</h2>
+<h3 id="tcp-無形通道串流">TCP: 無形通道、串流</h3>
+<ul>
+<li>Connection Oriented &amp; reliable protocol</li>
+<li>Flow control and error recovery</li>
+<li>Flow control : 找到網路頻寬內最大乘載量</li>
+<li>TCP很胖、慢 因為需要reliable</li>
+<li>TCP 3 way handshake (SYN/ACK機制實作)
+<ol type="1">
+<li>Client =&gt; Server (SYN)</li>
+<li>Server =&gt; Client (SYN)</li>
+<li>Client =&gt;Server(ACK)</li>
+</ol></li>
+<li>TCP Close Connection (FIN/ACK)
+<ul>
+<li>關閉連線的當下 Kernel不會馬上把連線port回收，time wait(default 60s)，為可調整kernel參數</li>
+</ul></li>
+</ul>
+<h3 id="udp很快">udp(很快):</h3>
+<ul>
+<li>無連線概念</li>
+<li>無狀態/無順序保證</li>
+<li>不用handshake也沒有flow control</li>
+</ul>
+<blockquote>
+<p>lab note - 主動斷連線者才會有Time_wait紀錄 - tcp重送機制會越送越慢 避免真實情況太忙 - 因為tcp是sequence /reliable (掉封包會造成很大延遲) - tcp/udp 的 connection 與 Kernel conntrack 不同角度 不要混淆 - iptables (kubernetes service 使用 statistic model + probability 完成)</p>
+</blockquote>
+<h3 id="icmp---internet-control-message-protocol">ICMP - Internet Control Message Protocol</h3>
+<ul>
+<li>ICMP 發送error and opeartional information 透過指示的成功或失敗來了解與其他端點網路溝通的狀況</li>
+<li>ICMP 到底是L3 還是 L4?
+<ul>
+<li>L3觀點: 只提供輔佐的功能，不做其他傳送應用資料使用，實作方式與IP protocol綁定</li>
+<li>L4觀點: 擁有自己的IP protocol，ICP=1、UDP=17、TCP=6</li>
+</ul></li>
+<li>ICMP Header
+<ul>
+<li>Types</li>
+<li>0 Echo Reply</li>
+<li>8 Echo Request</li>
+<li>3 Destination Unreachable</li>
+<li>TTL (Time to Live)</li>
+<li>經驗過一個-1</li>
+</ul></li>
+<li>Tools:
+<ul>
+<li>Ping</li>
+<li>Traceroute</li>
+<li>mtr &gt; lab note &gt; - traceroute 其實不只會用ICMP，TCP/UDP都可能會用到，tcpdump到的內容會較複雜 &gt; - mtr 比 traceroute好用 &gt; - /proc/sys/net/ipv4/icmp_* 參數很多 ex. icmp_ratelimit/icmp_ratemask &gt; - ICMP Destination Net Unreachable 預設是有被限制的 (調整icmp_ratelimit可解除限速)</li>
+</ul></li>
+</ul>
+<h3 id="http">http</h3>
+<ul>
+<li>Relies on TCP</li>
+<li>Connection Model
+<ul>
+<li>Short-lived
+<ul>
+<li>(一個請求一個連線，要維護Time_wait釋放與conntrack table滿了的情況)</li>
+<li>三項握手的效能考量</li>
+</ul></li>
+<li>Persistent-lived (一個連線，多個請求)
+<ul>
+<li>三項握手的情況只有一開始要</li>
+<li>socket 數量減少</li>
+<li>有可能會變肥貓連線(不做事佔著資源不釋放)</li>
+</ul></li>
+<li>Pipelining</li>
+</ul></li>
+</ul>
+<h3 id="http2--單一tcp-connection-多個雙向資料傳送bidirectional-streams">HTTP/2- 單一TCP connection 多個雙向資料傳送(bidirectional streams)</h3>
+<ul>
+<li>gRPC 可以基於很多載體運作(常見是基於HTTP/2)</li>
+</ul>
+<h3 id="dns-in-linux">DNS in Linux:</h3>
+<ul>
+<li>/etc/nsswitch.conf 定義了很多解析(包含hosts )</li>
+<li>hosts: file dns
+<ul>
+<li><ol type="1">
+<li>先lookup /etc/hosts</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>才使用dns功能 查找 /etc/resolv.conf</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>除錯時盡量把DNS跟IP切割來看</li>
+</ol></li>
+</ul></li>
+</ul>
+<h3 id="load-balacing-101">Load Balacing 101</h3>
+<ul>
+<li>Distribute Algorithm</li>
+<li>Round Robin(RR)</li>
+<li>Header Hash
+<ul>
+<li>L3</li>
+<li>L4 (ip+port)</li>
+<li>L7 (ex http load balancer/with application)</li>
+</ul></li>
+<li>Implementation
+<ul>
+<li>Proxy
+<ul>
+<li>ex. docker-proxy,</li>
+<li>client &lt;=&gt; proxy &lt;=&gt; backends，(btw,(L7)http header backend可得知真實client ip)</li>
+<li>SSL Termination</li>
+<li>Multiple gRPC request rely on the same TCP connection(Http Persistent-Lived mode)/</li>
+<li>L4 Load balancer無法做因為只有一條連線</li>
+<li>L7 Load balancer (如果認得grpc) 才有辦法做負載平衡</li>
+</ul></li>
+<li>Transparency(透明化)
+<ul>
+<li>Client &lt;--無形手腳--&gt; Target (DNAT )</li>
+<li>一樣無法處理gRPC(跟L3/L4 Loadbalancer一致)</li>
+<li>Kubernetes service是基於這種方式運作的</li>
+</ul></li>
+<li>Client-side load balancing(由Client直接送出Requset到backend server)
+<ul>
+<li>需要Workflow</li>
+<li>告訴Client Backend server有哪些</li>
+<li>使用client自己的演算法絕定目的</li>
+<li>L7 based (前提是client具備直接送封包給backend的能力(網路能通))</li>
+<li>gRPC 可使用，透過DNS回傳Backend server清單</li>
+<li>kubernetes headless service作法</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="dpi-deep-packet-inspection-深度封包檢測">DPI Deep Packet Inspection 深度封包檢測</h3>
+<ul>
+<li>給一個封包得知是什麼L7應用</li>
+<li>Type:
+<ul>
+<li>Shallow Packet Inspection (SPI)
+<ul>
+<li>根據封包常見header定義來源，如看見什麼port就覺得是什麼連線(不一定準 可被換掉)</li>
+</ul></li>
+<li>Deep Packet Insepection(DPI)
+<ul>
+<li>除了看heaader 甚至看內容、footer</li>
+<li>分析payload、signature matching 檢查細節嘗試辨別來源應用程式</li>
+</ul></li>
+</ul></li>
+<li>tools
+<ul>
+<li>nDPI (Based on OpenDPI)</li>
+</ul></li>
+</ul>
+<h2 id="ch6">ch6</h2>
+<h3 id="vpn">VPN</h3>
+<ul>
+<li>Client to Servers</li>
+<li>Server to Server</li>
+</ul>
+<h3 id="存取remote-server的幾種方式">存取remote server的幾種方式</h3>
+<ul>
+<li>Port-Forwarding
+<ul>
+<li>iptables modules</li>
+<li>Routable_IP:Port &lt;==&gt; Service_IP:Service_Port</li>
+<li>Client 不會知道真實service IP(因為是透過Routable_IP轉發)</li>
+<li>Support all L7 protocols (因為是基於iptables的L3/L4 protocol)</li>
+<li>使用時只會有一條連線</li>
+<li>10 services with 10 ports</li>
+</ul></li>
+<li>Reverse-Proxy(HTTP)
+<ul>
+<li>安裝額外應用程式(nginx)</li>
+<li>根據Reverse-Proxy支援與撰寫的規則決定目的</li>
+<li>一次的Request產生兩條連線</li>
+<li>Client &lt;---&gt; Process(TCP)</li>
+<li>Process &lt;----&gt; Service (TCP)</li>
+<li>Reverse Proxy 中 Service 要取得真實的Client要特別設定</li>
+</ul></li>
+<li>Virtual Private Network(VPN)
+<ul>
+<li>需要安裝額外軟體(Server on target nework、Client on laptop)</li>
+<li>Client會將封包進行封裝拋向Server，Server進行解封裝放回原本request的目的地</li>
+<li>一個Request 也有兩個連線</li>
+<li>Sender &lt;---&gt; Receiver</li>
+<li>VPN Client &lt;---&gt;VPN Server(TCP/UDP,openVPN預設以UDP)</li>
+<li>Service看Client IP(不一定，看解決方案實作)</li>
+<li>Client將能自由存取Server端的internal services</li>
+</ul></li>
+</ul>
+<h3 id="tuntap">Tun/Tap</h3>
+<ul>
+<li>openVPN</li>
+<li>使用Kernel Devices</li>
+<li>設定routing rules with Kernel Devices</li>
+<li>Tun/Tap (interface 供人操作 user space networking)
+<ul>
+<li>允許user space 程式去監聽封包並了解原始的網路流量(raw network traffic)</li>
+<li>Traffic 基於 ethernet or IP level</li>
+<li>Tun =&gt; IP Level(大部分情況都是用tun(ip資訊)即可)</li>
+<li>Tap =&gt; Ethernet Level</li>
+</ul></li>
+<li>Tun/Tap in linux iproute2
+<ul>
+<li>ip tuntap add dev xxxx mode tun</li>
+<li>ip tuntap show / ip -d link</li>
+</ul></li>
+<li>建立完成後仍需搭配program去使用該interface(attach)</li>
+<li>以往 收送封包=&gt;從實體網卡</li>
+<li>tuntap 收送封包 =&gt; 應用程式</li>
+<li>VPN(tunneling) 大量使用</li>
+<li>Tap
+<ul>
+<li>Ethernet packet(ARP) can be forward to remote server</li>
+<li>可串連兩個不同區域的ethernet LAN 使用同網段</li>
+<li>很少用，還要考慮IP不打架的問題</li>
+</ul></li>
+<li>openVPN: 預設是將default route設為vpn
+<ul>
+<li>可根據設定進行分段，讓部分網段route才走vpn</li>
+<li>常做為跳板使用(隱藏source IP)</li>
+<li>sudo lsof /dev/net/tun</li>
+<li>sudo ss -aunp 檢查 openVPN在listen(1194 port)的情況</li>
+<li>這邊只能Client to Server</li>
+</ul></li>
+</ul>
+<h3 id="tunneling">Tunneling</h3>
+<ul>
+<li>Site to Site VPN</li>
+<li>Network Tunneling
+<ul>
+<li>Application implementations：OpenVPN、SSH Tunnel...etc</li>
+<li>Protocol specified：IPIP、VXLAN、GRE、PPTP、L2TP.......</li>
+</ul></li>
+<li>use in where
+<ul>
+<li>Data Center (Cluster to Cluster)</li>
+<li>Kubernetes</li>
+<li>VPN</li>
+</ul></li>
+</ul>
+<h3 id="ip-in-ip">IP-in-IP</h3>
+<ul>
+<li>不會加密</li>
+<li>通常不會用在vpn，使用在cluster-to-cluster存取(calico)</li>
+<li>IP-in-IP 為獨立Protocol，與TCP/UDP同Layer(4)，並不是所有router都支持</li>
+<li>iproute2
+<ul>
+<li>ip tunnel add $name $mode ipip | gre | sit | isatap | vti</li>
+</ul></li>
+<li>kernel 即支援</li>
+<li>tunnel0 - 實作上都會給IP位置(為了讓基本Source IP能找到對的網卡)</li>
+</ul>
+<h2 id="ch7">ch7</h2>
+<ul>
+<li>Configuration
+<ul>
+<li>sysctl</li>
+<li>L2
+<ul>
+<li>ARP、Bridge</li>
+</ul></li>
+<li>L3
+<ul>
+<li>IPv4、IPv6</li>
+</ul></li>
+<li>L4
+<ul>
+<li>TCP、UDP</li>
+</ul></li>
+</ul></li>
+<li>/proc/sys/net (不同kernel 會有差異)</li>
+<li>Brigde
+<ul>
+<li>bridge-nf-call-arptables</li>
+<li>bridge-nf-call-ip6tables</li>
+<li>bridge-nf-call-iptables</li>
+</ul></li>
+<li>Core</li>
+<li>Ipv4
+<ul>
+<li>/proc/sys/net/ipv4
+<ul>
+<li>Time_WAIT
+<ul>
+<li>tcp_tw_reuse(0 or 1)，是否允許偷用Time_wait的socket(only往外連線)</li>
+<li>tcp_tw_recycle(kernel 4.12移除)</li>
+<li>Local Port
+<ul>
+<li>ip_local_port_range(32768,60999)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>/proc/sys/net/ipv4/
+<ul>
+<li>tcp_max_syn_backlog</li>
+<li>tcp_keepalive_probes</li>
+<li>tcp_keepalive_time(7200)</li>
+</ul></li>
+<li>tcp_memory
+<ul>
+<li>tcp_mem</li>
+<li>tcp_rmem</li>
+<li>tcp_wmem</li>
+</ul></li>
+<li>/proc/sys/net/ipv4/conf/${NIC}
+<ul>
+<li>ALL，Default根據設定什麼結果不同，需要研究</li>
+</ul></li>
+<li>/proc/sys/net/ipv4/conf/docker0
+<ul>
+<li>forwarding(forwards packet)</li>
+<li>rp_filter(Reverse Path Filtering) 安全防護</li>
+<li>封包到達網卡時，檢查source ip是否合規，不合則丟棄</li>
+<li>0 一律轉發</li>
+<li>1 strict 嚴格模式，檢查來源IP，查routing table，檢查是否合理由同網卡進出，合則收、不合則丟。</li>
+<li>2 loss 鬆散模式，檢察系統上無否有人能夠轉發，只要能轉發都會幫忙接收處理</li>
+</ul></li>
+<li>arp_ignore
+<ul>
+<li>0 只要系統ip與arp request ip match 則幫忙回</li>
+<li>1 問的IP必須是該網卡的IP</li>
+<li>2 看IP之外Sender IP也要同網段</li>
+</ul></li>
+<li>arp_filter(like rp_filter 會與arp_ignore一起使用)
+<ul>
+<li>0 都可以轉發</li>
+<li>1 檢查roting table確認檢查到的IP與sender ip是否相同網卡才回</li>
+</ul></li>
+</ul></li>
+<li>Neftilter
+<ul>
+<li>conntrack tables
+<ul>
+<li>nf_conntrack_buckets</li>
+<li>nf_conntrack_max
+<ul>
+<li>nf_conntrack_buckets*4</li>
+<li>2GB (MAX=65536)</li>
+<li>400GB(MAX=3145728)</li>
+</ul></li>
+<li>nf_conntrack_count</li>
+</ul></li>
+<li>TCP Timeout
+<ul>
+<li>nf_conntrack_tcp_timeout_close(10)</li>
+<li>nf_conntrack_tcp_timeout_close_wait(60)</li>
+<li>nf_conntrack_tcp__timeout_established(432,000)，一條已建立的連線會存放於contrack table 432000秒，強制踢出</li>
+<li>nf_conntrack_tcp__timeout_fin_wait(12)</li>
+<li>nf_conntrack_tcp__timeout_last_ack(3)</li>
+<li>nf_conntrack_tcp__timeout_sync_recv(60)</li>
+<li>nf_conntrack_tcp__timeout_sync_sent(120)</li>
+<li>nf_conntrack_tcp__timeout_time_wait(120)</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="ch8">ch8</h2>
+<ul>
+<li>tools
+<ul>
+<li>traffic control
+<ul>
+<li>tc</li>
+</ul></li>
+<li>DNS
+<ul>
+<li>dig,nslookup</li>
+</ul></li>
+<li>Routing
+<ul>
+<li>traceroute,mtr,ip route</li>
+</ul></li>
+<li>Send packets
+<ul>
+<li>ping,arping,hping,iperf,nc...</li>
+</ul></li>
+<li>Monitor traffics
+<ul>
+<li>iftop,sar</li>
+</ul></li>
+<li>Socket
+<ul>
+<li>netstat,ss</li>
+</ul></li>
+</ul></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%80%E6%9B%B8%E5%BF%83%E5%BE%97/" rel="tag"># 讀書心得</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/21/study-sre-4/" rel="prev" title="網站可靠性工程 - Part 4 (O'REILLY ISBN 978-986-476-625-3)">
+                  <i class="fa fa-chevron-left"></i> 網站可靠性工程 - Part 4 (O'REILLY ISBN 978-986-476-625-3)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"1ff2a6b4eeab7465ef81c6abd0f292fc"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
