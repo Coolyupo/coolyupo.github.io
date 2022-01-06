@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="CKA 考試紀錄 前言 起源於12月中旬左右的某天跟前公司主管聊天聽到一些抱怨XD，被其他部門的人質疑明明是XX組卻沒有人有CKA證照，其實當下我的想法是能夠解決問題遠比持有這張證照重要許多。 況且我也不認為對於使用Kubernetes有一小段時間的我們，這張證照真的很難考嗎?好啊，不然我就準備個一周來考看看(原本是想說裸考，但真的還是會抖XD)，儘管我已經不在公司了，不過也因為現在是離職待">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CKA">
+<meta property="og:url" content="http://example.com/2022/01/06/CKA/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="CKA 考試紀錄 前言 起源於12月中旬左右的某天跟前公司主管聊天聽到一些抱怨XD，被其他部門的人質疑明明是XX組卻沒有人有CKA證照，其實當下我的想法是能夠解決問題遠比持有這張證照重要許多。 況且我也不認為對於使用Kubernetes有一小段時間的我們，這張證照真的很難考嗎?好啊，不然我就準備個一周來考看看(原本是想說裸考，但真的還是會抖XD)，儘管我已經不在公司了，不過也因為現在是離職待">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://example.com/uploads/score.png">
+<meta property="og:image" content="http://example.com/uploads/cka.png">
+<meta property="article:published_time" content="2022-01-06T07:21:59.000Z">
+<meta property="article:modified_time" content="2022-01-06T09:16:55.901Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="GuruBear">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/uploads/score.png">
+
+
+<link rel="canonical" href="http://example.com/2022/01/06/CKA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2022/01/06/CKA/","path":"2022/01/06/CKA/","title":"CKA"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CKA | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cka-%E8%80%83%E8%A9%A6%E7%B4%80%E9%8C%84"><span class="nav-number">1.</span> <span class="nav-text">CKA 考試紀錄</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%96%E5%82%99"><span class="nav-number">1.2.1.</span> <span class="nav-text">準備</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%B7%E6%80%9D"><span class="nav-number">1.2.2.</span> <span class="nav-text">迷思</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.3.</span> <span class="nav-text">小技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%8C%E5%A4%96%E8%A9%B1"><span class="nav-number">1.3.</span> <span class="nav-text">題外話</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuruBear"
+      src="/uploads/gurubear.png">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/06/CKA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/gurubear.png">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CKA
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-01-06 15:21:59 / Modified: 17:16:55" itemprop="dateCreated datePublished" datetime="2022-01-06T15:21:59+08:00">2022-01-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="cka-考試紀錄">CKA 考試紀錄</h1>
+<h2 id="前言">前言</h2>
+<p>起源於12月中旬左右的某天跟前公司主管聊天聽到一些抱怨XD，被其他部門的人質疑明明是XX組卻沒有人有CKA證照，其實當下我的想法是<strong>能夠解決問題遠比持有這張證照重要許多</strong>。</p>
+<p>況且我也不認為對於使用Kubernetes有一小段時間的我們，這張證照真的很難考嗎?好啊，不然我就準備個一周來考看看(原本是想說裸考，但真的還是會抖XD)，儘管我已經不在公司了，不過也因為現在是離職待業(耍廢)狀態，做任何事情都很隨興的狀態。</p>
+<span id="more"></span>
+<p><img src="/uploads/score.png"  alt="me" align=center /></p>
+<p><img src="/uploads/cka.png" width="80%"  align=center /></p>
+<h2 id="正文">正文</h2>
+<h3 id="準備">準備</h3>
+<p>這次大概使用了一週準備考試，準備的方向也跟其他網友差不多。</p>
+<ol type="1">
+<li>前三天使用<a target="_blank" rel="noopener" href="https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/">udemy上的cka教學</a>(課程因為很便宜兩年前就買了但一直放置，講師也很有心一直在更新的樣子)，不過我一堂課都沒聽(聽了會來不及XD)，而是直接使用附贈的<a target="_blank" rel="noopener" href="https://kodekloud.com/courses/labs-certified-kubernetes-administrator-with-practice-tests/">kodecloud test</a>(udemy課程中會提供enroll code)，因為本身已經存在一些些經驗了，一路做下來倒也沒遇到太多問題，不過還是有些不熟的地方會需要想一下、查找文件或偷看答案XD</li>
+<li>第四天就用報名CKA送的兩次Killer.sh模擬考的其中一次，題目是真的如傳聞的長又複雜，全部寫完大概也是花了4個小時多一點，總共25題+2個ExtraProblem+3個PreviewProblem，好在寫完後正確率還算蠻高的(11X/12X)不然應該真的會崩潰XD，寫完後就把答案快速都看過一遍確定一下問題，跟建議的解法(有助於提升速度的)，然後這天的下午我就直接預約了後天下午的考試(需要至少24小時前預約)</li>
+<li>第五天，我就啟用第二次的Killer.sh，不過這次的問題內容跟第四天的竟然完全一樣......不曉得是不是因為我第一天的session還沒過期導致的，還是原本就會一樣。(正常啟用一個session後36h才會過期)雖然是都一樣但全部寫完也是花了我兩個小時剛剛好(orz</li>
+<li>第六天，下午就開始考試啦，理論上可以提前15分鐘從portal按下take exam，不過實際上還是要看你的live monitor是不是ready了(不過如果超過15分鐘沒開始考試將會失去資格而且不能重考唷)，我題目總共17題，難度的水平本身是覺得還好，應該比較接近kodecloud的mock exam，整體做完我大概還剩40分鐘就回頭去檢查(還真的檢查到一題不小心寫錯的)</li>
+<li>第七天，考完後24小時內會收到成績與是否通過，我大概也是在22個小時收到通過的通知。</li>
+</ol>
+<h3 id="迷思">迷思</h3>
+<ol type="1">
+<li>因為自己是第一次考這種live monitor的考試，原本以為是跟監考官互相視訊，原來只是我自己分享視訊+桌面，然後跟監考官用live chat的方式交談(原本一直很害怕自己英聽不好，倒是鬆了一口氣)</li>
+<li>因為害怕有看不懂的題目，特地安裝了google translate的plugin，不過幾乎沒用到，因為題目並沒有這麼艱難的單字或語法就是了，況且介面上還提供轉換三種語言(英文、日文、簡體中文)</li>
+<li>我遇到的監考官人很好也很客氣。</li>
+</ol>
+<h3 id="小技巧">小技巧</h3>
+<ol type="1">
+<li>雖然自己不是很喜歡，不過熟悉kubectl imperative command對於CKA的考試幫助非常大(可能大部分的人是用alias k=kubectl，因為我自己一直沒有這種習慣所以就沒這樣做)，在具備足夠基礎知識的情況下如何更快速作答會是關鍵。例如下面:
+<ul>
+<li><code>kubectl  run $pod --image=$image --label="a=1,b=2" --dry-run=client -o yaml &gt; ans.yml</code></li>
+<li><code>kubectl create deployment $deploymentname --image=$image --dry-run=client -o yaml &gt; ans.yml</code></li>
+<li><code>kubectl create sa</code> 、 <code>kubectl create clusterrole.....</code>、<code>kubectl create rolebinding......</code></li>
+</ul></li>
+<li>terminal內已經有內建kubectl autocomplete，可以盡情使用tab</li>
+<li>自己本身是認為考試的難度並不算太難，只要在看到題目的時候能知道<strong>他是在問什麼</strong>，然後透過官方文件查找應該都是有辦法的，重點還是在於自己對kubernetes的熟悉度有多少。</li>
+<li>雖然有人推薦用網友分享的CKA書籤大全，但我自己實際上在用的時候更喜歡使用左邊的搜尋欄，根據我對題目的了解去查找我想要看到的資源文件(要注意不要點到會違規的連結就是了，我通常查出來的都是點第一個OR第二個XD)</li>
+</ol>
+<h2 id="題外話">題外話</h2>
+<p>這次考試有點緊張，因為選擇在家裡考，順帶把家人也弄得有點緊張XD，特地借用我姊的房間把它弄成家徒四壁的樣子，只剩一張桌子+一張子+延長線。(還被監考官誇獎準備的非常小心XD)。不過當下有點尷尬的是因為房間實在太空、又密閉竟然會有一點點回音(Orz)，然後我家附近住戶又有人在微施工不定時產生一些小噪音......，好加在不需要用麥克風對話(純打字)</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/06/lvm-note/" rel="prev" title="LVM note">
+                  <i class="fa fa-chevron-left"></i> LVM note
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"3c891e130348249726e27b4e2ae2b568"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
