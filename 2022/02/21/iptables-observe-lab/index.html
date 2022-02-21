@@ -46,7 +46,7 @@
 <meta property="og:image" content="https://i.imgur.com/yhs7HcB.png">
 <meta property="og:image" content="https://i.imgur.com/Ctgv0kN.png">
 <meta property="article:published_time" content="2022-02-21T15:01:02.000Z">
-<meta property="article:modified_time" content="2022-02-21T15:04:09.749Z">
+<meta property="article:modified_time" content="2022-02-21T15:11:46.187Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="iptables">
@@ -229,7 +229,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-02-21 23:01:02 / Modified: 23:04:09" itemprop="dateCreated datePublished" datetime="2022-02-21T23:01:02+08:00">2022-02-21</time>
+      <time title="Created: 2022-02-21 23:01:02 / Modified: 23:11:46" itemprop="dateCreated datePublished" datetime="2022-02-21T23:01:02+08:00">2022-02-21</time>
     </span>
 
   
@@ -242,7 +242,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>一直以來對iptables都不是很熟悉，無聊做個kubernetes iptables為主的觀察紀錄小LAB，主要記錄一下當一般普通的服務在佈署時iptables如何增長<del>(順便當作收心)</del> <span id="more"></span> 實驗環境： * kubernetes v1.23.1 * 1 master + 1 worker * CNI: Calico 3.22(layer2-IPIP) * CRI: containerd://1.5.5 * Kube-proxy mode: iptables</p>
+        <p>一直以來對iptables都不是很熟悉，無聊做個kubernetes iptables為主的觀察紀錄小LAB，主要記錄一下當一般普通的服務在佈署時iptables如何增長<del>(順便當作收心)</del> <span id="more"></span></p>
+<p>實驗環境：</p>
+<ul>
+<li>kubernetes v1.23.1</li>
+<li>1 master + 1 worker</li>
+<li>CNI: Calico 3.22(layer2-IPIP)</li>
+<li>CRI: containerd://1.5.5</li>
+<li>Kube-proxy mode: iptables</li>
+</ul>
 <p><img src="https://i.imgur.com/shGJeav.png" /></p>
 <blockquote>
 <p>這裡的master沒有taint是屬於能夠任意scheduled節點，不過主次還是以worker node iptables-rule觀察為主</p>
