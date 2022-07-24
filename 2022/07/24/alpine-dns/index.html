@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="alpine linux dns 行為紀錄 這是一篇在追蹤dns lookup error時衍生出的筆記。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="alpine linux dns 行為紀錄">
+<meta property="og:url" content="http://example.com/2022/07/24/alpine-dns/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="alpine linux dns 行為紀錄 這是一篇在追蹤dns lookup error時衍生出的筆記。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/BOZ2weV.png">
+<meta property="og:image" content="https://i.imgur.com/d0FvHEt.png">
+<meta property="og:image" content="https://i.imgur.com/BOUYGXT.png">
+<meta property="og:image" content="https://i.imgur.com/URGY2Rr.png">
+<meta property="og:image" content="https://i.imgur.com/EUX077i.png">
+<meta property="og:image" content="https://i.imgur.com/VJr0hja.png">
+<meta property="og:image" content="https://i.imgur.com/17Oa9kF.png">
+<meta property="article:published_time" content="2022-07-24T02:52:00.000Z">
+<meta property="article:modified_time" content="2022-07-24T03:51:39.173Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="alpine">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/BOZ2weV.png">
+
+
+<link rel="canonical" href="http://example.com/2022/07/24/alpine-dns/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2022/07/24/alpine-dns/","path":"2022/07/24/alpine-dns/","title":"alpine linux dns 行為紀錄"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>alpine linux dns 行為紀錄 | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#alpine-linux-dns-%E8%A1%8C%E7%82%BA%E7%B4%80%E9%8C%84"><span class="nav-number">1.</span> <span class="nav-text">alpine linux dns 行為紀錄</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E9%A9%97%E7%92%B0%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">實驗環境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#general-osubuntu"><span class="nav-number">1.1.1.</span> <span class="nav-text">general os(ubuntu)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alpine-linux"><span class="nav-number">1.1.2.</span> <span class="nav-text">alpine linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%8C%E7%BA%8C%E6%8E%A2%E8%A8%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">後續探討</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%8C%E5%A4%96%E8%A9%B1"><span class="nav-number">1.2.</span> <span class="nav-text">題外話</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuruBear"
+      src="/uploads/gurubear.png">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/24/alpine-dns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/gurubear.png">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          alpine linux dns 行為紀錄
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-07-24 10:52:00 / Modified: 11:51:39" itemprop="dateCreated datePublished" datetime="2022-07-24T10:52:00+08:00">2022-07-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="alpine-linux-dns-行為紀錄">alpine linux dns 行為紀錄</h1>
+<p>這是一篇在追蹤dns lookup error時衍生出的筆記。 <span id="more"></span></p>
+<p>在打包container image時，我們會需要選擇base image，而常見的base image選項莫過於debian、centos、ubuntu、alpine這幾個。</p>
+<p>這邊就是特別針對alpine linux dns行為差異做了一下紀錄。</p>
+<h2 id="實驗環境">實驗環境</h2>
+<p>這邊是以kubernetes的方向來進行差異的比對。</p>
+<h3 id="general-osubuntu">general os(ubuntu)</h3>
+<p>傳統的作業系統(以ubuntu為例)，佈署了一份yaml，並額外指定dns</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">creationTimestamp:</span> <span class="literal">null</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">ubuntu</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ubuntu</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">lab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">command:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sleep</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">1d</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">ubuntu:20.04</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">dnsPolicy:</span> <span class="string">ClusterFirst</span></span><br><span class="line">  <span class="attr">dnsConfig:</span></span><br><span class="line">    <span class="attr">nameservers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">  <span class="attr">restartPolicy:</span> <span class="string">Always</span></span><br><span class="line"><span class="attr">status:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>進入到container可以從/etc/resolve.conf 看出除了預設的coredns之外也存在另外兩個額外的dns server</p>
+<p><img src="https://i.imgur.com/BOZ2weV.png" /> 過程中我們搭配 <a target="_blank" rel="noopener" href="https://github.com/eldadru/ksniff">ksniff</a> 套件tcpdump來進行驗證查看。</p>
+<p><code>kubectl sniff ubuntu -n lab -p</code></p>
+<p><img src="https://i.imgur.com/d0FvHEt.png" /></p>
+<p>在container內執行<code>curl http://nginx.default.svc</code></p>
+<p><img src="https://i.imgur.com/BOUYGXT.png" /></p>
+<p>可以知道在一般的OS的情境下，我們在同一時間只會針對一個dns server進行query(follow search&amp;ndot的行為)。</p>
+<h3 id="alpine-linux">alpine linux</h3>
+<p>接著我們測試在alpine linux上面會如何</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">creationTimestamp:</span> <span class="literal">null</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">ubuntu</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ubuntu</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">lab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">command:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sleep</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">1d</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">ubuntu:20.04</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">dnsPolicy:</span> <span class="string">ClusterFirst</span></span><br><span class="line">  <span class="attr">dnsConfig:</span></span><br><span class="line">    <span class="attr">nameservers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">  <span class="attr">restartPolicy:</span> <span class="string">Always</span></span><br><span class="line"><span class="attr">status:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/URGY2Rr.png" /></p>
+<p>/etc/resolv.conf 上一樣是會出現3個dns server</p>
+<p><code>kubectl sniff alpine -n lab -p</code></p>
+<p><img src="https://i.imgur.com/EUX077i.png" /></p>
+<p>一樣在container內執行<code>curl http://nginx.default.svc</code></p>
+<p><img src="https://i.imgur.com/VJr0hja.png" /></p>
+<p>可以觀察到在alpine linux當中，針對呼叫一個domain像dns進行呼叫的情境，與傳統OS不同，他會同時像所有的dns server進行詢問，並選擇response最快的作為答案回覆。</p>
+<h3 id="後續探討">後續探討</h3>
+<p>後續針對這些差異在做了一些爬文與servey，了解到這是基於作業系統底層選擇的standard c libray不同所導致的。(image from wiki) <img src="https://i.imgur.com/17Oa9kF.png" /></p>
+<p>一般常見的OS選用的是glibc，但alpine linux為了遵循其small、simple、secure的原則選用的是musl-libc，而DNS行為的差異正是musl-libc與glibc的差異點之一。這邊提供<a target="_blank" rel="noopener" href="https://wiki.musl-libc.org/functional-differences-from-glibc.html">連結</a>給大家參考，就不細討論內容了。</p>
+<h2 id="題外話">題外話</h2>
+<p>這次除了了解不同OS的DNS行為差異外，主要還是在探討時常會遇到DNS解析時，出現NXDomain進而導致呼叫失敗的問題。再去了解了一下NXDomain的<a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc8020">定義</a>後，發現問題看起來是因為自身所在環境IPv6、以及private dns&amp;public dns交錯使用產生的一些問題，然後又因為alpine linux的特性造成的困擾，不過在這邊就不好細講了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/alpine/" rel="tag"># alpine</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/05/flatcar/" rel="prev" title="flatcar">
+                  <i class="fa fa-chevron-left"></i> flatcar
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"459572f715890d94fbb037dd63f18605"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
