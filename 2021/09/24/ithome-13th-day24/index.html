@@ -28,32 +28,32 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day24，試著用Rancher交差Dashboard 正文 今天要來一日體驗rancher server上的dashboard功能 使用racher2.6.1-rc1版本搭配docker-compose檔，做single docker host。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/pSLi3AP.png">
-<meta property="og:image" content="https://i.imgur.com/U5duJBX.png">
-<meta property="og:image" content="https://i.imgur.com/TUU6YBu.png">
-<meta property="og:image" content="https://i.imgur.com/BUO1vEf.png">
-<meta property="og:image" content="https://i.imgur.com/SdqBcD7.png">
-<meta property="og:image" content="https://i.imgur.com/kLEqSkb.png">
-<meta property="og:image" content="https://i.imgur.com/uF7adPy.png">
-<meta property="og:image" content="https://i.imgur.com/1ZGNRBL.png">
-<meta property="og:image" content="https://i.imgur.com/zOCqymQ.png">
-<meta property="og:image" content="https://i.imgur.com/lRznZ54.png">
-<meta property="og:image" content="https://i.imgur.com/4Kq9shN.png">
-<meta property="og:image" content="https://i.imgur.com/n2i6SL6.png">
-<meta property="og:image" content="https://i.imgur.com/7BtqA7F.png">
-<meta property="og:image" content="https://i.imgur.com/D4OxCK6.png">
-<meta property="og:image" content="https://i.imgur.com/R1lTKe0.png">
-<meta property="og:image" content="https://i.imgur.com/bNkCnLl.png">
-<meta property="og:image" content="https://i.imgur.com/dReZ6nn.png">
-<meta property="og:image" content="https://i.imgur.com/IT0tjrI.png">
-<meta property="og:image" content="https://i.imgur.com/FGFN95R.png">
+<meta property="og:image" content="http://example.com/uploads/pSLi3AP.png">
+<meta property="og:image" content="http://example.com/uploads/U5duJBX.png">
+<meta property="og:image" content="http://example.com/uploads/TUU6YBu.png">
+<meta property="og:image" content="http://example.com/uploads/BUO1vEf.png">
+<meta property="og:image" content="http://example.com/uploads/SdqBcD7.png">
+<meta property="og:image" content="http://example.com/uploads/kLEqSkb.png">
+<meta property="og:image" content="http://example.com/uploads/uF7adPy.png">
+<meta property="og:image" content="http://example.com/uploads/1ZGNRBL.png">
+<meta property="og:image" content="http://example.com/uploads/zOCqymQ.png">
+<meta property="og:image" content="http://example.com/uploads/lRznZ54.png">
+<meta property="og:image" content="http://example.com/uploads/4Kq9shN.png">
+<meta property="og:image" content="http://example.com/uploads/n2i6SL6.png">
+<meta property="og:image" content="http://example.com/uploads/7BtqA7F.png">
+<meta property="og:image" content="http://example.com/uploads/D4OxCK6.png">
+<meta property="og:image" content="http://example.com/uploads/R1lTKe0.png">
+<meta property="og:image" content="http://example.com/uploads/bNkCnLl.png">
+<meta property="og:image" content="http://example.com/uploads/dReZ6nn.png">
+<meta property="og:image" content="http://example.com/uploads/IT0tjrI.png">
+<meta property="og:image" content="http://example.com/uploads/FGFN95R.png">
 <meta property="article:published_time" content="2021-09-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-01-06T09:25:47.889Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.904Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/pSLi3AP.png">
+<meta name="twitter:image" content="http://example.com/uploads/pSLi3AP.png">
 
 
 <link rel="canonical" href="http://example.com/2021/09/24/ithome-13th-day24/">
@@ -237,7 +237,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-01-06 17:25:47" itemprop="dateModified" datetime="2022-01-06T17:25:47+08:00">2022-01-06</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -252,24 +252,24 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="day24試著用rancher交差dashboard">Day24，試著用Rancher交差Dashboard</h1>
 <h2 id="正文">正文</h2>
-<p>今天要來一日體驗rancher server上的dashboard功能 使用racher2.6.1-rc1版本搭配docker-compose檔，做single docker host。 <span id="more"></span> docker-compose.yml <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">rancher_server:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">rancher/rancher:v2.6.1-rc1-linux-amd64</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/home/coolyupo/Desktop/ithome/rancher-pv:/var/lib/rancher</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure> 執行 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dokcer-compose up -d</span><br><span class="line">docker ps</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/pSLi3AP.png" /></p>
-<p>取得預設密碼 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs e1f 2&gt;&amp;1 | grep &quot;Bootstrap Password:&quot;</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/U5duJBX.png" /></p>
-<p>打開瀏覽器輸入密碼，會友修改密碼的環節 <img src="https://i.imgur.com/TUU6YBu.png" /></p>
-<p>成功進來後，可以看到local已經有了一個k3s了，所以讓我好奇的進去container內探索看看 <img src="https://i.imgur.com/BUO1vEf.png" /></p>
-<p>進入container使用kubectl可以發現是能夠操作k3s cluster的 <img src="https://i.imgur.com/SdqBcD7.png" /></p>
-<p>列出process來看一下，瞭解這個container在跑哪些東西 <img src="https://i.imgur.com/kLEqSkb.png" /></p>
-<p>確認一下我們rancher persistent的內容，的確也是k3s的data，所以這個rancher server的container image應該就是基於k3s延伸的應用。 <img src="https://i.imgur.com/uF7adPy.png" /></p>
-<p>那我們就回到ui上操作import，因為cluster非各大雲端，所以選擇的為Generic <img src="https://i.imgur.com/1ZGNRBL.png" /></p>
-<p>照著指示的部分操作在原本的cluster上 <img src="https://i.imgur.com/zOCqymQ.png" /> <img src="https://i.imgur.com/lRznZ54.png" /></p>
-<p>觀察cattle-system直到agent佈署完成 <img src="https://i.imgur.com/4Kq9shN.png" /></p>
-<p>回到ui點選我們的叢集，已經可以看到精美的dashboard囉 <img src="https://i.imgur.com/n2i6SL6.png" /></p>
-<p>右上角可以下載kubeconfig/import yaml/或直接使用kubectl shell，有時候還蠻方便的 <img src="https://i.imgur.com/7BtqA7F.png" /></p>
-<p>左下的cluster-tools中也有針對這個dashbaord功能所需要的套件安裝指引 <img src="https://i.imgur.com/D4OxCK6.png" /></p>
-<p>快速安裝了個monitoring來試試 <img src="https://i.imgur.com/R1lTKe0.png" /></p>
-<p>看起來就也是基於prometheus-operator的佈署，但是是rancher版本的 <img src="https://i.imgur.com/bNkCnLl.png" /></p>
-<p>佈署完後回到dashboard頁面上來看，可以看到rancher ui上啟用了monitoring的圖表了 <img src="https://i.imgur.com/dReZ6nn.png" /></p>
-<p>也能夠打開grafana直接觀看，非常方便 <img src="https://i.imgur.com/IT0tjrI.png" /></p>
-<p>還有App &amp; Market Place這邊也能幫助佈署許多應用 <img src="https://i.imgur.com/FGFN95R.png" /></p>
+<p>今天要來一日體驗rancher server上的dashboard功能 使用racher2.6.1-rc1版本搭配docker-compose檔，做single docker host。 <span id="more"></span> docker-compose.yml <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">rancher_server:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">rancher/rancher:v2.6.1-rc1-linux-amd64</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/home/coolyupo/Desktop/ithome/rancher-pv:/var/lib/rancher</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure> 執行 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dokcer-compose up -d</span><br><span class="line">docker ps</span><br></pre></td></tr></table></figure> <img src="/uploads/pSLi3AP.png" /></p>
+<p>取得預設密碼 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs e1f 2&gt;&amp;1 | grep &quot;Bootstrap Password:&quot;</span><br></pre></td></tr></table></figure> <img src="/uploads/U5duJBX.png" /></p>
+<p>打開瀏覽器輸入密碼，會友修改密碼的環節 <img src="/uploads/TUU6YBu.png" /></p>
+<p>成功進來後，可以看到local已經有了一個k3s了，所以讓我好奇的進去container內探索看看 <img src="/uploads/BUO1vEf.png" /></p>
+<p>進入container使用kubectl可以發現是能夠操作k3s cluster的 <img src="/uploads/SdqBcD7.png" /></p>
+<p>列出process來看一下，瞭解這個container在跑哪些東西 <img src="/uploads/kLEqSkb.png" /></p>
+<p>確認一下我們rancher persistent的內容，的確也是k3s的data，所以這個rancher server的container image應該就是基於k3s延伸的應用。 <img src="/uploads/uF7adPy.png" /></p>
+<p>那我們就回到ui上操作import，因為cluster非各大雲端，所以選擇的為Generic <img src="/uploads/1ZGNRBL.png" /></p>
+<p>照著指示的部分操作在原本的cluster上 <img src="/uploads/zOCqymQ.png" /> <img src="/uploads/lRznZ54.png" /></p>
+<p>觀察cattle-system直到agent佈署完成 <img src="/uploads/4Kq9shN.png" /></p>
+<p>回到ui點選我們的叢集，已經可以看到精美的dashboard囉 <img src="/uploads/n2i6SL6.png" /></p>
+<p>右上角可以下載kubeconfig/import yaml/或直接使用kubectl shell，有時候還蠻方便的 <img src="/uploads/7BtqA7F.png" /></p>
+<p>左下的cluster-tools中也有針對這個dashbaord功能所需要的套件安裝指引 <img src="/uploads/D4OxCK6.png" /></p>
+<p>快速安裝了個monitoring來試試 <img src="/uploads/R1lTKe0.png" /></p>
+<p>看起來就也是基於prometheus-operator的佈署，但是是rancher版本的 <img src="/uploads/bNkCnLl.png" /></p>
+<p>佈署完後回到dashboard頁面上來看，可以看到rancher ui上啟用了monitoring的圖表了 <img src="/uploads/dReZ6nn.png" /></p>
+<p>也能夠打開grafana直接觀看，非常方便 <img src="/uploads/IT0tjrI.png" /></p>
+<p>還有App &amp; Market Place這邊也能幫助佈署許多應用 <img src="/uploads/FGFN95R.png" /></p>
 <p>一日體驗就到這邊啦，Rancher就像是一個幫你打點好很多東西的大幫手，從cluster的管理、身分管理、監控、快速佈署......非常的多元。</p>
 <h2 id="閒聊">閒聊</h2>
 <p>平常我自己很少使用rancher，但每次安裝確實都感覺得出他的方便性，但我自己總覺得既然要用rancher來做管理，不如一開始就把它打造成RKE，後續Maintain/Upgrade就follow racher的腳步路應該可以比較順一點~</p>
@@ -319,7 +319,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -28,14 +28,14 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day02，先來建個開發資料庫好了。 正文 預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/lHvXxe0.png">
-<meta property="og:image" content="https://i.imgur.com/SUJ48o3.png">
+<meta property="og:image" content="http://example.com/uploads/lHvXxe0.png">
+<meta property="og:image" content="http://example.com/uploads/SUJ48o3.png">
 <meta property="article:published_time" content="2021-09-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T11:29:48.854Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.892Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/lHvXxe0.png">
+<meta name="twitter:image" content="http://example.com/uploads/lHvXxe0.png">
 
 
 <link rel="canonical" href="http://example.com/2021/09/02/ithome-13th-day02/">
@@ -219,7 +219,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:29:48" itemprop="dateModified" datetime="2021-11-16T19:29:48+08:00">2021-11-16</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -234,10 +234,10 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="day02先來建個開發資料庫好了">Day02，先來建個開發資料庫好了。</h1>
 <h2 id="正文">正文</h2>
-<p>預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。 <span id="more"></span> 這邊是直接使用<a target="_blank" rel="noopener" href="https://github.com/bitnami/bitnami-docker-postgresql">bitnami</a>包好的image，沒有做什麼特別的調整，使用的docker-compose檔案配置如下： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">  postgresql:</span><br><span class="line">    image: docker.io/bitnami/postgresql:13</span><br><span class="line">    ports:</span><br><span class="line">      - &#x27;5555:5432&#x27;</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x27;/volume1/homes/pg_data:/bitnami/postgresql&#x27;</span><br><span class="line">    restart: always</span><br><span class="line">    user: &#x27;1026&#x27;</span><br><span class="line">    environment:</span><br><span class="line">      - POSTGRES_USERNAME=postgres</span><br><span class="line">      - POSTGRES_PASSWORD=**********</span><br><span class="line">      - POSTGRES_REPLICATION_MODE=master</span><br></pre></td></tr></table></figure> bitnami範本的image，預設運行的使用者都是1001(rootless)，這邊切換成我的NAS上的使用者1026，目錄的部分也需要調整為相對應的權限。 <img src="https://i.imgur.com/lHvXxe0.png" /></p>
+<p>預計會用到一個資料庫提供給後端API使用，先來在家用NAS上用container來建立一個PostgreSQL的資料庫做為開發環境的測試資料庫。 <span id="more"></span> 這邊是直接使用<a target="_blank" rel="noopener" href="https://github.com/bitnami/bitnami-docker-postgresql">bitnami</a>包好的image，沒有做什麼特別的調整，使用的docker-compose檔案配置如下： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">  postgresql:</span><br><span class="line">    image: docker.io/bitnami/postgresql:13</span><br><span class="line">    ports:</span><br><span class="line">      - &#x27;5555:5432&#x27;</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x27;/volume1/homes/pg_data:/bitnami/postgresql&#x27;</span><br><span class="line">    restart: always</span><br><span class="line">    user: &#x27;1026&#x27;</span><br><span class="line">    environment:</span><br><span class="line">      - POSTGRES_USERNAME=postgres</span><br><span class="line">      - POSTGRES_PASSWORD=**********</span><br><span class="line">      - POSTGRES_REPLICATION_MODE=master</span><br></pre></td></tr></table></figure> bitnami範本的image，預設運行的使用者都是1001(rootless)，這邊切換成我的NAS上的使用者1026，目錄的部分也需要調整為相對應的權限。 <img src="/uploads/lHvXxe0.png" /></p>
 <p>再來進去container裡面做create database與指定database owner。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it --user root 2b6f sh</span><br><span class="line">psql -U postgres</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 輸入密碼</span></span></span><br><span class="line">create database homelab_blog ;</span><br><span class="line">create user homelab030;</span><br><span class="line">alter role homelab030 with password &#x27;********&#x27;;</span><br><span class="line">grant all privileges on database homelab_blog to homelab030;</span><br></pre></td></tr></table></figure>
-<p>喵一下目前database，退出。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\l</span><br><span class="line">\q</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/SUJ48o3.png" /></p>
+<p>喵一下目前database，退出。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\l</span><br><span class="line">\q</span><br></pre></td></tr></table></figure> <img src="/uploads/SUJ48o3.png" /></p>
 <p>明天就可以來處理Model相關的事情了。</p>
 <h2 id="閒聊">閒聊</h2>
 <p>這幾年來docker/container的興起，在用自己的電腦測試或開發串接一些open source的服務，相對來說都變得輕鬆許多，而且電腦也不會像過去一樣因安裝而弄得亂七八糟。 &gt; 題外話聊一下最近docker的授權有所異動，其中影響比較大的會是在<a target="_blank" rel="noopener" href="https://www.docker.com/blog/updating-product-subscriptions/?fbclid=IwAR2y_QqM-Gz94VtrKdYgtc4uXK6flaZhDAZgifBgrEe_dCTC5liExYE7MbI">docker desktop</a>這個tool上，大家要記得去follow、了解一下規則避免侵權唷~</p>
@@ -286,7 +286,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

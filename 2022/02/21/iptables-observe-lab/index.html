@@ -28,30 +28,30 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="一直以來對iptables都不是很熟悉，無聊做個kubernetes iptables為主的觀察紀錄小LAB，主要記錄一下當一般普通的服務在佈署時iptables如何增長(順便當作收心)">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/shGJeav.png">
-<meta property="og:image" content="https://i.imgur.com/8PxUyTJ.png">
-<meta property="og:image" content="https://i.imgur.com/W4UzXuD.png">
-<meta property="og:image" content="https://i.imgur.com/cyzVVrH.png">
-<meta property="og:image" content="https://i.imgur.com/XBu8ML7.png">
-<meta property="og:image" content="https://i.imgur.com/6hi86s0.png">
-<meta property="og:image" content="https://i.imgur.com/keW2FOp.png">
-<meta property="og:image" content="https://i.imgur.com/mZuCcw1.png">
-<meta property="og:image" content="https://i.imgur.com/8PmwGQS.png">
-<meta property="og:image" content="https://i.imgur.com/U8Gy7gj.png">
-<meta property="og:image" content="https://i.imgur.com/37DoxPT.png">
-<meta property="og:image" content="https://i.imgur.com/2nSdERs.png">
-<meta property="og:image" content="https://i.imgur.com/7IzMs0O.png">
-<meta property="og:image" content="https://i.imgur.com/RKVRYMy.png">
-<meta property="og:image" content="https://i.imgur.com/U17TstM.png">
-<meta property="og:image" content="https://i.imgur.com/yhs7HcB.png">
-<meta property="og:image" content="https://i.imgur.com/Ctgv0kN.png">
+<meta property="og:image" content="http://example.com/uploads/shGJeav.png">
+<meta property="og:image" content="http://example.com/uploads/8PxUyTJ.png">
+<meta property="og:image" content="http://example.com/uploads/W4UzXuD.png">
+<meta property="og:image" content="http://example.com/uploads/cyzVVrH.png">
+<meta property="og:image" content="http://example.com/uploads/XBu8ML7.png">
+<meta property="og:image" content="http://example.com/uploads/6hi86s0.png">
+<meta property="og:image" content="http://example.com/uploads/keW2FOp.png">
+<meta property="og:image" content="http://example.com/uploads/mZuCcw1.png">
+<meta property="og:image" content="http://example.com/uploads/8PmwGQS.png">
+<meta property="og:image" content="http://example.com/uploads/U8Gy7gj.png">
+<meta property="og:image" content="http://example.com/uploads/37DoxPT.png">
+<meta property="og:image" content="http://example.com/uploads/2nSdERs.png">
+<meta property="og:image" content="http://example.com/uploads/7IzMs0O.png">
+<meta property="og:image" content="http://example.com/uploads/RKVRYMy.png">
+<meta property="og:image" content="http://example.com/uploads/U17TstM.png">
+<meta property="og:image" content="http://example.com/uploads/yhs7HcB.png">
+<meta property="og:image" content="http://example.com/uploads/Ctgv0kN.png">
 <meta property="article:published_time" content="2022-02-21T15:01:02.000Z">
-<meta property="article:modified_time" content="2022-02-21T15:11:46.187Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.891Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="iptables">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/shGJeav.png">
+<meta name="twitter:image" content="http://example.com/uploads/shGJeav.png">
 
 
 <link rel="canonical" href="http://example.com/2022/02/21/iptables-observe-lab/">
@@ -227,10 +227,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-02-21 23:01:02 / Modified: 23:11:46" itemprop="dateCreated datePublished" datetime="2022-02-21T23:01:02+08:00">2022-02-21</time>
+      <time title="Created: 2022-02-21 23:01:02" itemprop="dateCreated datePublished" datetime="2022-02-21T23:01:02+08:00">2022-02-21</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
+      </span>
 
   
 </div>
@@ -251,12 +257,12 @@
 <li>CRI: containerd://1.5.5</li>
 <li>Kube-proxy mode: iptables</li>
 </ul>
-<p><img src="https://i.imgur.com/shGJeav.png" /></p>
+<p><img src="/uploads/shGJeav.png" /></p>
 <blockquote>
 <p>這裡的master沒有taint是屬於能夠任意scheduled節點，不過主次還是以worker node iptables-rule觀察為主</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables-save &gt; node01.txt</span><br><span class="line">iptables-save | wc -l</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/8PxUyTJ.png" /></p>
+<p><img src="/uploads/8PxUyTJ.png" /></p>
 <h2 id="deployment">deployment</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create deployment lab00 --image=nginx --replicas=1 </span><br></pre></td></tr></table></figure>
 <ol type="1">
@@ -266,15 +272,15 @@
 <ul>
 <li>(pod在自己身上)：規則有增加</li>
 </ul>
-<p><img src="https://i.imgur.com/W4UzXuD.png" /></p>
-<p>觀察起來主要就是在forward chain底下的any -&gt; cali+ &amp; cali+ -&gt;any有新增rules(沒有理解錯的話應該是針對由calico cni/interface產出的pod ip協助其與host或其他進行轉發的功能) <img src="https://i.imgur.com/cyzVVrH.png" /></p>
-<p>分別新增以cali84691b5c14a命名的chain rules <img src="https://i.imgur.com/XBu8ML7.png" /></p>
-<p><img src="https://i.imgur.com/6hi86s0.png" /></p>
+<p><img src="/uploads/W4UzXuD.png" /></p>
+<p>觀察起來主要就是在forward chain底下的any -&gt; cali+ &amp; cali+ -&gt;any有新增rules(沒有理解錯的話應該是針對由calico cni/interface產出的pod ip協助其與host或其他進行轉發的功能) <img src="/uploads/cyzVVrH.png" /></p>
+<p>分別新增以cali84691b5c14a命名的chain rules <img src="/uploads/XBu8ML7.png" /></p>
+<p><img src="/uploads/6hi86s0.png" /></p>
 <ul>
 <li>(pod在別人身上)：沒有看到新增的規則</li>
 </ul>
-<p><img src="https://i.imgur.com/keW2FOp.png" /></p>
-<p><img src="https://i.imgur.com/mZuCcw1.png" /></p>
+<p><img src="/uploads/keW2FOp.png" /></p>
+<p><img src="/uploads/mZuCcw1.png" /></p>
 <ol start="2" type="1">
 <li>replica:2</li>
 </ol>
@@ -283,25 +289,25 @@
 <li>(2個pod都在自己身上)： 有看到新增規則(與replica比多一份)</li>
 </ul>
 <p>多了以cali211a2c4f642為主的規則</p>
-<p><img src="https://i.imgur.com/8PmwGQS.png" /></p>
+<p><img src="/uploads/8PmwGQS.png" /></p>
 <h2 id="service">service</h2>
-<p>以兩個replica為主 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deploy lab00 --port=8080 --target-port=80</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/U8Gy7gj.png" /></p>
+<p>以兩個replica為主 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deploy lab00 --port=8080 --target-port=80</span><br></pre></td></tr></table></figure> <img src="/uploads/U8Gy7gj.png" /></p>
 <h3 id="clusterip">ClusterIP</h3>
 <p>與單純只有deployment時相比多了兩個pod ip的 SNAT(masquerade) &amp; DNAT</p>
-<p><img src="https://i.imgur.com/37DoxPT.png" /></p>
+<p><img src="/uploads/37DoxPT.png" /></p>
 <p>針對cluster service的ip+port與endpoint的ip+port進行轉發，並且在多個endpoint時透過random model分配到不同的KUBE-SEP-xxxx rules</p>
-<p><img src="https://i.imgur.com/2nSdERs.png" /></p>
+<p><img src="/uploads/2nSdERs.png" /></p>
 <p>也就是說從service進來的iptabels規則應該會這樣走： KUBE-SERVICES -&gt; KUBE-SVC-XXXX -&gt; KUBE-SEP-XXXX</p>
 <p>用<code>iptables -t nat -L</code>來觀察主要就是這些......</p>
-<p><img src="https://i.imgur.com/7IzMs0O.png" /></p>
+<p><img src="/uploads/7IzMs0O.png" /></p>
 <h3 id="nodeport">NodePort</h3>
 <p>延續前面接著再創建nodeport service</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deploy lab00 --name=lab00-nodeport --type=NodePort --port=8080 --target-port=80</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/RKVRYMy.png" /></p>
+<p><img src="/uploads/RKVRYMy.png" /></p>
 <p>與clusterIP不同的地方應該是前面多了一個KUBE-NODEPORTS的規則</p>
-<p><img src="https://i.imgur.com/U17TstM.png" /> <img src="https://i.imgur.com/yhs7HcB.png" /></p>
+<p><img src="/uploads/U17TstM.png" /> <img src="/uploads/yhs7HcB.png" /></p>
 <p>一樣用<code>iptables -t nat -L</code>來觀察一下與clusterIP不同的地方.......</p>
-<p><img src="https://i.imgur.com/Ctgv0kN.png" /></p>
+<p><img src="/uploads/Ctgv0kN.png" /></p>
 <h2 id="閒聊">閒聊</h2>
 <p>這次就先觀察一些基本的到這裡，之後有空的話應該會再觀察看看no-selector service/headless service/metalLB+Loadbalancer service這三個......(都不熟悉只能觀察了Orz)</p>
 <blockquote>
@@ -353,7 +359,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -28,24 +28,24 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day27，Kubesphere 體驗 正文">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/jgDCEiJ.png">
-<meta property="og:image" content="https://i.imgur.com/hOfxzz2.png">
-<meta property="og:image" content="https://i.imgur.com/gq1qPWQ.png">
-<meta property="og:image" content="https://i.imgur.com/JJ3m8Cc.png">
-<meta property="og:image" content="https://i.imgur.com/zLvDOid.png">
-<meta property="og:image" content="https://i.imgur.com/peHQZBl.png">
-<meta property="og:image" content="https://i.imgur.com/tXo0vMo.png">
-<meta property="og:image" content="https://i.imgur.com/AEPIBQ3.png">
-<meta property="og:image" content="https://i.imgur.com/Ex40kNX.png">
-<meta property="og:image" content="https://i.imgur.com/wUkIAtD.png">
-<meta property="og:image" content="https://i.imgur.com/FDBXxIW.png">
+<meta property="og:image" content="http://example.com/uploads/jgDCEiJ.png">
+<meta property="og:image" content="http://example.com/uploads/hOfxzz2.png">
+<meta property="og:image" content="http://example.com/uploads/gq1qPWQ.png">
+<meta property="og:image" content="http://example.com/uploads/JJ3m8Cc.png">
+<meta property="og:image" content="http://example.com/uploads/zLvDOid.png">
+<meta property="og:image" content="http://example.com/uploads/peHQZBl.png">
+<meta property="og:image" content="http://example.com/uploads/tXo0vMo.png">
+<meta property="og:image" content="http://example.com/uploads/AEPIBQ3.png">
+<meta property="og:image" content="http://example.com/uploads/Ex40kNX.png">
+<meta property="og:image" content="http://example.com/uploads/wUkIAtD.png">
+<meta property="og:image" content="http://example.com/uploads/FDBXxIW.png">
 <meta property="article:published_time" content="2021-09-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-01-06T09:25:56.772Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.932Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/jgDCEiJ.png">
+<meta name="twitter:image" content="http://example.com/uploads/jgDCEiJ.png">
 
 
 <link rel="canonical" href="http://example.com/2021/09/27/ithome-13th-day27/">
@@ -229,7 +229,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-01-06 17:25:56" itemprop="dateModified" datetime="2022-01-06T17:25:56+08:00">2022-01-06</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -245,18 +245,18 @@
         <h1 id="day27kubesphere-體驗">Day27，Kubesphere 體驗</h1>
 <h2 id="正文">正文</h2>
 <span id="more"></span>
-<p>先把nfs-client設定為default storage class <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl patch storageclass nfs-client -p &#x27;&#123;&quot;metadata&quot;: &#123;&quot;annotations&quot;:&#123;&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;&#125;&#125;&#125;&#x27; </span><br></pre></td></tr></table></figure> &gt; 一開始沒有設定default storage class，playbook執行就失敗了 &gt; <img src="https://i.imgur.com/jgDCEiJ.png" /></p>
+<p>先把nfs-client設定為default storage class <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl patch storageclass nfs-client -p &#x27;&#123;&quot;metadata&quot;: &#123;&quot;annotations&quot;:&#123;&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;&#125;&#125;&#125;&#x27; </span><br></pre></td></tr></table></figure> &gt; 一開始沒有設定default storage class，playbook執行就失敗了 &gt; <img src="/uploads/jgDCEiJ.png" /></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.1.1/kubesphere-installer.yaml</span><br><span class="line">   </span><br><span class="line">kubectl apply -f https://github.com/kubesphere/ks-installer/releases/download/v3.1.1/cluster-configuration.yaml</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs ks-installer-54c6bcf76b-vvw2q -n kubesphere-system -f</span><br></pre></td></tr></table></figure>
-<p>裡面的ansible跑一陣子後完成啦，<strong>起始的帳號密碼是固定的並使用nodeport，就不打馬賽克了</strong> <img src="https://i.imgur.com/hOfxzz2.png" /></p>
-<p>被安裝的instances <img src="https://i.imgur.com/gq1qPWQ.png" /> 使用到的pvc <img src="https://i.imgur.com/JJ3m8Cc.png" /></p>
-<p>裝的東西有點多，看一下資源狀況好像又還好，應該是因為還沒在用 <img src="https://i.imgur.com/zLvDOid.png" /></p>
-<p>打開瀏覽器 http://192.168.1.131:30880 ，輸入帳號密碼後會需要修改密碼 <img src="https://i.imgur.com/peHQZBl.png" /></p>
-<p>進入到裡面可以發現跟rancher一樣，有非常精美的dashboard <img src="https://i.imgur.com/tXo0vMo.png" /></p>
-<p>小工具中一樣能使用kubectl shell <img src="https://i.imgur.com/AEPIBQ3.png" /></p>
-<p>預設也就安裝了monitoring tools <img src="https://i.imgur.com/Ex40kNX.png" /></p>
-<p>跟rancher一樣有自己的帳號管理系統 <img src="https://i.imgur.com/wUkIAtD.png" /></p>
-<p>也可以設定專屬於平台的通知 <img src="https://i.imgur.com/FDBXxIW.png" /></p>
+<p>裡面的ansible跑一陣子後完成啦，<strong>起始的帳號密碼是固定的並使用nodeport，就不打馬賽克了</strong> <img src="/uploads/hOfxzz2.png" /></p>
+<p>被安裝的instances <img src="/uploads/gq1qPWQ.png" /> 使用到的pvc <img src="/uploads/JJ3m8Cc.png" /></p>
+<p>裝的東西有點多，看一下資源狀況好像又還好，應該是因為還沒在用 <img src="/uploads/zLvDOid.png" /></p>
+<p>打開瀏覽器 http://192.168.1.131:30880 ，輸入帳號密碼後會需要修改密碼 <img src="/uploads/peHQZBl.png" /></p>
+<p>進入到裡面可以發現跟rancher一樣，有非常精美的dashboard <img src="/uploads/tXo0vMo.png" /></p>
+<p>小工具中一樣能使用kubectl shell <img src="/uploads/AEPIBQ3.png" /></p>
+<p>預設也就安裝了monitoring tools <img src="/uploads/Ex40kNX.png" /></p>
+<p>跟rancher一樣有自己的帳號管理系統 <img src="/uploads/wUkIAtD.png" /></p>
+<p>也可以設定專屬於平台的通知 <img src="/uploads/FDBXxIW.png" /></p>
 <p>再來就是可以從<a target="_blank" rel="noopener" href="https://kubesphere.io/docs/pluggable-components/">官方看到</a>有非常多的plugin能夠enable，文件資源也是非常豐富與複雜,這邊的一日體驗就到這裡，看起來也是一個非常龐大的project呀。</p>
 <h2 id="移除">移除</h2>
 <p>找了一下介面上好像找不到一鍵移除，查了一下官方需要去使用官方提供的<code>kubesphere-delete.sh</code> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/kubesphere/ks-installer/release-3.1/scripts/kubesphere-delete.sh</span><br><span class="line">bash kubesphere-delete.sh</span><br></pre></td></tr></table></figure> 執行了好長一段時間來刪除完，幾乎是所有的resource都被label過需要取消，真是非常龐大的作業。 &gt; 題外話，移除完後我先前安裝的openELB開始不正常，查了一下應該是因為不小心被刪掉了些東西，重新佈署後就正常了(須注意)</p>
@@ -308,7 +308,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

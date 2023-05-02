@@ -28,26 +28,26 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day20，Grafana Loki 不一樣的log選擇 正文 今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK&#x2F;EFK)。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/X3uQjlV.png">
-<meta property="og:image" content="https://i.imgur.com/z93SgL3.png">
-<meta property="og:image" content="https://i.imgur.com/aT25P02.png">
-<meta property="og:image" content="https://i.imgur.com/L0kP75f.png">
-<meta property="og:image" content="https://i.imgur.com/KLyD3t3.png">
-<meta property="og:image" content="https://i.imgur.com/KZMLd1A.png">
-<meta property="og:image" content="https://i.imgur.com/95BZPg5.png">
-<meta property="og:image" content="https://i.imgur.com/3WtpjaL.png">
-<meta property="og:image" content="https://i.imgur.com/7eoxytq.png">
-<meta property="og:image" content="https://i.imgur.com/brJ0k5h.png">
-<meta property="og:image" content="https://i.imgur.com/UlFZ5lP.png">
-<meta property="og:image" content="https://i.imgur.com/jIn4Bch.png">
-<meta property="og:image" content="https://i.imgur.com/1xivZC3.png">
+<meta property="og:image" content="http://example.com/uploads/X3uQjlV.png">
+<meta property="og:image" content="http://example.com/uploads/z93SgL3.png">
+<meta property="og:image" content="http://example.com/uploads/aT25P02.png">
+<meta property="og:image" content="http://example.com/uploads/L0kP75f.png">
+<meta property="og:image" content="http://example.com/uploads/KLyD3t3.png">
+<meta property="og:image" content="http://example.com/uploads/KZMLd1A.png">
+<meta property="og:image" content="http://example.com/uploads/95BZPg5.png">
+<meta property="og:image" content="http://example.com/uploads/3WtpjaL.png">
+<meta property="og:image" content="http://example.com/uploads/7eoxytq.png">
+<meta property="og:image" content="http://example.com/uploads/brJ0k5h.png">
+<meta property="og:image" content="http://example.com/uploads/UlFZ5lP.png">
+<meta property="og:image" content="http://example.com/uploads/jIn4Bch.png">
+<meta property="og:image" content="http://example.com/uploads/1xivZC3.png">
 <meta property="article:published_time" content="2021-09-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-01-06T09:25:33.799Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.903Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/X3uQjlV.png">
+<meta name="twitter:image" content="http://example.com/uploads/X3uQjlV.png">
 
 
 <link rel="canonical" href="http://example.com/2021/09/20/ithome-13th-day20/">
@@ -231,7 +231,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-01-06 17:25:33" itemprop="dateModified" datetime="2022-01-06T17:25:33+08:00">2022-01-06</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -246,22 +246,22 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="day20grafana-loki-不一樣的log選擇">Day20，Grafana Loki 不一樣的log選擇</h1>
 <h2 id="正文">正文</h2>
-<p>今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK/EFK)。 <span id="more"></span> 簡單補充一下官方 loki 架構 <img src="https://i.imgur.com/X3uQjlV.png" /> 其中agent的選擇有 * Promtail * Docker Driver * Fluentd * Fluent Bit * Logstash * Lambda Promtail</p>
-<p>這邊一樣使用Helm安裝 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add grafana https://grafana.github.io/helm-charts</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure> 這邊要安裝的是loki-stack <img src="https://i.imgur.com/z93SgL3.png" /></p>
-<p>loki-stack 是使用dependency chart的方式，所以可以選擇的agent很多種 <img src="https://i.imgur.com/aT25P02.png" /></p>
+<p>今天要安裝的是一套Grafana LAB出產、針對Logging的解決方案Grafana Loki，是一個主打著lightweight的解決方案(比較對象常常是ELK/EFK)。 <span id="more"></span> 簡單補充一下官方 loki 架構 <img src="/uploads/X3uQjlV.png" /> 其中agent的選擇有 * Promtail * Docker Driver * Fluentd * Fluent Bit * Logstash * Lambda Promtail</p>
+<p>這邊一樣使用Helm安裝 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add grafana https://grafana.github.io/helm-charts</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure> 這邊要安裝的是loki-stack <img src="/uploads/z93SgL3.png" /></p>
+<p>loki-stack 是使用dependency chart的方式，所以可以選擇的agent很多種 <img src="/uploads/aT25P02.png" /></p>
 <p>這邊選擇的angent是預設的promtail，一併安裝grafana&amp;prometheus <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">helm install homelab-loki grafana/loki-stack --version 2.4.1 \</span><br><span class="line">--set grafana.enabled=true \</span><br><span class="line">--set prometheus.enabled=true \</span><br><span class="line">--set prometheus.alertmanager.persistentVolume.enabled=false \</span><br><span class="line">--set prometheus.server.persistentVolume.enabled=false \</span><br><span class="line">--set loki.persistence.enabled=true \</span><br><span class="line">--set loki.persistence.storageClassName=nfs-client \</span><br><span class="line">--set loki.persistence.size=30Gi \</span><br><span class="line">--namespace loki</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://i.imgur.com/L0kP75f.png" /> &gt; 安裝的過程跳出不少1.22將棄用的API XD</p>
-<p>安裝完後的長相 <img src="https://i.imgur.com/KLyD3t3.png" /></p>
+<p><img src="/uploads/L0kP75f.png" /> &gt; 安裝的過程跳出不少1.22將棄用的API XD</p>
+<p>安裝完後的長相 <img src="/uploads/KLyD3t3.png" /></p>
 <p>來看一下promtail的config，這邊的scrape_config的設定方式基本就跟prometheus的設定相同，kubernetes_sd_configs指定來源為kubernetes pod</p>
-<p><img src="https://i.imgur.com/KZMLd1A.png" /> 貼在vs code上稍微折疊一下，可以看到一堆relabel的config <img src="https://i.imgur.com/95BZPg5.png" /></p>
+<p><img src="/uploads/KZMLd1A.png" /> 貼在vs code上稍微折疊一下，可以看到一堆relabel的config <img src="/uploads/95BZPg5.png" /></p>
 <p>接著先取得garfana的admin密碼，並使用port-forward的方式導到本機</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get secret --namespace loki homelab-loki-grafana -o jsonpath=&quot;&#123;.data.admin-password&#125;&quot; | base64 --decode ; echo</span><br><span class="line"></span><br><span class="line">kubectl port-forward svc/homelab-loki-grafana 8080:80 -n loki </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/3WtpjaL.png" /></p>
-<p>左邊explore的按鈕點一下，左上的下拉選擇為loki。可以看到這邊與kibana性質非常相像，這邊的查詢則是基於<a target="_blank" rel="noopener" href="https://grafana.com/docs/loki/latest/logql/">LogQL</a>的語法 <img src="https://i.imgur.com/7eoxytq.png" /></p>
-<p>點開Log browser 也有輔助label可以協助search <img src="https://i.imgur.com/brJ0k5h.png" /></p>
-<p>點開help則是有些Cheat Sheet可供參考 <img src="https://i.imgur.com/UlFZ5lP.png" /></p>
-<p>也有query history，能夠再次執行過去的query <img src="https://i.imgur.com/jIn4Bch.png" /></p>
-<p>當然也可以從DashBoard import個quick search dashboard做簡易快速查詢 <img src="https://i.imgur.com/1xivZC3.png" /></p>
+<p><img src="/uploads/3WtpjaL.png" /></p>
+<p>左邊explore的按鈕點一下，左上的下拉選擇為loki。可以看到這邊與kibana性質非常相像，這邊的查詢則是基於<a target="_blank" rel="noopener" href="https://grafana.com/docs/loki/latest/logql/">LogQL</a>的語法 <img src="/uploads/7eoxytq.png" /></p>
+<p>點開Log browser 也有輔助label可以協助search <img src="/uploads/brJ0k5h.png" /></p>
+<p>點開help則是有些Cheat Sheet可供參考 <img src="/uploads/UlFZ5lP.png" /></p>
+<p>也有query history，能夠再次執行過去的query <img src="/uploads/jIn4Bch.png" /></p>
+<p>當然也可以從DashBoard import個quick search dashboard做簡易快速查詢 <img src="/uploads/1xivZC3.png" /></p>
 <h2 id="閒聊">閒聊</h2>
 <p>如果你想把syslog收進loki當然也可以辦到的喔，透過job scrap config去蒐集<code>/var/log/*log</code>之類的，可以在官網上看到相關的設定指引喔。</p>
 
@@ -310,7 +310,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

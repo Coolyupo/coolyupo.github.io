@@ -28,19 +28,19 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="alpine linux dns 行為紀錄 這是一篇在追蹤dns lookup error時衍生出的筆記。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/BOZ2weV.png">
-<meta property="og:image" content="https://i.imgur.com/d0FvHEt.png">
-<meta property="og:image" content="https://i.imgur.com/BOUYGXT.png">
-<meta property="og:image" content="https://i.imgur.com/URGY2Rr.png">
-<meta property="og:image" content="https://i.imgur.com/EUX077i.png">
-<meta property="og:image" content="https://i.imgur.com/VJr0hja.png">
-<meta property="og:image" content="https://i.imgur.com/17Oa9kF.png">
+<meta property="og:image" content="http://example.com/uploads/BOZ2weV.png">
+<meta property="og:image" content="http://example.com/uploads/d0FvHEt.png">
+<meta property="og:image" content="http://example.com/uploads/BOUYGXT.png">
+<meta property="og:image" content="http://example.com/uploads/URGY2Rr.png">
+<meta property="og:image" content="http://example.com/uploads/EUX077i.png">
+<meta property="og:image" content="http://example.com/uploads/VJr0hja.png">
+<meta property="og:image" content="http://example.com/uploads/17Oa9kF.png">
 <meta property="article:published_time" content="2022-07-24T02:52:00.000Z">
-<meta property="article:modified_time" content="2022-11-29T01:36:36.439Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.888Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="alpine">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/BOZ2weV.png">
+<meta name="twitter:image" content="http://example.com/uploads/BOZ2weV.png">
 
 
 <link rel="canonical" href="http://example.com/2022/07/24/alpine-dns/">
@@ -224,7 +224,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-11-29 09:36:36" itemprop="dateModified" datetime="2022-11-29T09:36:36+08:00">2022-11-29</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -247,24 +247,24 @@
 <p>傳統的作業系統(以ubuntu為例)，佈署了一份yaml，並額外指定dns</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">creationTimestamp:</span> <span class="literal">null</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">ubuntu</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ubuntu</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">lab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">command:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sleep</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">1d</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">ubuntu:20.04</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">dnsPolicy:</span> <span class="string">ClusterFirst</span></span><br><span class="line">  <span class="attr">dnsConfig:</span></span><br><span class="line">    <span class="attr">nameservers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">  <span class="attr">restartPolicy:</span> <span class="string">Always</span></span><br><span class="line"><span class="attr">status:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
 <p>進入到container可以從/etc/resolve.conf 看出除了預設的coredns之外也存在另外兩個額外的dns server</p>
-<p><img src="https://i.imgur.com/BOZ2weV.png" /> 過程中我們搭配 <a target="_blank" rel="noopener" href="https://github.com/eldadru/ksniff">ksniff</a> 套件tcpdump來進行驗證查看。</p>
+<p><img src="/uploads/BOZ2weV.png" /> 過程中我們搭配 <a target="_blank" rel="noopener" href="https://github.com/eldadru/ksniff">ksniff</a> 套件tcpdump來進行驗證查看。</p>
 <p><code>kubectl sniff ubuntu -n lab -p</code></p>
-<p><img src="https://i.imgur.com/d0FvHEt.png" /></p>
+<p><img src="/uploads/d0FvHEt.png" /></p>
 <p>在container內執行<code>curl http://nginx.default.svc</code></p>
-<p><img src="https://i.imgur.com/BOUYGXT.png" /></p>
+<p><img src="/uploads/BOUYGXT.png" /></p>
 <p>可以知道在一般的OS的情境下，我們在同一時間只會針對一個dns server進行query(follow search&amp;ndot的行為)。</p>
 <h3 id="alpine-linux">alpine linux</h3>
 <p>接著我們測試在alpine linux上面會如何</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">creationTimestamp:</span> <span class="literal">null</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">alpine</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">alpine</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">lab</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">command:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">sleep</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">1d</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">alpine:3.14</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">alpine</span></span><br><span class="line">    <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">  <span class="attr">dnsPolicy:</span> <span class="string">ClusterFirst</span></span><br><span class="line">  <span class="attr">dnsConfig:</span></span><br><span class="line">    <span class="attr">nameservers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">  <span class="attr">restartPolicy:</span> <span class="string">Always</span></span><br><span class="line"><span class="attr">status:</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/URGY2Rr.png" /></p>
+<p><img src="/uploads/URGY2Rr.png" /></p>
 <p>/etc/resolv.conf 上一樣是會出現3個dns server</p>
 <p><code>kubectl sniff alpine -n lab -p</code></p>
-<p><img src="https://i.imgur.com/EUX077i.png" /></p>
+<p><img src="/uploads/EUX077i.png" /></p>
 <p>一樣在container內執行<code>curl http://nginx.default.svc</code></p>
-<p><img src="https://i.imgur.com/VJr0hja.png" /></p>
+<p><img src="/uploads/VJr0hja.png" /></p>
 <p>可以觀察到在alpine linux當中，針對呼叫一個domain像dns進行呼叫的情境，與傳統OS不同，他會同時像所有的dns server進行詢問，並選擇response最快的作為答案回覆。</p>
 <h3 id="後續探討">後續探討</h3>
-<p>後續針對這些差異在做了一些爬文與servey，了解到這是基於作業系統底層選擇的standard c libray不同所導致的。(image from wiki) <img src="https://i.imgur.com/17Oa9kF.png" /></p>
+<p>後續針對這些差異在做了一些爬文與servey，了解到這是基於作業系統底層選擇的standard c libray不同所導致的。(image from wiki) <img src="/uploads/17Oa9kF.png" /></p>
 <p>一般常見的OS選用的是glibc，但alpine linux為了遵循其small、simple、secure的原則選用的是musl-libc，而DNS行為的差異正是musl-libc與glibc的差異點之一。這邊提供<a target="_blank" rel="noopener" href="https://wiki.musl-libc.org/functional-differences-from-glibc.html">連結</a>給大家參考，就不細討論內容了。</p>
 <h2 id="題外話">題外話</h2>
 <p>這次除了了解不同OS的DNS行為差異外，主要還是在探討時常會遇到DNS解析時，出現NXDomain進而導致呼叫失敗的問題。再去了解了一下NXDomain的<a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc8020">定義</a>後，發現問題看起來是因為自身所在環境IPv6、以及private dns&amp;public dns交錯使用產生的一些問題，然後又因為alpine linux的特性造成的困擾，不過在這邊就不好細講了。</p>
@@ -310,7 +310,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

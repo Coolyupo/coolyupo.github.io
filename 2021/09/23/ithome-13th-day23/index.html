@@ -28,13 +28,13 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day23，替你的Gitlab pipeline 添加點搞事 正文 在前面介紹gitlab-ci的pipeline中我僅僅只用到了build stage作為container image build的動作。 然而在實務上，我們可能還會有許多需要整合的stages單元測試、整合測試、各種佈署細節、各種通報細節以及與gitlab issue、dashboard整合的動作。 這邊我就準備來搞三個">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/9MP63T9.png">
+<meta property="og:image" content="http://example.com/uploads/9MP63T9.png">
 <meta property="article:published_time" content="2021-09-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-16T11:27:58.934Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.889Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/9MP63T9.png">
+<meta name="twitter:image" content="http://example.com/uploads/9MP63T9.png">
 
 
 <link rel="canonical" href="http://example.com/2021/09/23/ithome-13th-day23/">
@@ -218,7 +218,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-16 19:27:58" itemprop="dateModified" datetime="2021-11-16T19:27:58+08:00">2021-11-16</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -240,7 +240,7 @@
 <li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/user/application_security/dast/">DAST</a> - Dynamic Application Security Testing
 <ul>
 <li>這邊也是使用gitlab官方包好的image，不過非EE版本不支援從介面直接新增，所以我們需要去看他的open source並將加入到自己的pipeline當中，而這邊的DAST則是基於<a target="_blank" rel="noopener" href="https://www.zaproxy.org/">ZAP</a>這套開源掃描工具，我們撰寫的方式也很簡單 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">dast</span></span><br><span class="line"><span class="attr">dast:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">dast</span></span><br><span class="line">  <span class="attr">image:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">&quot;$SECURE_ANALYZERS_PREFIX/dast:$DAST_VERSION&quot;</span></span><br><span class="line">  <span class="attr">variables:</span></span><br><span class="line">    <span class="attr">GIT_STRATEGY:</span> <span class="string">none</span></span><br><span class="line">    <span class="attr">DAST_VERSION:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">DAST_MARKDOWN_REPORT:</span> <span class="string">report.md</span></span><br><span class="line">    <span class="attr">SECURE_ANALYZERS_PREFIX:</span> <span class="string">&quot;registry.gitlab.com/gitlab-org/security-products/analyzers&quot;</span></span><br><span class="line">  <span class="attr">allow_failure:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">export</span> <span class="string">DAST_WEBSITE=&quot;https://homelab.gurubear.info/&quot;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/analyze</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">&quot;dast-report&quot;</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gl-dast-report.json</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$DAST_MARKDOWN_REPORT</span></span><br></pre></td></tr></table></figure> &gt; 這邊一樣有大量變數可以參考官方設定，可以輸出的有json、html、markdown</li>
-<li>這邊我就不輸出json改輸出markdown看看了~以下截圖 <img src="https://i.imgur.com/9MP63T9.png" /></li>
+<li>這邊我就不輸出json改輸出markdown看看了~以下截圖 <img src="/uploads/9MP63T9.png" /></li>
 </ul></li>
 </ul>
 <p>本次使用的<a target="_blank" rel="noopener" href="https://gitlab.com/gurubear-ithome-13th/homelabapi/-/pipelines/373074832">repo pipeline</a></p>
@@ -292,7 +292,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

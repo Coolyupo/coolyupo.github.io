@@ -28,16 +28,16 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day07，搭配gitlab-ci執行image auto build 正文 今天要設定gitlab上的專案，讓他們能夠在git commit時自動打包成docker image並存放於gitlab registry。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/GtHaZXi.png">
-<meta property="og:image" content="https://i.imgur.com/Wcy8LJu.png">
-<meta property="og:image" content="https://i.imgur.com/1sCJVC9.png">
-<meta property="og:image" content="https://i.imgur.com/uEbSAmS.png">
+<meta property="og:image" content="http://example.com/uploads/GtHaZXi.png">
+<meta property="og:image" content="http://example.com/uploads/Wcy8LJu.png">
+<meta property="og:image" content="http://example.com/uploads/1sCJVC9.png">
+<meta property="og:image" content="http://example.com/uploads/uEbSAmS.png">
 <meta property="article:published_time" content="2021-09-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-21T06:48:54.518Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.901Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/GtHaZXi.png">
+<meta name="twitter:image" content="http://example.com/uploads/GtHaZXi.png">
 
 
 <link rel="canonical" href="http://example.com/2021/09/07/ithome-13th-day07/">
@@ -221,7 +221,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-21 14:48:54" itemprop="dateModified" datetime="2021-11-21T14:48:54+08:00">2021-11-21</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -238,15 +238,15 @@
 <h2 id="正文">正文</h2>
 <p>今天要設定gitlab上的專案，讓他們能夠在git commit時自動打包成docker image並存放於gitlab registry。 <span id="more"></span> 目前gitlab上面都有提供許多shared runner，舉凡像是一些無關緊要、無機敏性考量的內容，都可以直接透過官方提供的shared runner 來進行pipeline，這次的homelab也會使用這個shared runner 進行auto build的動作。</p>
 <p>反之，如果是一些private repository，有機敏性考量、有對應網路環境限制(如地端自動化佈署等等......)，那就是透過sepcific runners於自己的機器中建置與維護專用的runner，符合當下環境的需求，且不用與陌生人競爭資源，安裝與註冊的流程上面&amp;官網介紹的都算詳細，看大家如何選擇而已。</p>
-<p>gitlab repository左邊選單 <strong>Settings &gt; CI/CD &gt; 展開 Runners</strong>，從圖片上我們可以看到許多shared runners，而runner下方許多藍色的tag則是告知你該runner的使用情境/環境。 <img src="https://i.imgur.com/GtHaZXi.png" /></p>
-<p>下圖是官方所展示的gitlab runner execution flow <img src="https://i.imgur.com/Wcy8LJu.png" /></p>
+<p>gitlab repository左邊選單 <strong>Settings &gt; CI/CD &gt; 展開 Runners</strong>，從圖片上我們可以看到許多shared runners，而runner下方許多藍色的tag則是告知你該runner的使用情境/環境。 <img src="/uploads/GtHaZXi.png" /></p>
+<p>下圖是官方所展示的gitlab runner execution flow <img src="/uploads/Wcy8LJu.png" /></p>
 <p>那如何觸發runner運作呢？就是要搭配.gitlab-ci.yml，當該檔案存在於gitlab repository且內容的撰寫<a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/">符合官方所規範的方式</a>，就可以觸發gitlab runner來工作啦。</p>
 <p>那我這邊就是簡單的修改一下官方範本，撰寫一份.gitlab-ci.yml 如下，使用的是docker in docker(dind)的方式： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker-build:</span><br><span class="line">  image: docker:latest</span><br><span class="line">  stage: build</span><br><span class="line">  services:</span><br><span class="line">    - docker:dind</span><br><span class="line">  before_script:</span><br><span class="line">    - docker login -u &quot;$CI_REGISTRY_USER&quot; -p &quot;$CI_REGISTRY_PASSWORD&quot; $CI_REGISTRY</span><br><span class="line">  script:</span><br><span class="line">    - |</span><br><span class="line">      if [[ &quot;$CI_COMMIT_BRANCH&quot; == &quot;master&quot; ]]; then</span><br><span class="line">        tag=&quot;:dev&quot;</span><br><span class="line">      else</span><br><span class="line">        tag=&quot;:$CI_COMMIT_REF_NAME&quot;</span><br><span class="line">      fi</span><br><span class="line">    - docker build -t &quot;$CI_REGISTRY_IMAGE$&#123;tag&#125;&quot; .</span><br><span class="line">    - docker push &quot;$CI_REGISTRY_IMAGE$&#123;tag&#125;&quot;</span><br><span class="line">  tags:</span><br><span class="line">    - docker</span><br><span class="line">  only:</span><br><span class="line">    - master</span><br><span class="line">    - /^Release-v[0-9]+(?:.[0-9]+)+$/</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>gitlab runner中其實預先定義了許多變數，與當下gitlab的使用者/repo/環境都息息相關，初學者不熟悉有哪些變數可以用的話不妨在runner中執行export將變數輸出看一看，或是花點時間認真閱讀<a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/variables/predefined_variables.html">官方文件</a>看看有哪些是自己需要的。</p>
 </blockquote>
-<p>.gitlab-ci.yml的內容可以搭配左邊選單CI/CD &gt; pipeline &gt; 畫面右上角CI Lint做檢驗。會告訴你語法是否正確，預計如何執行pipeline。 <img src="https://i.imgur.com/1sCJVC9.png" /></p>
-<p>執行的過程，可以點選pipeline查看Console，那這邊的邏輯就是master主線會將image打包成dev 而<code>/^Release-v[0-9]+(?:.[0-9]+)+$/</code>則是只要是這樣的名字就將image如此打包，如下圖所示。 <img src="https://i.imgur.com/uEbSAmS.png" /></p>
+<p>.gitlab-ci.yml的內容可以搭配左邊選單CI/CD &gt; pipeline &gt; 畫面右上角CI Lint做檢驗。會告訴你語法是否正確，預計如何執行pipeline。 <img src="/uploads/1sCJVC9.png" /></p>
+<p>執行的過程，可以點選pipeline查看Console，那這邊的邏輯就是master主線會將image打包成dev 而<code>/^Release-v[0-9]+(?:.[0-9]+)+$/</code>則是只要是這樣的名字就將image如此打包，如下圖所示。 <img src="/uploads/uEbSAmS.png" /></p>
 <p>那這樣子我前幾天寫的兩個應用都完成Auto Build囉，明天可以開始規劃基礎環境建設了。</p>
 <ul>
 <li>https://gitlab.com/gurubear-ithome-13th/homelabapi/-/pipelines</li>
@@ -299,7 +299,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

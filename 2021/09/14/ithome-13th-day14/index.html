@@ -28,22 +28,22 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="Day14，來試試 OpenELB 正文 前面幾個章節有提到Service type LoadBalancer，這個service type在雲端上依賴cloud vendor的loadbalancer得以實作，而在地端想要有同樣的功能體驗則大致上有兩種做法，第一種是透過硬體Loadbalancer串接，且有提供Kubernetes custom controller&#x2F;CRD之類的廠商(ex.">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/UFGe06J.png">
-<meta property="og:image" content="https://i.imgur.com/rubK6Pj.png">
-<meta property="og:image" content="https://i.imgur.com/97cjezS.png">
-<meta property="og:image" content="https://i.imgur.com/hxm2WEf.png">
-<meta property="og:image" content="https://i.imgur.com/W1b12Z4.png">
-<meta property="og:image" content="https://i.imgur.com/Y5QaPz9.png">
-<meta property="og:image" content="https://i.imgur.com/GzKhZo5.png">
-<meta property="og:image" content="https://i.imgur.com/3Yl3Cow.png">
-<meta property="og:image" content="https://i.imgur.com/et4Znw9.png">
+<meta property="og:image" content="http://example.com/uploads/UFGe06J.png">
+<meta property="og:image" content="http://example.com/uploads/rubK6Pj.png">
+<meta property="og:image" content="http://example.com/uploads/97cjezS.png">
+<meta property="og:image" content="http://example.com/uploads/hxm2WEf.png">
+<meta property="og:image" content="http://example.com/uploads/W1b12Z4.png">
+<meta property="og:image" content="http://example.com/uploads/Y5QaPz9.png">
+<meta property="og:image" content="http://example.com/uploads/GzKhZo5.png">
+<meta property="og:image" content="http://example.com/uploads/3Yl3Cow.png">
+<meta property="og:image" content="http://example.com/uploads/et4Znw9.png">
 <meta property="article:published_time" content="2021-09-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-01-06T09:25:05.066Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.942Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="13th_鐵人賽">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/UFGe06J.png">
+<meta name="twitter:image" content="http://example.com/uploads/UFGe06J.png">
 
 
 <link rel="canonical" href="http://example.com/2021/09/14/ithome-13th-day14/">
@@ -227,7 +227,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-01-06 17:25:05" itemprop="dateModified" datetime="2022-01-06T17:25:05+08:00">2022-01-06</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -243,17 +243,17 @@
         <h1 id="day14來試試-openelb">Day14，來試試 OpenELB</h1>
 <h2 id="正文">正文</h2>
 <p>前面幾個章節有提到Service type LoadBalancer，這個service type在雲端上依賴cloud vendor的loadbalancer得以實作，而在地端想要有同樣的功能體驗則大致上有兩種做法，第一種是透過硬體Loadbalancer串接，且有提供Kubernetes custom controller/CRD之類的廠商(ex. <a target="_blank" rel="noopener" href="https://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/v1.5/">F5 BIG-IP</a>)，而另一種則是透過software實作，達成類似情境。 <span id="more"></span> 而我們這裡能選擇就只有後者這種方式(沒有前者的機器)，過去提到這一塊最著名的莫過於<a target="_blank" rel="noopener" href="https://metallb.universe.tf/">MetalLB</a>，也是我工作上常選擇的。但前陣子因緣際會參與了一場線上的meetup，內容是介紹kubesphere的架構，kubesphere內的NLB選擇為<a target="_blank" rel="noopener" href="https://github.com/kubesphere/openelb">OpenELB(PorterLB)</a>，這也讓我心裡想著改天也得來試玩看看。</p>
-<p>進行安裝 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubesphere/porter/master/deploy/porter.yaml</span><br></pre></td></tr></table></figure> 確認porter-system namespace下，有兩個completed、一個running <img src="https://i.imgur.com/UFGe06J.png" /></p>
-<p>當節點存在複數網卡時，需定義Annotation的網卡IP。(單一網卡則不用) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl annotate nodes vm01 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.231&quot;</span><br><span class="line">kubectl annotate nodes vm02 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.232&quot;</span><br><span class="line">kubectl annotate nodes vm03 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.233&quot;</span><br><span class="line">kubectl annotate nodes vm04 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.234&quot;</span><br><span class="line">kubectl annotate nodes vm05 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.235&quot;</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/rubK6Pj.png" /></p>
+<p>進行安裝 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubesphere/porter/master/deploy/porter.yaml</span><br></pre></td></tr></table></figure> 確認porter-system namespace下，有兩個completed、一個running <img src="/uploads/UFGe06J.png" /></p>
+<p>當節點存在複數網卡時，需定義Annotation的網卡IP。(單一網卡則不用) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl annotate nodes vm01 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.231&quot;</span><br><span class="line">kubectl annotate nodes vm02 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.232&quot;</span><br><span class="line">kubectl annotate nodes vm03 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.233&quot;</span><br><span class="line">kubectl annotate nodes vm04 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.234&quot;</span><br><span class="line">kubectl annotate nodes vm05 layer2.porter.kubesphere.io/v1alpha1=&quot;192.168.1.235&quot;</span><br></pre></td></tr></table></figure> <img src="/uploads/rubK6Pj.png" /></p>
 <p>佈署layer2的設定，與IP Pools。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f porter-layer2-eip.yaml</span><br></pre></td></tr></table></figure> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">network.kubesphere.io/v1alpha2</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Eip</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">porter-layer2-eip</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">address:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.240</span><span class="number">-192.168</span><span class="number">.1</span><span class="number">.250</span></span><br><span class="line">  <span class="attr">interface:</span> <span class="string">ens34</span> <span class="comment">##對應server上網卡</span></span><br><span class="line">  <span class="attr">protocol:</span> <span class="string">layer2</span></span><br><span class="line"></span><br></pre></td></tr></table></figure> 快速一個測試用的Nginx <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create ns test</span><br><span class="line">kubectl apply -f test-nginx.yml</span><br></pre></td></tr></table></figure> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-deployment</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">nginx:1.14.2</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test-nginx-svc</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">lb.kubesphere.io/v1alpha1:</span> <span class="string">porter</span></span><br><span class="line">    <span class="attr">protocol.porter.kubesphere.io/v1alpha1:</span> <span class="string">layer2</span></span><br><span class="line">    <span class="attr">eip.porter.kubesphere.io/v1alpha2:</span> <span class="string">porter-layer2-eip</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">http</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="attr">externalTrafficPolicy:</span> <span class="string">Cluster</span></span><br></pre></td></tr></table></figure> 我們這邊設定的externalTrafficPolicy: Cluster，特性上是不會保留Client IP的。 incomming request會進入任一worker節點，透過cluster(kube-proxy轉發至對應pod)</p>
-<p>觀察一下service確認我們拿到了192.168.1.240的ip <img src="https://i.imgur.com/97cjezS.png" /></p>
-<p>打開瀏覽器檢查一下，服務正常 <img src="https://i.imgur.com/hxm2WEf.png" /></p>
-<p>檢查一下log，發現來源IP為10.233系列的，為cluser內的IP，如預期沒有留存到Client IP。 <img src="https://i.imgur.com/W1b12Z4.png" /></p>
-<p>在筆電上試著PING看看192.168.1.240，會發現是由192.168.1.234(vm04)回應 <img src="https://i.imgur.com/Y5QaPz9.png" /></p>
-<p>而<strong>我們的nginx則是在192.168.1.235(vm05)上</strong>。 <img src="https://i.imgur.com/GzKhZo5.png" /></p>
+<p>觀察一下service確認我們拿到了192.168.1.240的ip <img src="/uploads/97cjezS.png" /></p>
+<p>打開瀏覽器檢查一下，服務正常 <img src="/uploads/hxm2WEf.png" /></p>
+<p>檢查一下log，發現來源IP為10.233系列的，為cluser內的IP，如預期沒有留存到Client IP。 <img src="/uploads/W1b12Z4.png" /></p>
+<p>在筆電上試著PING看看192.168.1.240，會發現是由192.168.1.234(vm04)回應 <img src="/uploads/Y5QaPz9.png" /></p>
+<p>而<strong>我們的nginx則是在192.168.1.235(vm05)上</strong>。 <img src="/uploads/GzKhZo5.png" /></p>
 <p>再次將service移除、並重新添加並修改規則為<code>externalTrafficPolicy: local</code>這是能夠保留client IP的方式(實務上我們很多情境皆會要求保留來源IP)，因為這個規則不會透過kube-proxy轉發，而是直接流向host pod，也就是說incomming request會流入能夠回應的pod的節點(這裡指的就是nginx所在節點)。</p>
-<p>佈署完後一樣是取得192.168.1.240的IP，使用ping呼叫，發現就是由192.168.1.235(vm05進行回傳)，與預期一致。 <img src="https://i.imgur.com/3Yl3Cow.png" /></p>
-<p>檢查nginx log，確認可以看到log真正的client ip(192.168.1.134)了 <img src="https://i.imgur.com/et4Znw9.png" /></p>
+<p>佈署完後一樣是取得192.168.1.240的IP，使用ping呼叫，發現就是由192.168.1.235(vm05進行回傳)，與預期一致。 <img src="/uploads/3Yl3Cow.png" /></p>
+<p>檢查nginx log，確認可以看到log真正的client ip(192.168.1.134)了 <img src="/uploads/et4Znw9.png" /></p>
 <p>明天就可以來用用ingress controller將服務正式hosting起來了。</p>
 <h2 id="閒聊">閒聊</h2>
 <p>官網有強調要打開kube-proxy IPVS strict ARP，這個部分倒是與MetalLB一致，但我這次用的是iptables，所以不管好像也沒差。初步看起來的感覺是openELB應該是更lightweight的選擇(雖然我認為MetalLB也是十分輕巧、設定簡單)，不過還用的很少需要再觀察觀察~</p>
@@ -303,7 +303,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

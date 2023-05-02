@@ -28,15 +28,15 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="2021&#x2F;11&#x2F;17更新，docker desktop前陣子已調整授權，有打算使用的需要去看一下唷https:&#x2F;&#x2F;www.docker.com&#x2F;blog&#x2F;updating-product-subscriptions&#x2F;?fbclid&#x3D;IwAR2y_QqM-Gz94VtrKdYgtc4uXK6flaZhDAZgifBgrEe_dCTC5liExYE7MbI">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/ikzv9Vo.png">
-<meta property="og:image" content="https://i.imgur.com/V0OF3jR.png">
+<meta property="og:image" content="http://example.com/uploads/ikzv9Vo.png">
+<meta property="og:image" content="http://example.com/uploads/V0OF3jR.png">
 <meta property="article:published_time" content="2020-04-03T03:17:00.000Z">
-<meta property="article:modified_time" content="2021-11-21T06:51:48.839Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.942Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="wsl1">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/ikzv9Vo.png">
+<meta name="twitter:image" content="http://example.com/uploads/ikzv9Vo.png">
 
 
 <link rel="canonical" href="http://example.com/2020/04/03/wsl1-docker-desktop/">
@@ -220,7 +220,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-21 14:51:48" itemprop="dateModified" datetime="2021-11-21T14:51:48+08:00">2021-11-21</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -240,13 +240,13 @@
 <p>Enable hyper-v <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dism.exe /Online /Enable-Feature:Microsoft-Hyper-V-All</span><br><span class="line">bcdedit /set hypervisorlaunchtype auto</span><br></pre></td></tr></table></figure></p>
 <p>OS: docker-win10-pro <a target="_blank" rel="noopener" href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">DownLoad-Link</a></p>
 <p>安裝完畢調整設定</p>
-<p><img src="https://i.imgur.com/ikzv9Vo.png" /></p>
+<p><img src="/uploads/ikzv9Vo.png" /></p>
 <p>打開WSL(<a target="_blank" rel="noopener" href="https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly">參考連結</a> 照著做下面這些安裝docker-ce)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Update the apt package list.</span></span></span><br><span class="line">sudo apt-get update -y</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Install Docker&#x27;s package dependencies.</span></span></span><br><span class="line">sudo apt-get install -y \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Download and add Docker&#x27;s official public PGP key.</span></span></span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Verify the fingerprint.</span></span></span><br><span class="line">sudo apt-key fingerprint 0EBFCD88</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Add the `stable` channel&#x27;s Docker upstream repository.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment">## If you want to live on the edge, you can change &quot;stable&quot; below to &quot;test&quot; or</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># &quot;nightly&quot;. I highly recommend sticking with stable!</span></span></span><br><span class="line">sudo add-apt-repository \</span><br><span class="line">   &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span><br><span class="line"><span class="meta">   $</span><span class="bash">(lsb_release -cs) \</span></span><br><span class="line"><span class="bash">   stable<span class="string">&quot;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"># Update the apt package list (for the new apt repo).</span></span></span><br><span class="line">sudo apt-get update -y</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"># Install the latest version of Docker CE.</span></span></span><br><span class="line">sudo apt-get install -y docker-ce</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"># Allow your user to access the Docker CLI without needing root access.</span></span></span><br><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
 <p>先去下載docker-compose</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
 <p>最後編輯寫入docker_host設定至.zshrc &gt; 此處使用的是zsh shell 如果是bash則要寫入.bashrc諸如此類......目前看起來wsl不會預設載入/etc/profile 所以只能寫在這 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;export DOCKER_HOST=tcp://localhost:2375&quot; &gt;&gt; ~/.zshrc</span><br></pre></td></tr></table></figure> 重開你的WSL</p>
-<p><img src="https://i.imgur.com/V0OF3jR.png" /></p>
+<p><img src="/uploads/V0OF3jR.png" /></p>
 
     </div>
 
@@ -293,7 +293,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

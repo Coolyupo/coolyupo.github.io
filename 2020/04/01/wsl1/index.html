@@ -28,23 +28,23 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="wsl1  這邊沒有選擇使用wsl2，因為這邊的主工作環境還是windows居多，若使用wsl2 hyper-v會需要開啟，且virtualbox等會需要安裝相依版本在wsl2內(尚未確定是否會產生其他問題)">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/kMSDLFN.png">
-<meta property="og:image" content="https://i.imgur.com/aqoxrPp.png">
-<meta property="og:image" content="https://i.imgur.com/nEJanFd.png">
-<meta property="og:image" content="https://i.imgur.com/gtsXQwI.png">
-<meta property="og:image" content="https://i.imgur.com/wFJwIGz.png">
-<meta property="og:image" content="https://i.imgur.com/ienqd48.png">
-<meta property="og:image" content="https://i.imgur.com/K3sh7Pj.png">
-<meta property="og:image" content="https://i.imgur.com/2gatuVg.png">
-<meta property="og:image" content="https://i.imgur.com/OxnFlAN.png">
+<meta property="og:image" content="http://example.com/uploads/kMSDLFN.png">
+<meta property="og:image" content="http://example.com/uploads/aqoxrPp.png">
+<meta property="og:image" content="http://example.com/uploads/nEJanFd.png">
+<meta property="og:image" content="http://example.com/uploads/gtsXQwI.png">
+<meta property="og:image" content="http://example.com/uploads/wFJwIGz.png">
+<meta property="og:image" content="http://example.com/uploads/ienqd48.png">
+<meta property="og:image" content="http://example.com/uploads/K3sh7Pj.png">
+<meta property="og:image" content="http://example.com/uploads/2gatuVg.png">
+<meta property="og:image" content="http://example.com/uploads/OxnFlAN.png">
 <meta property="article:published_time" content="2020-04-01T03:17:00.000Z">
-<meta property="article:modified_time" content="2021-11-21T06:52:33.807Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.884Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="wsl1">
 <meta property="article:tag" content="virtualbox">
 <meta property="article:tag" content="vagrant">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/kMSDLFN.png">
+<meta name="twitter:image" content="http://example.com/uploads/kMSDLFN.png">
 
 
 <link rel="canonical" href="http://example.com/2020/04/01/wsl1/">
@@ -228,7 +228,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-21 14:52:33" itemprop="dateModified" datetime="2021-11-21T14:52:33+08:00">2021-11-21</time>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
       </span>
 
   
@@ -245,22 +245,22 @@
 <blockquote>
 <p>這邊沒有選擇使用wsl2，因為這邊的主工作環境還是windows居多，若使用wsl2 hyper-v會需要開啟，且virtualbox等會需要安裝相依版本在wsl2內(尚未確定是否會產生其他問題) <span id="more"></span> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</span><br></pre></td></tr></table></figure> 重開機 -&gt; Microsoft Store -&gt; 選擇作業系統</p>
 </blockquote>
-<p><img src="https://i.imgur.com/kMSDLFN.png" /></p>
+<p><img src="/uploads/kMSDLFN.png" /></p>
 <h2 id="安裝-virtualbox-5.2">安裝 VirtualBox 5.2</h2>
 <p><a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/Download_Old_Builds_5_2">Donwload Link</a></p>
-<p><img src="https://i.imgur.com/aqoxrPp.png" /></p>
-<p><img src="https://i.imgur.com/nEJanFd.png" /></p>
-<p>可能會需要關掉hyper-v &gt; 若要使用docker-for-windows 要自行切換 &gt; 這邊要使用vagrant+virtualbox需關閉 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line"></span><br><span class="line">dism.exe /Online /Disable-Feature:Microsoft-Hyper-V</span><br><span class="line"></span><br><span class="line">bcdedit /set hypervisorlaunchtype off</span><br></pre></td></tr></table></figure> 要給wsl的vagrant使用，所以設定環境變數在系統中(根據安裝路徑) <img src="https://i.imgur.com/gtsXQwI.png" /></p>
+<p><img src="/uploads/aqoxrPp.png" /></p>
+<p><img src="/uploads/nEJanFd.png" /></p>
+<p>可能會需要關掉hyper-v &gt; 若要使用docker-for-windows 要自行切換 &gt; 這邊要使用vagrant+virtualbox需關閉 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line"></span><br><span class="line">dism.exe /Online /Disable-Feature:Microsoft-Hyper-V</span><br><span class="line"></span><br><span class="line">bcdedit /set hypervisorlaunchtype off</span><br></pre></td></tr></table></figure> 要給wsl的vagrant使用，所以設定環境變數在系統中(根據安裝路徑) <img src="/uploads/gtsXQwI.png" /></p>
 <h2 id="vagrant">vagrant</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># wsl</span></span></span><br><span class="line">sudo apt install vagrant</span><br></pre></td></tr></table></figure>
 <p>本篇的vagrant組合目錄需要位於windows的目錄下</p>
-<p><img src="https://i.imgur.com/wFJwIGz.png" /></p>
-<p><img src="https://i.imgur.com/ienqd48.png" /></p>
+<p><img src="/uploads/wFJwIGz.png" /></p>
+<p><img src="/uploads/ienqd48.png" /></p>
 <p>使用vagrant指令時要添加vagrant的wsl變數</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># wsl</span></span></span><br><span class="line">export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS=&quot;1&quot;</span><br><span class="line">vagrant up</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/K3sh7Pj.png" /></p>
-<p><img src="https://i.imgur.com/2gatuVg.png" /></p>
-<p><img src="https://i.imgur.com/OxnFlAN.png" /></p>
+<p><img src="/uploads/K3sh7Pj.png" /></p>
+<p><img src="/uploads/2gatuVg.png" /></p>
+<p><img src="/uploads/OxnFlAN.png" /></p>
 <h2 id="others">others</h2>
 <p>開回hyper-v <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># powershell</span></span></span><br><span class="line">dism.exe /Online /Enable-Feature:Microsoft-Hyper-V-All</span><br><span class="line">bcdedit /set hypervisorlaunchtype auto</span><br></pre></td></tr></table></figure></p>
 <h2 id="ref">REF</h2>
@@ -316,7 +316,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -28,28 +28,28 @@
 <meta property="og:site_name" content="阿熊的日常筆記">
 <meta property="og:description" content="RKE &amp; RKE2 體驗日記 這篇只是一個homelab體驗日記(筆記)。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/U95FDDS.png">
-<meta property="og:image" content="https://i.imgur.com/FCbL9QN.png">
-<meta property="og:image" content="https://i.imgur.com/HgirCsf.png">
-<meta property="og:image" content="https://i.imgur.com/gAZKzcV.png">
-<meta property="og:image" content="https://i.imgur.com/zSq7vIF.png">
-<meta property="og:image" content="https://i.imgur.com/bqO8OIS.png">
-<meta property="og:image" content="https://i.imgur.com/bblvUdc.png">
-<meta property="og:image" content="https://i.imgur.com/nkmc2ej.png">
-<meta property="og:image" content="https://i.imgur.com/nKJ3yxB.png">
-<meta property="og:image" content="https://i.imgur.com/5lizKQs.png">
-<meta property="og:image" content="https://i.imgur.com/QpFHZO3.png">
-<meta property="og:image" content="https://i.imgur.com/DfsHCRg.png">
-<meta property="og:image" content="https://i.imgur.com/mbffo9L.png">
-<meta property="og:image" content="https://i.imgur.com/1YbHssF.png">
+<meta property="og:image" content="http://example.com/uploads/U95FDDS.png">
+<meta property="og:image" content="http://example.com/uploads/FCbL9QN.png">
+<meta property="og:image" content="http://example.com/uploads/HgirCsf.png">
+<meta property="og:image" content="http://example.com/uploads/gAZKzcV.png">
+<meta property="og:image" content="http://example.com/uploads/zSq7vIF.png">
+<meta property="og:image" content="http://example.com/uploads/bqO8OIS.png">
+<meta property="og:image" content="http://example.com/uploads/bblvUdc.png">
+<meta property="og:image" content="http://example.com/uploads/nkmc2ej.png">
+<meta property="og:image" content="http://example.com/uploads/nKJ3yxB.png">
+<meta property="og:image" content="http://example.com/uploads/5lizKQs.png">
+<meta property="og:image" content="http://example.com/uploads/QpFHZO3.png">
+<meta property="og:image" content="http://example.com/uploads/DfsHCRg.png">
+<meta property="og:image" content="http://example.com/uploads/mbffo9L.png">
+<meta property="og:image" content="http://example.com/uploads/1YbHssF.png">
 <meta property="article:published_time" content="2022-02-23T12:34:16.000Z">
-<meta property="article:modified_time" content="2022-02-23T12:37:11.268Z">
+<meta property="article:modified_time" content="2023-05-02T11:53:36.884Z">
 <meta property="article:author" content="GuruBear">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="RKE">
 <meta property="article:tag" content="RKE2">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/U95FDDS.png">
+<meta name="twitter:image" content="http://example.com/uploads/U95FDDS.png">
 
 
 <link rel="canonical" href="http://example.com/2022/02/23/rke-rke2/">
@@ -225,10 +225,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-02-23 20:34:16 / Modified: 20:37:11" itemprop="dateCreated datePublished" datetime="2022-02-23T20:34:16+08:00">2022-02-23</time>
+      <time title="Created: 2022-02-23 20:34:16" itemprop="dateCreated datePublished" datetime="2022-02-23T20:34:16+08:00">2022-02-23</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
+      </span>
 
   
 </div>
@@ -287,31 +293,31 @@
 </tbody>
 </table>
 <h3 id="node">node</h3>
-<p>因為rke是基於docker進行佈署的 每台node上先安裝docker，並設定預計登入的user在docker group當中(使其不需提權可以直接叫用docker cli) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -aG docker coolyupo</span><br></pre></td></tr></table></figure> <img src="https://i.imgur.com/U95FDDS.png" /></p>
+<p>因為rke是基於docker進行佈署的 每台node上先安裝docker，並設定預計登入的user在docker group當中(使其不需提權可以直接叫用docker cli) <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -aG docker coolyupo</span><br></pre></td></tr></table></figure> <img src="/uploads/U95FDDS.png" /></p>
 <p>開啟允許linux bridge呼叫iptables的系統參數</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;net.bridge.bridge-nf-call-iptables=1&quot; | sudo tee -a /etc/sysctl.d/99-k8s.conf</span><br><span class="line">sudo sysctl -p /etc/sysctl.d/99-k8s.conf</span><br></pre></td></tr></table></figure>
 <p>停用swap(還要再檢查一下/etc/fstab 有沒有取消swap的mount並免重開後又跑出來)</p>
-<p><img src="https://i.imgur.com/FCbL9QN.png" /></p>
+<p><img src="/uploads/FCbL9QN.png" /></p>
 <h3 id="operator">operator</h3>
 <p>安裝rke</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/rancher/rke/releases/download/v1.3.7/rke_linux-amd64</span><br><span class="line">mv rke_linux-amd64 rke</span><br><span class="line">chmod +x rke</span><br><span class="line">sudo mv rke /usr/local/bin</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/HgirCsf.png" /></p>
+<p><img src="/uploads/HgirCsf.png" /></p>
 <p>設定到各台上的ssh憑證 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line">ssh-copy-id 192.168.46.132</span><br><span class="line">ssh-copy-id 192.168.46.133</span><br><span class="line">ssh-copy-id 192.168.46.134</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://i.imgur.com/gAZKzcV.png" /></p>
+<p><img src="/uploads/gAZKzcV.png" /></p>
 <p>透過rke config -p 互動式輸入產出預計佈署的cluster.yml</p>
-<p><img src="https://i.imgur.com/zSq7vIF.png" /></p>
-<p><img src="https://i.imgur.com/bqO8OIS.png" /></p>
+<p><img src="/uploads/zSq7vIF.png" /></p>
+<p><img src="/uploads/bqO8OIS.png" /></p>
 <p>可以得到一個蠻完整的cluster.yml，有很多地方Kubernetes component能夠設定(也包含要去哪裡提取image)，所以可以<a target="_blank" rel="noopener" href="https://rancher.com/docs/rke/latest/en/config-options/">參考官方</a>添加自己想要的設定細節</p>
 <p>接著執行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rke up</span><br></pre></td></tr></table></figure>
 <p>就可以看到開始佈署了</p>
-<p><img src="https://i.imgur.com/bblvUdc.png" /></p>
+<p><img src="/uploads/bblvUdc.png" /></p>
 <p>佈署完成後就可以看到多了兩個檔案，一個是使用rke佈署的cluster state、另一個則是kubectl使用的kubeconfig。</p>
-<p><img src="https://i.imgur.com/nkmc2ej.png" /></p>
-<p><img src="https://i.imgur.com/nKJ3yxB.png" /></p>
+<p><img src="/uploads/nkmc2ej.png" /></p>
+<p><img src="/uploads/nKJ3yxB.png" /></p>
 <p>與kubeadm方式不同，在kube-system內沒有看到相關核心元件的static pod，東找西找了一下發現是在host上用docker run rancher/hyperkube:v1.22.6-rancher1 起來的(並指定network=host)</p>
-<p><img src="https://i.imgur.com/5lizKQs.png" /></p>
-<p>做一下inspect後可以看到entrypoint也有相關的參數設定，應該是根據一開始設定的cluster.yml有關 <img src="https://i.imgur.com/QpFHZO3.png" /></p>
+<p><img src="/uploads/5lizKQs.png" /></p>
+<p>做一下inspect後可以看到entrypoint也有相關的參數設定，應該是根據一開始設定的cluster.yml有關 <img src="/uploads/QpFHZO3.png" /></p>
 <h2 id="rke2">RKE2</h2>
 <p>使用的環境就是：</p>
 <table>
@@ -365,7 +371,7 @@
 <p>原本應該是應該手動建立/etc/rancher/rke2/config.yaml，去設定相關的token&amp;tls-san，ex:</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">token:</span> <span class="string">my-shared-secret</span></span><br><span class="line"><span class="attr">tls-san:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">my-kubernetes-domain.com</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">another-kubernetes-domain.com</span></span><br></pre></td></tr></table></figure>
 <p>因為我忘了做這個，必須直接<code>cat /var/lib/rancher/rke2/server/node-token</code></p>
-<p><img src="https://i.imgur.com/DfsHCRg.png" /></p>
+<p><img src="/uploads/DfsHCRg.png" /></p>
 <p>取得這個token</p>
 <h3 id="nd3rd-server">2nd&amp;3rd server</h3>
 <p>一樣先執行shell並將service enable <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL https://get.rke2.io | sh -</span><br><span class="line"></span><br><span class="line">systemctl enable rke2-server.service</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
@@ -380,10 +386,10 @@
 <p>rke2安裝的過程中有將相關的cli套件放置於<code>/var/lib/rancher/rke2/bin/</code>內 並且在安裝完後我們可以在<code>/etc/rancher/rke2/rke2.yaml</code>找到kubeconfig</p>
 <p>然後稍微看一下這個簡單佈署完的長相(在任一台server皆可)......</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes -o wide</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/mbffo9L.png" /></p>
+<p><img src="/uploads/mbffo9L.png" /></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get po --all-namespaces -o wide</span><br></pre></td></tr></table></figure>
 <p>與RKE不同，static pod又回來了XD</p>
-<p><img src="https://i.imgur.com/1YbHssF.png" /></p>
+<p><img src="/uploads/1YbHssF.png" /></p>
 <p>就先做到這好了，比起RKE很多設定我還搞不太清楚要怎麼弄XD，未來有機會的話應該會找時間再來詳細看看。</p>
 <h2 id="閒聊">閒聊</h2>
 <p>平常不太接觸RKE/Rancher系列的東西，前陣子有聽了一下邱牛大的閉門分享，想說找個機會來玩玩看，就抱著都試了RKE就連RKE2也一起小玩看看好了的心態來的XD</p>
@@ -434,7 +440,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
