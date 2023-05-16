@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="KEDA(Kubernetes Event-driven Autoscaling)使用記錄 HPA介紹 大部分的人應該都聽過或知道Kubernetes支援水平服務的自動擴展，簡稱HPA（HorizontalPodAutoscaler)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KEDA(Kubernetes Event-driven Autoscaling)使用記錄">
+<meta property="og:url" content="http://example.com/2023/05/16/keda/index.html">
+<meta property="og:site_name" content="阿熊的日常筆記">
+<meta property="og:description" content="KEDA(Kubernetes Event-driven Autoscaling)使用記錄 HPA介紹 大部分的人應該都聽過或知道Kubernetes支援水平服務的自動擴展，簡稱HPA（HorizontalPodAutoscaler)。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://example.com/uploads/Sy5JTDeB3.png">
+<meta property="og:image" content="http://example.com/uploads/Skw0OwlB3.png">
+<meta property="og:image" content="http://example.com/uploads/Sk7WJOgB3.png">
+<meta property="og:image" content="http://example.com/uploads/HkacD_lr3.png">
+<meta property="og:image" content="http://example.com/uploads/SyGscdeBn.png">
+<meta property="og:image" content="http://example.com/uploads/H1yJpdgH2.png">
+<meta property="og:image" content="http://example.com/uploads/rJi9TOxBn.png">
+<meta property="og:image" content="http://example.com/uploads/HyVfKYlH3.png">
+<meta property="og:image" content="http://example.com/uploads/S1HrBolrh.png">
+<meta property="og:image" content="http://example.com/uploads/Hk1TIjeB3.png">
+<meta property="og:image" content="http://example.com/uploads/rJBJsierh.png">
+<meta property="og:image" content="http://example.com/uploads/BJkQjoxHh.png">
+<meta property="og:image" content="http://example.com/uploads/Hytz3ogHh.png">
+<meta property="og:image" content="http://example.com/uploads/Hyl-RslBh.png">
+<meta property="article:published_time" content="2023-05-16T07:44:00.000Z">
+<meta property="article:modified_time" content="2023-05-16T07:57:54.643Z">
+<meta property="article:author" content="GuruBear">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="KEDA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/uploads/Sy5JTDeB3.png">
+
+
+<link rel="canonical" href="http://example.com/2023/05/16/keda/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-tw","comments":true,"permalink":"http://example.com/2023/05/16/keda/","path":"2023/05/16/keda/","title":"KEDA(Kubernetes Event-driven Autoscaling)使用記錄"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>KEDA(Kubernetes Event-driven Autoscaling)使用記錄 | 阿熊的日常筆記</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿熊的日常筆記</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">GuruBear's note</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kedakubernetes-event-driven-autoscaling%E4%BD%BF%E7%94%A8%E8%A8%98%E9%8C%84"><span class="nav-number">1.</span> <span class="nav-text">KEDA(Kubernetes Event-driven Autoscaling)使用記錄</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hpa%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.1.</span> <span class="nav-text">HPA介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#api%E7%9A%84%E7%89%88%E6%9C%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text">API的版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#metrics-server"><span class="nav-number">1.1.2.</span> <span class="nav-text">metrics-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A4%8E%E5%85%AC%E5%BC%8F"><span class="nav-number">1.1.3.</span> <span class="nav-text">基礎公式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keda"><span class="nav-number">1.2.</span> <span class="nav-text">KEDA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%9D%E4%BE%86%E7%9C%8B%E4%B8%80%E4%B8%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">先快速安裝來看一下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#crd"><span class="nav-number">1.2.2.</span> <span class="nav-text">CRD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#demo"><span class="nav-number">1.2.3.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.2.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%92%E8%81%8A"><span class="nav-number">1.3.</span> <span class="nav-text">閒聊</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="GuruBear"
+      src="/uploads/gurubear.png">
+  <p class="site-author-name" itemprop="name">GuruBear</p>
+  <div class="site-description" itemprop="description">紀錄一些我的學習筆記</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/16/keda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/gurubear.png">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          KEDA(Kubernetes Event-driven Autoscaling)使用記錄
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-05-16 15:44:00 / Modified: 15:57:54" itemprop="dateCreated datePublished" datetime="2023-05-16T15:44:00+08:00">2023-05-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="kedakubernetes-event-driven-autoscaling使用記錄">KEDA(Kubernetes Event-driven Autoscaling)使用記錄</h1>
+<h2 id="hpa介紹">HPA介紹</h2>
+<p>大部分的人應該都聽過或知道Kubernetes支援水平服務的自動擴展，簡稱HPA（HorizontalPodAutoscaler)。 <span id="more"></span></p>
+<h3 id="api的版本">API的版本</h3>
+<p>講到HPA，又可以提到目前Kubernetes有支援的API版本可以分成兩個</p>
+<ul>
+<li>autoscaling/v1
+<ul>
+<li>支援以CPU的使用量來進行縮放</li>
+</ul></li>
+<li>autoscaling/v2(1.23+ GA) or autoscaling/v2beta2
+<ul>
+<li>支援以CPU&amp;記憶體使用量來進行縮放</li>
+<li>支援以custom metrics的方式進行縮放</li>
+</ul></li>
+</ul>
+<p>不過我自己認為v1就是單純比較早期版本設計的，現在其實可以只看v2就好。 我們簡單apply一個範例來說 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">test</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="attr">limits:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">50m</span></span><br><span class="line">          <span class="attr">requests:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">50m</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">autoscaling/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">HorizontalPodAutoscaler</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test-hpa</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scaleTargetRef:</span></span><br><span class="line">    <span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">minReplicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">maxReplicas:</span> <span class="number">5</span></span><br><span class="line">  <span class="attr">targetCPUUtilizationPercentage:</span> <span class="number">10</span></span><br></pre></td></tr></table></figure> 接著我們去檢查剛剛apply的test-hpa</p>
+<p><img src="/uploads/Sy5JTDeB3.png" /></p>
+<p>可以看到即便我們在yaml上寫的是<code>autoscaling/v1</code>，kubernetes實際上運行的卻是<code>autoscaling/v2</code>也就是他幫我們從v1轉成v2格式了(這也是目前Kubernetes兼容一大票Api版本的方式)，那其實也可以說是我們一開始就寫v2就好囉。</p>
+<h3 id="metrics-server">metrics-server</h3>
+<p>至於為什麼Kubernetes能夠支援根據CPU＆記憶體使用量來進行縮放呢？其實是因為大多數的cluster有在預設的情況下安裝了<a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/metrics-server">metrics-server</a>這個元件。</p>
+<p>在安裝了metrics-server這個元件後，這個元件變能夠替我們從Kubelet蒐集節點與container的cpu&amp;memory使用量，並透過向kubernetes註冊APIservice（<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/apiserver-aggregation/">aggregated APIs</a>）的方式提供給HPA進行查詢。所以當我們執行下列動作時</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get apiservice</span><br></pre></td></tr></table></figure>
+<p>可以看到下面的<code>v1beta1.metrics.k8s.io</code>，而<code>metrics.k8s.io</code>就是提供給HPA default使用的CPU＆memory用量的來源</p>
+<p><img src="/uploads/Skw0OwlB3.png" /></p>
+<p>也就是說如果我直接透過API可以取得什麼樣的資訊呢？</p>
+<p><img src="/uploads/Sk7WJOgB3.png" /></p>
+<h3 id="基礎公式">基礎公式</h3>
+<p>這邊提的就是HPA到底會依據什麼樣的計算方式去執行水平擴展，官方提供的公式如下</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desiredReplicas = ceil[currentReplicas * ( currentMetricValue / desiredMetricValue )]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>desiredReplicas: 期望的Replicas數量</li>
+<li>currentReplicas: 目前的Replicas數量</li>
+<li>currentMetricValue: 可取得的目前pod的metrics加總</li>
+<li>desiredMetricValue: 這裡的desiredMetric以CPU&amp;記憶體來說的話就是指<code>request</code>值的加總。所以定義<code>request</code>在HPA的角度來說非常重要。如果不是CPU/Memory則就是會看我們自己在custom metrics上面如何定義相對應的threshold，而計算的公式也是會參照回這裡唷。</li>
+</ul>
+<p>那基本的HPA就介紹到這裡(還有一些參數/Behavior就不詳細介紹了)。</p>
+<h2 id="keda">KEDA</h2>
+<p>那前面介紹HPA時有持續一直在強調到custom metrics，也就是說<code>autoscaling/v2</code>是可以支援我們使用客製化的metrics來進行水平縮放的，傳統在這個部分我們一樣會需要實做真正的程式並一樣透過api aggregated的方式去implement出<code>custom.metrics.k8s.io</code>的api service。但這對一般人來說實在是有點太過複雜了，所以接下來要介紹的<a target="_blank" rel="noopener" href="https://keda.sh/">KEDA</a>就是一個簡單的幫我們做到這件事情的工具，讓我們能夠簡單的使用他與各種event source、database串接來進行水平擴展。</p>
+<p>先附上官方的架構圖</p>
+<p><img src="/uploads/HkacD_lr3.png" /></p>
+<h3 id="先快速安裝來看一下">先快速安裝來看一下</h3>
+<p>我們一樣使用<a target="_blank" rel="noopener" href="https://keda.sh/docs/2.10/deploy/#install">官方的helm快速安裝指令</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">helm repo add kedacore https://kedacore.github.io/charts</span><br><span class="line">helm repo update</span><br><span class="line">kubectl create namespace keda</span><br><span class="line">helm install keda kedacore/keda --namespace keda</span><br></pre></td></tr></table></figure></p>
+<p>先簡單來介紹一下安裝了什麼</p>
+<p><img src="/uploads/SyGscdeBn.png" /></p>
+<ul>
+<li>keda-operator: 負責執行與KEDA相關的CRD與resource的lifecyle。</li>
+<li>keda-admission-webhook: 這是比較新的功能，負責替我們做CRD格式驗證的功能，避免misconfiguration的情況。如果想進一步瞭解的話可以執行下面這個指令： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get validatingwebhookconfiguration keda-admission -o yaml</span><br></pre></td></tr></table></figure></li>
+<li>keda-operator-metrics-apiserver: 這個就是負責提供客製化metrics api的的服務，在KEDA中所使用的是<code>external.metrics.k8s.io</code>我們執行這個指令看到</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get apiservice</span><br></pre></td></tr></table></figure>
+<p><img src="/uploads/H1yJpdgH2.png" /></p>
+<h3 id="crd">CRD</h3>
+<p>前面快速帶過安裝完後的狀態後，我們介紹一下KEDA主要支援的是哪些CRD</p>
+<p><img src="/uploads/rJi9TOxBn.png" /></p>
+<p>那我們這邊做一個快速的介紹，想要詳細瞭解的可以<a target="_blank" rel="noopener" href="https://keda.sh/docs/2.10/concepts/">參閱官方</a></p>
+<ul>
+<li>scaledobjects: <strong>這是我們待會主要要介紹的</strong>，透過撰寫scaledobject我們可以使用外部的客製化metrics來幫助我們進行HPA的動作。</li>
+<li>scaledjobs: 與scaledobject不同，主要服務的目標不是deployment而是job，透過我們定義的條件可以達到event triggered job的動作。</li>
+<li>triggerauthentications：專門負責儲存與整合機敏資訊的CRD，當我們外部資源需要特別使用Key存取時，會使用triggerauthentications搭配scaledobject/scaledjobs去執行。</li>
+<li>clustertriggerauthentications：這邊就跟role&amp;clusterrole的概念一樣，triggerauthentications是namespace scope而clustertriggerauthentications是屬於cluster scope，就不仔細再介紹了。</li>
+</ul>
+<p>那我們再詳細來看一下scaledobjects可以填寫什麼樣的內容 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">keda.sh/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ScaledObject</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> &#123;<span class="string">scaled-object-name</span>&#125;</span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scaleTargetRef:</span></span><br><span class="line">    <span class="attr">apiVersion:</span>    &#123;<span class="string">api-version-of-target-resource</span>&#125;  <span class="comment"># Optional. Default: apps/v1</span></span><br><span class="line">    <span class="attr">kind:</span>          &#123;<span class="string">kind-of-target-resource</span>&#125;         <span class="comment"># Optional. Default: Deployment</span></span><br><span class="line">    <span class="attr">name:</span>          &#123;<span class="string">name-of-target-resource</span>&#125;         <span class="comment"># Mandatory. Must be in the same namespace as the ScaledObject</span></span><br><span class="line">    <span class="attr">envSourceContainerName:</span> &#123;<span class="string">container-name</span>&#125;         <span class="comment"># Optional. Default: .spec.template.spec.containers[0]</span></span><br><span class="line">  <span class="attr">pollingInterval:</span>  <span class="number">30</span>                               <span class="comment"># Optional. Default: 30 seconds</span></span><br><span class="line">  <span class="attr">cooldownPeriod:</span>   <span class="number">300</span>                              <span class="comment"># Optional. Default: 300 seconds</span></span><br><span class="line">  <span class="attr">idleReplicaCount:</span> <span class="number">0</span>                                <span class="comment"># Optional. Default: ignored, must be less than minReplicaCount </span></span><br><span class="line">  <span class="attr">minReplicaCount:</span>  <span class="number">1</span>                                <span class="comment"># Optional. Default: 0</span></span><br><span class="line">  <span class="attr">maxReplicaCount:</span>  <span class="number">100</span>                              <span class="comment"># Optional. Default: 100</span></span><br><span class="line">  <span class="attr">fallback:</span>                                          <span class="comment"># Optional. Section to specify fallback options</span></span><br><span class="line">    <span class="attr">failureThreshold:</span> <span class="number">3</span>                              <span class="comment"># Mandatory if fallback section is included</span></span><br><span class="line">    <span class="attr">replicas:</span> <span class="number">6</span>                                      <span class="comment"># Mandatory if fallback section is included</span></span><br><span class="line">  <span class="attr">advanced:</span>                                          <span class="comment"># Optional. Section to specify advanced options</span></span><br><span class="line">    <span class="attr">restoreToOriginalReplicaCount:</span> <span class="literal">true</span><span class="string">/false</span>        <span class="comment"># Optional. Default: false</span></span><br><span class="line">    <span class="attr">horizontalPodAutoscalerConfig:</span>                   <span class="comment"># Optional. Section to specify HPA related options</span></span><br><span class="line">      <span class="attr">name:</span> &#123;<span class="string">name-of-hpa-resource</span>&#125;                   <span class="comment"># Optional. Default: keda-hpa-&#123;scaled-object-name&#125;</span></span><br><span class="line">      <span class="attr">behavior:</span>                                      <span class="comment"># Optional. Use to modify HPA&#x27;s scaling behavior</span></span><br><span class="line">        <span class="attr">scaleDown:</span></span><br><span class="line">          <span class="attr">stabilizationWindowSeconds:</span> <span class="number">300</span></span><br><span class="line">          <span class="attr">policies:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">Percent</span></span><br><span class="line">            <span class="attr">value:</span> <span class="number">100</span></span><br><span class="line">            <span class="attr">periodSeconds:</span> <span class="number">15</span></span><br><span class="line">  <span class="attr">triggers:</span></span><br><span class="line">  <span class="comment"># &#123;list of triggers to activate scaling of the target resource&#125;</span></span><br></pre></td></tr></table></figure> 可以看到我們spec中除了可以定義我們目標的Container是誰之外，也有許多參數可以設定(e.g. minReplicaCount/pollingInterval......)並且advanced也能夠讓我們去設定以前在HPA上面客製化調整個scaleUP and scaleDown的Behavior。而其中triggers的區塊就會需要搭配我們預計使 用的scaler，下面這張會顯示是<a target="_blank" rel="noopener" href="https://keda.sh/docs/2.10/concepts/#event-sources-and-scalers">官方提供KEDA目前支援的Scaler</a></p>
+<p><img src="/uploads/HyVfKYlH3.png" /></p>
+<p>其中CPU/Memory預設會使用default metrics-server所提供的API，我們可以來看看是怎麼設定的 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">triggers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">cpu</span></span><br><span class="line">  <span class="attr">metricType:</span> <span class="string">Utilization</span> <span class="comment"># Allowed types are &#x27;Utilization&#x27; or &#x27;AverageValue&#x27;</span></span><br><span class="line">  <span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">Utilization</span> <span class="comment"># Deprecated in favor of trigger.metricType; allowed types are &#x27;Utilization&#x27; or &#x27;AverageValue&#x27;</span></span><br><span class="line">    <span class="attr">value:</span> <span class="string">&quot;60&quot;</span></span><br><span class="line">    <span class="attr">containerName:</span> <span class="string">&quot;&quot;</span> <span class="comment"># Optional. You can use this to target a specific container in a pod</span></span><br></pre></td></tr></table></figure> 那根據這樣的方式與剛剛的Scaledobject區塊的trigger組合起來，就可以完成整個yaml了。另外再多提一點triggers的部分是支援multiple triggers的，也就是說我可以透過很多種外部條件來達成我服務的水平擴展，並非單一面向，當所有條件都具備觸發水平擴展的能力時，會以desiredReplicas最大的條件去做執行。</p>
+<h3 id="demo">Demo</h3>
+<p>我們這邊就實際用一個簡易的application搭配prometheus來做演示。 我把相關內容放上<a target="_blank" rel="noopener" href="https://github.com/Coolyupo/KedaforBlog">Github連結</a></p>
+<p>我們用Dotnet CLI創建一個Web API的範本，並搭配prometheus-net package來做metrics exporter，打包成container後以deployment的方式部署如下。 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">keda-demo</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">keda-demo</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">revisionHistoryLimit:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">keda-demo</span></span><br><span class="line">  <span class="attr">strategy:</span></span><br><span class="line">    <span class="attr">rollingUpdate:</span></span><br><span class="line">      <span class="attr">maxSurge:</span> <span class="number">25</span><span class="string">%</span></span><br><span class="line">      <span class="attr">maxUnavailable:</span> <span class="number">25</span><span class="string">%</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">RollingUpdate</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">keda-demo</span></span><br><span class="line">      <span class="attr">annotations:</span></span><br><span class="line">        <span class="attr">prometheus.io/scrape:</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line">        <span class="attr">prometheus.io/port:</span>   <span class="string">&#x27;80&#x27;</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">docker.io/coolyupo/kedademo:20230516</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">kedademo</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">        <span class="attr">resources:</span> </span><br><span class="line">          <span class="attr">requests:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">50m</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">512M</span></span><br><span class="line">          <span class="attr">limits:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">50m</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">512M</span>          </span><br></pre></td></tr></table></figure></p>
+<p>因為我們要使用prometheus蒐集metrics並提供給KEDA做使用，我們需要有一個prometheus server（如果有既有的可以直接使用），因為我們這邊沒有所以需要額外創建一個詳細的部署檔可以參考github repo的mainfest裡面，主要就是需要寫一段rules去撈取我們pod的metrics，在這裡我就直接使用<a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config">kubernetes_sd_config</a>，再給足權限的情況下我們可以設定prometheus scrape的條件如下，那我就不詳細介紹這邊在做什麼了。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&#x27;dotnet-monitor&#x27;</span></span><br><span class="line">        <span class="attr">kubernetes_sd_configs:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">role:</span> <span class="string">pod</span></span><br><span class="line">            <span class="attr">namespaces:</span></span><br><span class="line">              <span class="attr">names:</span> </span><br><span class="line">              <span class="bullet">-</span> <span class="string">default</span></span><br><span class="line">        <span class="attr">relabel_configs:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__meta_kubernetes_pod_annotation_prometheus_io_scrape</span>]</span><br><span class="line">          <span class="attr">action:</span> <span class="string">keep</span></span><br><span class="line">          <span class="attr">regex:</span> <span class="literal">true</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__meta_kubernetes_pod_annotation_prometheus_io_path</span>]</span><br><span class="line">          <span class="attr">action:</span> <span class="string">replace</span></span><br><span class="line">          <span class="attr">target_label:</span> <span class="string">__metrics_path__</span></span><br><span class="line">          <span class="attr">regex:</span> <span class="string">(.+)</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__address__</span>, <span class="string">__meta_kubernetes_pod_annotation_prometheus_io_port</span>]</span><br><span class="line">          <span class="attr">action:</span> <span class="string">replace</span></span><br><span class="line">          <span class="attr">regex:</span> <span class="string">([^:]+)(?::\d+)?;(\d+)</span></span><br><span class="line">          <span class="attr">replacement:</span> <span class="string">$1:$2</span></span><br><span class="line">          <span class="attr">target_label:</span> <span class="string">__address__</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">action:</span> <span class="string">labelmap</span></span><br><span class="line">          <span class="attr">regex:</span> <span class="string">__meta_kubernetes_pod_label_(.+)</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__meta_kubernetes_namespace</span>]</span><br><span class="line">          <span class="attr">action:</span> <span class="string">replace</span></span><br><span class="line">          <span class="attr">target_label:</span> <span class="string">kubernetes_namespace</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">source_labels:</span> [<span class="string">__meta_kubernetes_pod_name</span>]</span><br><span class="line">          <span class="attr">action:</span> <span class="string">replace</span></span><br><span class="line">          <span class="attr">target_label:</span> <span class="string">kubernetes_pod_name</span></span><br></pre></td></tr></table></figure>
+<p>我們的Application＆Prometheus都安裝完成後，可以來到Prometheus的UI檢查Target狀態是否正常。</p>
+<p><img src="/uploads/S1HrBolrh.png" /></p>
+<p>我們可以試著在用UI上查詢</p>
+<p><img src="/uploads/Hk1TIjeB3.png" /></p>
+<p>到這邊為止我們DEMO的前置作業算是完整結束了，接下來我們就簡單apply一份來看 scaledobject</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">keda.sh/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ScaledObject</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">keda-demo-scaledobject</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">minReplicaCount:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">maxReplicaCount:</span> <span class="number">5</span></span><br><span class="line">  <span class="attr">scaleTargetRef:</span></span><br><span class="line">    <span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">keda-demo</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line">  <span class="attr">triggers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">prometheus</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">serverAddress:</span> <span class="string">http://prometheus-service.monitoring.svc:9090</span></span><br><span class="line">      <span class="attr">query:</span> <span class="string">sum(irate(http_request_duration_seconds_count&#123;app=&quot;keda-demo&quot;&#125;[1m]))</span></span><br><span class="line">      <span class="attr">threshold:</span> <span class="string">&#x27;10&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>我們輸入查看 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get scaledobject -n default</span><br></pre></td></tr></table></figure> <img src="/uploads/rJBJsierh.png" /></p>
+<p>接著我們再輸入 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get hpa -n default</span><br></pre></td></tr></table></figure></p>
+<p><img src="/uploads/BJkQjoxHh.png" /></p>
+<p><strong>事實上也就是說KEDA透過Scaledobject的定義去幫助我們創見與管理HPA resource的lifecycle</strong>，那接著我們再看一下這個HPA的內容</p>
+<p><img src="/uploads/Hytz3ogHh.png" /></p>
+<p>從這張圖可以看到我們的metrics是有正確被定義出來的，而另外一個點是這個HPA與我們自己手動建立的HPA明顯不同的地方在，他是有上層控制器所控制的，所以在metadata的地方有特別顯示ownerReference</p>
+<p>回到範例，也就是說當我們的平均RPS（由過去1分鐘內計算），超過10就可以觸發scaling，如下圖使用watch觀察，持續呼叫我們的API的結果</p>
+<p><img src="/uploads/Hyl-RslBh.png" /></p>
+<h3 id="其他">其他</h3>
+<p>前面有提到Behavior相關的內容，Kubernetes也有專門的一套方式讓我們夠自定義ScaleUP and ScaleDown要發生的行為，根據不同的情境理論上我們都能夠做不太相同的設計，<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior">而官方文件也已經提供許多Practices</a>，有興趣可以自己花時間去閱讀。</p>
+<h2 id="閒聊">閒聊</h2>
+<p>OMG，又這麼冗長。不過真心覺得autoscaling要做好真是比想像困難的多。上面分享的只是我們理論上的實踐，但很多時候我們要先找到有效的指標，再來最好這個指標帶有一點預測性、前瞻性。有時候在真正高併發的情境下，當機制觸發Threshold要scaling的當下，說不定服務已經先被打掛了。不過也期待未來這塊能夠有主流AI/ML的介入XD。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+              <a href="/tags/KEDA/" rel="tag"># KEDA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/15/opa-gatekeeper/" rel="prev" title="OPA-gatekeeper">
+                  <i class="fa fa-chevron-left"></i> OPA-gatekeeper
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuruBear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"coolyupo","repo":"coolyupo.github.io","client_id":"99c63371e36dad946b67","client_secret":"414024fcca2a1bc506558d8e93c7241cdfb66886","admin_user":"coolyupo","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"ae4fdbcb16b05ccbab3d73630adf4737"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
