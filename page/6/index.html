@@ -137,13 +137,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -172,6 +172,122 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/30/jestonNano-k3s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/gurubear.png">
+      <meta itemprop="name" content="GuruBear">
+      <meta itemprop="description" content="紀錄一些我的學習筆記">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿熊的日常筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/01/30/jestonNano-k3s/" class="post-title-link" itemprop="url">k3s x jeston nano 隨手記</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-01-30 12:00:43" itemprop="dateCreated datePublished" datetime="2020-01-30T12:00:43+08:00">2020-01-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-05-02 19:53:36" itemprop="dateModified" datetime="2023-05-02T19:53:36+08:00">2023-05-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <span id="more"></span>
+<h2 id="done">Done</h2>
+<table>
+<thead>
+<tr class="header">
+<th>OS</th>
+<th>hardware</th>
+<th>master</th>
+<th>node</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ubuntu18.04(official)</td>
+<td>vm in ds718+(4vCores、8gb ram)</td>
+<td>V</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ubuntu18.04(jeston)</td>
+<td>jeston nano(NVIDIA Tegra X1)</td>
+<td></td>
+<td>V</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>K3S預設使用containerd。
+<ul>
+<li>master我隨便用直接使用containerd</li>
+<li>node因nvidia container 僅 support docker、lxc、cri-o 所以改用docker搭建</li>
+</ul></li>
+<li>etcd 上層協議不變下層改用SQL lite轉譯，節點之間有抽象的etcd socket。</li>
+<li>rancher的框架master預設是可以schedule的，不想要需自己重上taint。</li>
+<li>目前未指定CNI(尚未測試是否無法溝通)，節點上有產出svclb-traefik的daemonset應該是作為取代kubeproxy的功能。</li>
+<li>預設會幫你直接安裝traefik ingress controller，若要取消可在安裝選項上取消。</li>
+<li>真的是非常簡單安裝、亦可一鍵取消安裝。</li>
+</ul>
+<p><img src="/uploads/uzz5yZ2.png" /></p>
+<p><img src="/uploads/RUTM2gD.png" /></p>
+<h2 id="future">Future</h2>
+<ul>
+<li>檢查CNI部分</li>
+<li>試跑TensorFlow/TensorRT</li>
+<li>跟之前跑的Jupyter sample上的usb camera搭上關係。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
