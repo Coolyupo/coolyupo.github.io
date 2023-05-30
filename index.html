@@ -204,10 +204,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-05-18 12:08:59 / Modified: 12:22:05" itemprop="dateCreated datePublished" datetime="2023-05-18T12:08:59+08:00">2023-05-18</time>
+      <time title="Created: 2023-05-18 12:08:59" itemprop="dateCreated datePublished" datetime="2023-05-18T12:08:59+08:00">2023-05-18</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-05-30 09:41:29" itemprop="dateModified" datetime="2023-05-30T09:41:29+08:00">2023-05-30</time>
+      </span>
 
   
 </div>
@@ -226,7 +232,10 @@
 <li>readiness probe: 用來決定container是否就緒的(未就緒的狀態下就不會放到endpoint當中)</li>
 <li>startup probe: 則是專門用在啟動時的檢測</li>
 </ul>
-<p>在過去我們常用的莫過於HttpGET，亦或者是客製化的exec command。 &gt; 至於為什麼是exec，這是因為每一個container的probe事實上是Kubelet協助幫我們檢驗的，所以他需要進入到container中幫我們執行對應的command</p>
+<p>在過去我們常用的莫過於HttpGET，亦或者是客製化的exec command。</p>
+<blockquote>
+<p>至於為什麼是exec，這是因為每一個container的probe事實上是Kubelet協助幫我們檢驗的，所以他需要進入到container中幫我們執行對應的command</p>
+</blockquote>
 <p>而這篇主要分享的是，如果我們的服務不是傳統的Web/WebAPI Server，而是gRPC Server該怎麼做探針檢查。</p>
           <!--noindex-->
             <div class="post-button">
